@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using WorkingDaysApp.FormUI;
 using WorkingDaysApp.Logic;
 
 namespace WorkingDaysApp
@@ -9,7 +7,9 @@ namespace WorkingDaysApp
     {
         static void Main()
         {
-            new WorkingDays().start();
+            var wd = new WorkingDays();
+            wd.start();
+            new MainForm(wd).ShowDialog();
         }
     }
 }
