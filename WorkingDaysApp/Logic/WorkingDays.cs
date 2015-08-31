@@ -1,25 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using WorkingDaysApp.FormUI;
+using System.Text;
 
 namespace WorkingDaysApp.Logic
 {
-    public delegate void SetArrivalDelegate(List<string> monthData);
-    public delegate void ShowDates(List<string> yearsList);
+    public delegate void SetArrivalDelegate();
+    public delegate void ShowYears(List<string> yearsList);
+    public delegate void ShowMonth();
 
     public class WorkingDays
     {
-        public event SetArrivalDelegate arrivalEvent;
-        public event ShowDates showYearsEvent;
-        public event ShowDates showMonthsEvent;
-
+        public event SetArrivalDelegate ArrivalEvent;
+        public event SetArrivalDelegate LeavingEvent;
+        public event ShowYears ShowYearsEvent;
+        public event ShowMonth ShowMonthsEvent;
 
         private List<FileInfo> AllFiles;
 
         public void start()
         {
             setAllFiles();
+        }
+
+        public List<string> getFileLines(int Year, int Month)
+        {
+            string filePath = getMonthsFilesPath() + "\\" + buildFileName(Year, Month);
+
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllLines(filePath, new []{""});
+            }
+
+            List<string> fileLines = new List<string>(File.ReadAllLines(filePath, Encoding.UTF8));
+            
+            return fileLines;
         }
 
         public void SetYears()
@@ -35,11 +49,15 @@ namespace WorkingDaysApp.Logic
                 {
                     years.Add(curYear);
                 }
-
             }
-            showYearsEvent(years);
+            ShowYearsEvent(years);
         }
 
+
+        private string buildFileName(int Year, int Month)
+        {
+            return Year + "-" + (Month <= 9 ? "0" : "") + Month + ".txt";
+        }
 
 
 
@@ -50,12 +68,13 @@ namespace WorkingDaysApp.Logic
 
         private void setAllFiles()
         {
-            string project_path = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())) + "\\monthFiles";
-            AllFiles = new List<FileInfo>(new DirectoryInfo(project_path).GetFiles("*"));
-
-            //AllFiles = new List<string>(Directory.GetFiles(project_path));
+            AllFiles = new List<FileInfo>(new DirectoryInfo(getMonthsFilesPath()).GetFiles("*"));
         }
 
+        private string getMonthsFilesPath()
+        {
+            return Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())) + "\\monthFiles";
+        }
 
     }
 }
