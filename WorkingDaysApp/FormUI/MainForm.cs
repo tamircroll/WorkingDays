@@ -121,7 +121,7 @@ namespace WorkingDaysApp.FormUI
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
-            r_WorkingDays.addCurrentArrivalTime();
+            r_WorkingDays.SetCurrentArrivalTime();
             setGrid();
         }
 

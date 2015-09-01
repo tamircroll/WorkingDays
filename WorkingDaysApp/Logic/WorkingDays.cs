@@ -25,7 +25,7 @@ namespace WorkingDaysApp.Logic
 
         public List<string> getFileLines(int Year, int Month)
         {
-            string filePath = getMonthsFilesPath() + "\\" + buildFileName(Year, Month);
+            string filePath = FilesHandler.BuildFilePath(Year, Month);
 
             if (!File.Exists(filePath))
             {
@@ -37,6 +37,7 @@ namespace WorkingDaysApp.Logic
             return fileLines;
         }
 
+        
         public List<string> GetYears()
         {
             List<string> years = new List<string>();
@@ -54,7 +55,7 @@ namespace WorkingDaysApp.Logic
             return years;
         }
 
-        public void addCurrentArrivalTime()
+        public void SetCurrentArrivalTime()
         {
             List<string> fileLines = getFileLines(TimeHandler.CurYear(), TimeHandler.CurMonth());
             int lineToChange = -1;
@@ -86,7 +87,7 @@ namespace WorkingDaysApp.Logic
                     );
             }
 
-            File.WriteAllLines(getMonthsFilesPath() + "\\" + buildFileName(TimeHandler.CurYear(), TimeHandler.CurMonth()), fileLines.ToArray());
+            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()), fileLines.ToArray());
         }
 
         private string setLineArrival(string i_FileLine)
@@ -95,22 +96,10 @@ namespace WorkingDaysApp.Logic
             lineArr[2] = TimeHandler.getCurrClockTime();
             return String.Format("{0}-{1}-{2}-{3}-{4}", lineArr[0], lineArr[1], lineArr[2], lineArr[3], lineArr[4]);
         }
-
-
-        private string buildFileName(int Year, int Month)
-        {
-            return Year + "-" + (Month <= 9 ? "0" : "") + Month + ".txt";
-        }
         
         private void setAllFiles()
         {
-            AllFiles = new List<FileInfo>(new DirectoryInfo(getMonthsFilesPath()).GetFiles("*"));
+            AllFiles = FilesHandler.GetAllFiles();
         }
-
-        private string getMonthsFilesPath()
-        {
-            return Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())) + "\\monthFiles";
-        }
-
     }
 }

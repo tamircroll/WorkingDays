@@ -41,7 +41,7 @@ namespace WorkingDaysApp.Logic
 
         public static string getCurrClockTime()
         {
-            return DateTime.Now.ToString("hh:mm:ss");
+            return DateTime.Now.ToString("HH:mm:ss");
         }
     }
 }
