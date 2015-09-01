@@ -76,23 +76,26 @@ namespace WorkingDaysApp.FormUI
             monthGridView.Rows.Clear();
             foreach (var dayData in monthData)
             {
+                int j = 0;
                 var day = dayData.Split('-');
                 if (day.Length < 4) continue;
 
                 int rowNum = monthGridView.Rows.Add();
                 var newRow = monthGridView.Rows[rowNum];
 
-                for (int i = 1; i < day.Length; i++)
+                for (int i = 0; i < day.Length; i++)
                 {
-                    if (i == 4)
+                    if (i == 3)
                     {
-                        newRow.Cells[i].Value = calcTime((string) newRow.Cells[2].Value, (string) newRow.Cells[3].Value);
-                        newRow.Cells[5].Value = day[i];
+                        newRow.Cells[j].Value = calcTime((string) newRow.Cells[1].Value, (string) newRow.Cells[2].Value);
+//                        newRow.Cells[j].Value = day[i];
+                        j++;
                     }
                     else
                     {
-                        newRow.Cells[i].Value = day[i];
+                        newRow.Cells[j].Value = day[i];
                     }
+                    j++;
                 }
             }
         }

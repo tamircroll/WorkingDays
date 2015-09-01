@@ -65,7 +65,7 @@ namespace WorkingDaysApp.Logic
 
                 if (lineArr.Length < 2) continue;
 
-                if (int.Parse(lineArr[1]) == TimeHandler.CurDay())
+                if (int.Parse(lineArr[0]) == TimeHandler.CurDay())
                 {
                     DialogResult toSetNow = MessageBox.Show("Arival already set.\nSet now instead?", @"Set Arrival",
                         MessageBoxButtons.YesNo);
@@ -82,9 +82,10 @@ namespace WorkingDaysApp.Logic
             {
                 fileLines.Add(String.Format(
                     "{0}-{1}-{2}-{2}-{3}",
-                    "Working Day",
                     TimeHandler.CurDay(),
-                    TimeHandler.getCurrClockTime(), "_")
+                    TimeHandler.getCurrClockTime(),
+                    "Working Day",
+                    "_")
                     );
             }
 
@@ -92,18 +93,10 @@ namespace WorkingDaysApp.Logic
                 fileLines.ToArray());
         }
 
-
-
-
-
-
-
-
-
         private string setLineArrival(string i_FileLine)
         {
             string[] lineArr = i_FileLine.Split('-');
-            lineArr[2] = TimeHandler.getCurrClockTime();
+            lineArr[1] = TimeHandler.getCurrClockTime();
             return String.Format("{0}-{1}-{2}-{3}-{4}", lineArr[0], lineArr[1], lineArr[2], lineArr[3], lineArr[4]);
         }
     }
