@@ -12,9 +12,9 @@ namespace WorkingDaysApp.Logic
 
     public class WorkingDays
     {
-        public event SetArrivalDelegate ArrivalEvent;
-        public event SetArrivalDelegate LeavingEvent;
-        public event ShowYears ShowYearsEvent;
+//        public event SetArrivalDelegate ArrivalEvent;
+//        public event SetArrivalDelegate LeavingEvent;
+//        public event ShowYears ShowYearsEvent;
 
         private List<FileInfo> AllFiles;
 
@@ -85,8 +85,8 @@ namespace WorkingDaysApp.Logic
                     TimeHandler.CurDay(),
                     TimeHandler.getCurrClockTime(),
                     "Working Day",
-                    "_")
-                    );
+                    "_"
+                    ));
             }
 
             File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
