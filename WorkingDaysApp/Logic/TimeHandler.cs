@@ -43,5 +43,22 @@ namespace WorkingDaysApp.Logic
         {
             return DateTime.Now.ToString("HH:mm:ss");
         }
+
+        public static string calcTime(string i_FirstTime, string i_SecondTime)
+        {
+            string[] firstTime = i_FirstTime.Split(':');
+            string[] secondTime = i_SecondTime.Split(':');
+            if (firstTime.Length > 1 && secondTime.Length > 1)
+            {
+                TimeSpan firsTimeSpan = new TimeSpan(int.Parse(firstTime[0]), int.Parse(firstTime[1]),
+                    int.Parse(firstTime[2]));
+                TimeSpan secondTimeSpan = new TimeSpan(int.Parse(secondTime[0]), int.Parse(secondTime[1]),
+                    int.Parse(secondTime[2]));
+                TimeSpan time = secondTimeSpan - firsTimeSpan;
+                return time.ToString();
+            }
+
+            return "_";
+        }
     }
 }

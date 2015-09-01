@@ -40,13 +40,13 @@
             this.chooseYearTitle = new System.Windows.Forms.Label();
             this.chooseYear = new System.Windows.Forms.ComboBox();
             this.monthGridView = new System.Windows.Forms.DataGridView();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Day = new System.Windows.Forms.DataGridViewButtonColumn();
             this.StartTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.EndTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TotalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dayType = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Comment = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chooseDateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).BeginInit();
             this.SuspendLayout();
@@ -62,6 +62,7 @@
             this.Leaving.TabIndex = 1;
             this.Leaving.Text = "Leaving";
             this.Leaving.UseVisualStyleBackColor = false;
+            this.Leaving.Click += new System.EventHandler(this.Leaving_Click);
             // 
             // Arrival
             // 
@@ -168,6 +169,7 @@
             // 
             this.Day.FillWeight = 141.1765F;
             this.Day.HeaderText = "Day";
+            this.Day.MinimumWidth = 20;
             this.Day.Name = "Day";
             this.Day.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Day.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -229,7 +231,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.chooseDateGroupBox.ResumeLayout(false);
             this.chooseDateGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).EndInit();

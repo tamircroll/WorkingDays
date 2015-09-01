@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
+using WorkingDaysApp.Enums;
 using WorkingDaysApp.Logic;
 
 namespace WorkingDaysApp.FormUI
@@ -16,17 +15,19 @@ namespace WorkingDaysApp.FormUI
         {
             r_WorkingDays = i_WorkingDays;
             InitializeComponent();
+            setTimeToNow();
+            initForm();
+        }
+
+        private void setTimeToNow()
+        {
             chosenYearInt = TimeHandler.CurYear();
             chosenMonthInt = TimeHandler.CurMonth();
-            initForm();
         }
 
         private void initForm()
         {
-//            r_WorkingDays.ArrivalEvent += setGrid;
-//            r_WorkingDays.ShowMonthsEvent += setMonthToggle;
-//            r_WorkingDays.ShowYearsEvent += setYearsToggle;
-            setGrid();
+            setForm();
             chooseMonth.Text = chosenMonthInt.ToString();
             chooseYear.Text = chosenYearInt.ToString();
             setListViewTitle();
@@ -60,72 +61,67 @@ namespace WorkingDaysApp.FormUI
         private void setChoosenYear(int i_Year)
         {
             chosenYearInt = i_Year;
-            setGrid();
+            setForm();
         }
 
         private void setChoosenMonth(int i_Month)
         {
             chosenMonthInt = i_Month;
+            setForm();
+        }
+
+        private void setForm()
+        {
+            setListViewTitle();
             setGrid();
         }
 
         private void setGrid()
         {
-            setListViewTitle();
-            List<string> monthData = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
+            List<string> allDaysInMonth = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
+            
             monthGridView.Rows.Clear();
-            foreach (var dayData in monthData)
+            foreach (var dayInfo in allDaysInMonth)
             {
-                int j = 0;
-                var day = dayData.Split('-');
-                if (day.Length < 4) continue;
+                var dayArr = dayInfo.Split('-');
+                if (dayArr.Length < 6) continue;
 
-                int rowNum = monthGridView.Rows.Add();
-                var newRow = monthGridView.Rows[rowNum];
+                int currRowNum = monthGridView.Rows.Add();
+                var newRow = monthGridView.Rows[currRowNum];
 
-                for (int i = 0; i < day.Length; i++)
+                for (int i = 0; i < dayArr.Length; i++)
                 {
-                    if (i == 3)
-                    {
-                        newRow.Cells[j].Value = calcTime((string) newRow.Cells[1].Value, (string) newRow.Cells[2].Value);
-//                        newRow.Cells[j].Value = day[i];
-                        j++;
-                    }
-                    else
-                    {
-                        newRow.Cells[j].Value = day[i];
-                    }
-                    j++;
+                    setGridRow(i, newRow, dayArr);
                 }
             }
         }
 
-        private string calcTime(string i_FirstTime, string i_SecondTime)
+        private static void setGridRow(int i, DataGridViewRow newRow, string[] dayArr)
         {
-            string[] firstTime = i_FirstTime.Split(':');
-            string[] secondTime = i_SecondTime.Split(':');
-            if (firstTime.Length > 1 && secondTime.Length > 1)
+            if (i == (int) eColumn.TotalHours)
             {
-                TimeSpan firsTimeSpan = new TimeSpan(int.Parse(firstTime[0]), int.Parse(firstTime[1]),
-                    int.Parse(firstTime[2]));
-                TimeSpan secondTimeSpan = new TimeSpan(int.Parse(secondTime[0]), int.Parse(secondTime[1]),
-                    int.Parse(secondTime[2]));
-                TimeSpan time = secondTimeSpan - firsTimeSpan;
-                return time.ToString();
+                newRow.Cells[i].Value = TimeHandler.calcTime(
+                    (string) newRow.Cells[(int) eColumn.Arrival].Value,
+                    (string) newRow.Cells[(int) eColumn.Leaving].Value);
             }
-
-            return "_";
+            else
+            {
+                newRow.Cells[i].Value = dayArr[i];
+            }
         }
-
-        private void MainForm_Load(object i_Sender, EventArgs e)
+        
+        private void Leaving_Click(object sender, EventArgs e)
         {
-
+            setTimeToNow();
+            r_WorkingDays.SetCurrentTime(eColumn.Leaving);
+            setForm();
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
-            r_WorkingDays.SetCurrentArrivalTime();
-            setGrid();
+            setTimeToNow();
+            r_WorkingDays.SetCurrentTime(eColumn.Arrival);
+            setForm();
         }
 
         private void daysGridView_CellContentClick(object i_Sender, EventArgs e)
@@ -142,7 +138,6 @@ namespace WorkingDaysApp.FormUI
         {
             setMonthToggle();
         }
-
 
         private void chooseYear_SelectedIndexChanged(object sender, EventArgs e)
         {
