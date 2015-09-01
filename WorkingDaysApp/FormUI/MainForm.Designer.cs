@@ -40,13 +40,13 @@
             this.chooseYearTitle = new System.Windows.Forms.Label();
             this.chooseYear = new System.Windows.Forms.ComboBox();
             this.monthGridView = new System.Windows.Forms.DataGridView();
-            this.dayType = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Day = new System.Windows.Forms.DataGridViewButtonColumn();
             this.StartTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.EndTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TotalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dayType = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Comment = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chooseDateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).BeginInit();
             this.SuspendLayout();
@@ -149,11 +149,11 @@
             this.monthGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.monthGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.monthGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dayType,
             this.Day,
             this.StartTime,
             this.EndTime,
             this.TotalTime,
+            this.dayType,
             this.Comment});
             this.monthGridView.EnableHeadersVisualStyles = false;
             this.monthGridView.GridColor = System.Drawing.Color.DimGray;
@@ -163,15 +163,6 @@
             this.monthGridView.Size = new System.Drawing.Size(859, 542);
             this.monthGridView.TabIndex = 5;
             this.monthGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.daysGridView_CellContentClick);
-            // 
-            // dayType
-            // 
-            this.dayType.HeaderText = "dayType";
-            this.dayType.Items.AddRange(new object[] {
-            "Work Day",
-            "holiday"});
-            this.dayType.MinimumWidth = 110;
-            this.dayType.Name = "dayType";
             // 
             // Day
             // 
@@ -203,6 +194,13 @@
             this.TotalTime.DefaultCellStyle = dataGridViewCellStyle1;
             this.TotalTime.HeaderText = "Total Time";
             this.TotalTime.Name = "TotalTime";
+            // 
+            // dayType
+            // 
+            this.dayType.HeaderText = "dayType";
+            this.dayType.MinimumWidth = 110;
+            this.dayType.Name = "dayType";
+            this.dayType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Comment
             // 
@@ -252,11 +250,11 @@
         private System.Windows.Forms.Label chooseYearTitle;
         private System.Windows.Forms.DataGridView monthGridView;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn dayType;
         private System.Windows.Forms.DataGridViewButtonColumn Day;
         private System.Windows.Forms.DataGridViewButtonColumn StartTime;
         private System.Windows.Forms.DataGridViewButtonColumn EndTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalTime;
+        private System.Windows.Forms.DataGridViewButtonColumn dayType;
         private System.Windows.Forms.DataGridViewButtonColumn Comment;
 
     }
