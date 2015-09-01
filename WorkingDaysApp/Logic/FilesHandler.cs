@@ -24,8 +24,21 @@ namespace WorkingDaysApp.Logic
 
         public static string BuildFilePath(int Year, int Month)
         {
-            return FilesHandler.GetMonthsFilesPath() + "\\" + BuildFileName(Year, Month);
+            return GetMonthsFilesPath() + "\\" + BuildFileName(Year, Month);
         }
 
+        public static List<string> GetFileLines(int Year, int Month)
+        {
+            string filePath = BuildFilePath(Year, Month);
+
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllLines(filePath, new[] { "" });
+            }
+
+            List<string> fileLines = new List<string>(File.ReadAllLines(filePath, Encoding.UTF8));
+
+            return fileLines;
+        }
     }
 }

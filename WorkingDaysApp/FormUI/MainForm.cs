@@ -72,7 +72,7 @@ namespace WorkingDaysApp.FormUI
         private void setGrid()
         {
             setListViewTitle();
-            List<string> monthData = r_WorkingDays.getFileLines(chosenYearInt, chosenMonthInt);
+            List<string> monthData = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
             monthGridView.Rows.Clear();
             foreach (var dayData in monthData)
             {

@@ -6,37 +6,14 @@ using System.Windows.Forms;
 
 namespace WorkingDaysApp.Logic
 {
-    public delegate void SetArrivalDelegate();
-
-    public delegate void ShowYears(List<string> yearsList);
-
     public class WorkingDays
     {
-//        public event SetArrivalDelegate ArrivalEvent;
-//        public event SetArrivalDelegate LeavingEvent;
-//        public event ShowYears ShowYearsEvent;
-
         private List<FileInfo> AllFiles;
 
         public void start()
         {
             AllFiles = FilesHandler.GetAllFiles();
         }
-
-        public List<string> getFileLines(int Year, int Month)
-        {
-            string filePath = FilesHandler.BuildFilePath(Year, Month);
-
-            if (!File.Exists(filePath))
-            {
-                File.WriteAllLines(filePath, new[] {""});
-            }
-
-            List<string> fileLines = new List<string>(File.ReadAllLines(filePath, Encoding.UTF8));
-
-            return fileLines;
-        }
-
 
         public List<string> GetYears()
         {
@@ -57,7 +34,7 @@ namespace WorkingDaysApp.Logic
 
         public void SetCurrentArrivalTime()
         {
-            List<string> fileLines = getFileLines(TimeHandler.CurYear(), TimeHandler.CurMonth());
+            List<string> fileLines = FilesHandler.GetFileLines(TimeHandler.CurYear(), TimeHandler.CurMonth());
             int lineToChange = -1;
             for (int i = 0; i < fileLines.Count; i++)
             {
@@ -89,8 +66,7 @@ namespace WorkingDaysApp.Logic
                     ));
             }
 
-            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
-                fileLines.ToArray());
+            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()), fileLines.ToArray());
         }
 
         private string setLineArrival(string i_FileLine)
