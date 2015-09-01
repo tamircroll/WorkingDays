@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Leaving = new System.Windows.Forms.Button();
             this.Arrival = new System.Windows.Forms.Button();
             this.listViewTitle = new System.Windows.Forms.Label();
@@ -38,13 +40,13 @@
             this.chooseYearTitle = new System.Windows.Forms.Label();
             this.chooseYear = new System.Windows.Forms.ComboBox();
             this.monthGridView = new System.Windows.Forms.DataGridView();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.dayType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Day = new System.Windows.Forms.DataGridViewButtonColumn();
             this.StartTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.EndTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TotalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Comment = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chooseDateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).BeginInit();
             this.SuspendLayout();
@@ -138,7 +140,6 @@
             this.chooseYear.Name = "chooseYear";
             this.chooseYear.Size = new System.Drawing.Size(267, 33);
             this.chooseYear.TabIndex = 5;
-            this.chooseYear.Text = "2015";
             this.chooseYear.DropDown += new System.EventHandler(this.chooseYear_DropDown);
             this.chooseYear.SelectedIndexChanged += new System.EventHandler(this.chooseYear_SelectedIndexChanged);
             // 
@@ -198,12 +199,16 @@
             // 
             // TotalTime
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle1;
             this.TotalTime.HeaderText = "Total Time";
             this.TotalTime.Name = "TotalTime";
             // 
             // Comment
             // 
             this.Comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Comment.DefaultCellStyle = dataGridViewCellStyle2;
             this.Comment.FillWeight = 58.82353F;
             this.Comment.HeaderText = "Comment";
             this.Comment.MinimumWidth = 250;
