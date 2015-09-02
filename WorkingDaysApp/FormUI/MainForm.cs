@@ -9,7 +9,7 @@ namespace WorkingDaysApp.FormUI
     public partial class MainForm : Form
     {
         private readonly WorkingDays r_WorkingDays;
-        private int chosenYearInt, chosenMonthInt;
+//        private readonly WorkingDays _workingDays;
 
         public MainForm(WorkingDays i_WorkingDays)
         {
@@ -18,6 +18,7 @@ namespace WorkingDaysApp.FormUI
             setTime();
         }
 
+
         private void setTime()
         {
             setTime(TimeHandler.CurYear(), TimeHandler.CurMonth());
@@ -25,22 +26,22 @@ namespace WorkingDaysApp.FormUI
 
         private void setTime(int year, int Month)
         {
-            chosenYearInt = year;
-            chosenMonthInt = Month;
+            r_WorkingDays.chosenYearInt = year;
+            r_WorkingDays.chosenMonthInt = Month;
             refreshView();
         }
 
         private void refreshView()
         {
-            chooseMonth.Text = chosenMonthInt.ToString();
-            chooseYear.Text = chosenYearInt.ToString();
+            chooseMonth.Text = r_WorkingDays.chosenMonthInt.ToString();
+            chooseYear.Text = r_WorkingDays.chosenYearInt.ToString();
             setListViewTitle();
             setGrid();
         }
 
         private void setListViewTitle()
         {
-            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", chosenYearInt, chosenMonthInt);
+            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", r_WorkingDays.chosenYearInt, r_WorkingDays.chosenMonthInt);
         }
 
         private void setYearsToggle()
@@ -65,19 +66,19 @@ namespace WorkingDaysApp.FormUI
 
         private void setChoosenYear(int i_Year)
         {
-            chosenYearInt = i_Year;
+            r_WorkingDays.chosenYearInt = i_Year;
             refreshView();
         }
 
         private void setChoosenMonth(int i_Month)
         {
-            chosenMonthInt = i_Month;
+            r_WorkingDays.chosenMonthInt = i_Month;
             refreshView();
         }
         
         private void setGrid()
         {
-            List<string> allDaysInMonth = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
+            List<string> allDaysInMonth = FilesHandler.GetFileLines(r_WorkingDays.chosenYearInt, r_WorkingDays.chosenMonthInt);
             
             monthGridView.Rows.Clear();
             foreach (var dayInfo in allDaysInMonth)

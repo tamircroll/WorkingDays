@@ -11,6 +11,8 @@ namespace WorkingDaysApp.Logic
         public const char ROW_SEPARATOR = '-';
         public const string WORKING_DAY = "Working day", HOLIDAY = "Holiday", HALF_DAY = "Half day", 
             ROW_FORMAT = "{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}";
+        public int chosenYearInt;
+        public int chosenMonthInt;
 
         private List<FileInfo> AllFiles;
 
