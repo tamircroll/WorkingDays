@@ -1,4 +1,7 @@
-﻿namespace WorkingDaysApp.FormUI
+﻿using System;
+using System.Drawing;
+
+namespace WorkingDaysApp.FormUI
 {
     partial class MainForm
     {
@@ -69,10 +72,10 @@
             // 
             // Arrival
             // 
-            this.Arrival.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.Arrival.BackColor = Color.PaleGoldenrod;
             this.Arrival.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Arrival.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.Arrival.Location = new System.Drawing.Point(33, 75);
+            this.Arrival.Font = new Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.Arrival.Location = new Point(33, 75);
             this.Arrival.Name = "Arrival";
             this.Arrival.Size = new System.Drawing.Size(251, 85);
             this.Arrival.TabIndex = 0;
@@ -84,10 +87,10 @@
             // listViewTitle
             // 
             this.listViewTitle.AutoSize = true;
-            this.listViewTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.listViewTitle.Location = new System.Drawing.Point(606, 29);
+            this.listViewTitle.Font = new Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.listViewTitle.Location = new Point(606, 29);
             this.listViewTitle.Name = "listViewTitle";
-            this.listViewTitle.Size = new System.Drawing.Size(91, 29);
+            this.listViewTitle.Size = new Size(91, 29);
             this.listViewTitle.TabIndex = 3;
             this.listViewTitle.Text = "Month: ";
             // 
@@ -168,7 +171,7 @@
             this.monthGridView.Location = new System.Drawing.Point(611, 75);
             this.monthGridView.Name = "monthGridView";
             this.monthGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.monthGridView.Size = new System.Drawing.Size(936, 709);
+            this.monthGridView.Size = new System.Drawing.Size(936, 719);
             this.monthGridView.TabIndex = 5;
             this.monthGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.daysGridView_CellContentClick);
             // 
@@ -176,6 +179,7 @@
             // 
             this.Day.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Day.FillWeight = 2F;
+            this.Day.Frozen = true;
             this.Day.HeaderText = "Day";
             this.Day.MinimumWidth = 40;
             this.Day.Name = "Day";
@@ -185,11 +189,14 @@
             // 
             // weekDayCol
             // 
+            this.weekDayCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.weekDayCol.FillWeight = 2F;
+            this.weekDayCol.Frozen = true;
             this.weekDayCol.HeaderText = "Week Day";
             this.weekDayCol.MinimumWidth = 80;
             this.weekDayCol.Name = "weekDayCol";
             this.weekDayCol.ReadOnly = true;
+            this.weekDayCol.Width = 80;
             // 
             // StartTime
             // 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using WorkingDaysApp.Enums;
 using WorkingDaysApp.Logic;
@@ -11,10 +12,11 @@ namespace WorkingDaysApp.FormUI
 
         public MainForm()
         {
+            WorkingDays.Instance.m_Changed += refreshView;
             InitializeComponent();
             setTimeToNow();
         }
-
+        
 
         private void setTimeToNow()
         {
@@ -23,22 +25,21 @@ namespace WorkingDaysApp.FormUI
 
         private void setTime(int year, int Month)
         {
-            WorkingDays.Instance.chosenYearInt = year;
-            WorkingDays.Instance.chosenMonthInt = Month;
-            refreshView();
+            WorkingDays.Instance.ChosenYearInt = year;
+            WorkingDays.Instance.ChosenMonthInt = Month;
         }
 
         private void refreshView()
         {
-            chooseMonth.Text = WorkingDays.Instance.chosenMonthInt.ToString();
-            chooseYear.Text = WorkingDays.Instance.chosenYearInt.ToString();
+            chooseMonth.Text = WorkingDays.Instance.ChosenMonthInt.ToString();
+            chooseYear.Text = WorkingDays.Instance.ChosenYearInt.ToString();
             setListViewTitle();
             setGrid();
         }
 
         private void setListViewTitle()
         {
-            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", WorkingDays.Instance.chosenYearInt, WorkingDays.Instance.chosenMonthInt);
+            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", WorkingDays.Instance.ChosenYearInt, WorkingDays.Instance.ChosenMonthInt);
         }
 
         private void setYearsToggle()
@@ -63,17 +64,17 @@ namespace WorkingDaysApp.FormUI
 
         private void setChoosenYear(int i_Year)
         {
-            WorkingDays.Instance.chosenYearInt = i_Year;
+            WorkingDays.Instance.ChosenYearInt = i_Year;
         }
 
         private void setChoosenMonth(int i_Month)
         {
-            WorkingDays.Instance.chosenMonthInt = i_Month;
+            WorkingDays.Instance.ChosenMonthInt = i_Month;
         }
         
         private void setGrid()
         {
-            List<string> allDaysInMonth = FilesHandler.GetFileLines(WorkingDays.Instance.chosenYearInt, WorkingDays.Instance.chosenMonthInt);
+            List<string> allDaysInMonth = FilesHandler.GetFileLines(WorkingDays.Instance.ChosenYearInt, WorkingDays.Instance.ChosenMonthInt);
             
             monthGridView.Rows.Clear();
             foreach (var dayInfo in allDaysInMonth)
@@ -109,14 +110,12 @@ namespace WorkingDaysApp.FormUI
         {
             setTimeToNow();
             WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
-            refreshView();
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
             setTimeToNow();
             WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
-            refreshView();
         }
 
         private void daysGridView_CellContentClick(object i_Sender, EventArgs e)
@@ -153,7 +152,6 @@ namespace WorkingDaysApp.FormUI
             ComboBox cb = sender as ComboBox;
             String s = cb.Text;
             setChoosenYear(int.Parse(s));
-            refreshView();
         }
 
         private void chooseMonth_SelectedIndexChanged(object i_Sender, EventArgs e)
@@ -161,14 +159,18 @@ namespace WorkingDaysApp.FormUI
             ComboBox cb = i_Sender as ComboBox;
             String s = cb.Text;
             setChoosenMonth(int.Parse(s));
-            refreshView();
         }
 
         private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int row = e.RowIndex;
-            String msg = (string)monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
-            WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
+            String msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
+            switch (e.ColumnIndex)
+            {
+                case (int)eColumn.Comment:
+                    WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
+                    break;
+            }
         }
     }
 }

@@ -6,8 +6,11 @@ using WorkingDaysApp.Enums;
 
 namespace WorkingDaysApp.Logic
 {
+    public delegate void ChangeWasMade();
+
     public class WorkingDays
     {
+        public event ChangeWasMade m_Changed;
         static readonly WorkingDays _instance = new WorkingDays();
 
         public const char ROW_SEPARATOR = '-';
@@ -22,7 +25,28 @@ namespace WorkingDaysApp.Logic
             get { return _instance; }
         }
 
-        public int chosenYearInt, chosenMonthInt;
+        private int m_ChosenYearInt = TimeHandler.CurYear(), 
+            m_ChosenMonthInt = TimeHandler.CurMonth();
+
+        public int ChosenMonthInt
+        {
+            get { return m_ChosenMonthInt; }
+            set
+            {
+                m_ChosenMonthInt = value;
+                m_Changed.Invoke();
+            }
+        }
+
+        public int ChosenYearInt 
+        {
+            get { return m_ChosenYearInt;}
+            set
+            {
+                m_ChosenYearInt = value;
+                m_Changed.Invoke();
+            }
+        }
 
         private List<FileInfo> AllFiles;
         
@@ -52,7 +76,7 @@ namespace WorkingDaysApp.Logic
         public void SetTime(int monthDay, eColumn column, string timeToSet)
         {
             int lineToEdit = monthDay - 1;
-            List<string> fileLines = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
+            List<string> fileLines = FilesHandler.GetFileLines(m_ChosenYearInt, m_ChosenMonthInt);
             string[] lineArr = fileLines[lineToEdit].Split(ROW_SEPARATOR);
 
             if (column == eColumn.Arrival && lineArr[(int)column] != "" && !toChangeData()) return;
@@ -61,15 +85,16 @@ namespace WorkingDaysApp.Logic
 
         public void setCellData(int i_RowToSet, eColumn i_ColumnToSet, string i_DataToSet)
         {
-            List<string> i_FileLines = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
-            string[] lineArr = i_FileLines[i_RowToSet].Split(ROW_SEPARATOR);
+            List<string> fileLines = FilesHandler.GetFileLines(m_ChosenYearInt, m_ChosenMonthInt);
+            string[] lineArr = fileLines[i_RowToSet].Split(ROW_SEPARATOR);
 
             lineArr[(int) i_ColumnToSet] = i_DataToSet;
             lineArr[(int) eColumn.MonthDay] = TimeHandler.CurDay().ToString();
-            i_FileLines[i_RowToSet] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3],
+            fileLines[i_RowToSet] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3],
                 lineArr[4], lineArr[5],lineArr[6], ROW_SEPARATOR);
             File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
-                i_FileLines.ToArray());
+                fileLines.ToArray());
+            if (m_Changed != null) m_Changed.Invoke();
         }
 
         private static bool toChangeData()
