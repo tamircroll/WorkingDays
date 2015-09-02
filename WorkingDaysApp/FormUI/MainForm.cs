@@ -126,6 +126,20 @@ namespace WorkingDaysApp.FormUI
 
         private void daysGridView_CellContentClick(object i_Sender, EventArgs e)
         {
+            var a = e as DataGridViewCellEventArgs;
+            switch (a.ColumnIndex)
+            {
+                case (int)eColumn.Day:
+                    return;
+                case (int)eColumn.Arrival:
+                    return;
+                case (int)eColumn.Leaving:
+                    return;
+                case (int)eColumn.DayType:
+                    return;
+                case (int)eColumn.Comment:
+                    return;
+            }
         }
 
 
