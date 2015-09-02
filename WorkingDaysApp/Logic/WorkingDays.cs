@@ -86,12 +86,11 @@ namespace WorkingDaysApp.Logic
         public void setCellData(int i_RowToSet, eColumn i_ColumnToSet, string i_DataToSet)
         {
             List<string> fileLines = FilesHandler.GetFileLines(m_ChosenYearInt, m_ChosenMonthInt);
-            string[] lineArr = fileLines[i_RowToSet].Split(ROW_SEPARATOR);
-
-            lineArr[(int) i_ColumnToSet] = i_DataToSet;
-            lineArr[(int) eColumn.MonthDay] = TimeHandler.CurDay().ToString();
-            fileLines[i_RowToSet] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3],
-                lineArr[4], lineArr[5],lineArr[6], ROW_SEPARATOR);
+            string[] rowToSetArr = fileLines[i_RowToSet].Split(ROW_SEPARATOR);
+            
+            rowToSetArr[(int) i_ColumnToSet] = i_DataToSet;
+            fileLines[i_RowToSet] = String.Format(ROW_FORMAT, rowToSetArr[0], rowToSetArr[1], rowToSetArr[2], rowToSetArr[3],
+                rowToSetArr[4], rowToSetArr[5],rowToSetArr[6], ROW_SEPARATOR);
             File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
                 fileLines.ToArray());
             if (m_Changed != null) m_Changed.Invoke();

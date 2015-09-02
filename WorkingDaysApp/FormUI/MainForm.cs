@@ -118,23 +118,6 @@ namespace WorkingDaysApp.FormUI
             WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
         }
 
-        private void daysGridView_CellContentClick(object i_Sender, EventArgs e)
-        {
-            var a = e as DataGridViewCellEventArgs;
-            switch (a.ColumnIndex)
-            {
-                case (int)eColumn.MonthDay:
-                    return;
-                case (int)eColumn.Arrival:
-                    return;
-                case (int)eColumn.Leaving:
-                    return;
-                case (int)eColumn.DayType:
-                    return;
-                case (int)eColumn.Comment:
-                    return;
-            }
-        }
 
 
         private void chooseYear_DropDown(object i_Sender, EventArgs e)
@@ -165,9 +148,21 @@ namespace WorkingDaysApp.FormUI
         {
             int row = e.RowIndex;
             String msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
+            
             switch (e.ColumnIndex)
             {
+                case (int)eColumn.MonthDay:
+                    return;
+                case (int)eColumn.Arrival:
+                    return;
+                case (int)eColumn.Leaving:
+                    return;
+                case (int)eColumn.DayType:
+                    return;
                 case (int)eColumn.Comment:
+                    WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
+                    break;
+                case (int)eColumn.SetComment:
                     WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
                     break;
             }

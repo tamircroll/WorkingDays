@@ -1,9 +1,9 @@
 1-Tuesday----Working day-
 2-Wednesday----Working day-
-3-Thursday----Working day-
+3-Thursday-00:30:09-00:30:13--Working day-
 4-Friday----Holiday-
-2-Saturday----Holiday-gdfgdfgfd
-6-Sunday----Working day-
+5-Saturday----Holiday-
+6-Sunday----Working day-jghjghjghj
 7-Monday----Working day-
 8-Tuesday----Working day-
 9-Wednesday----Working day-
