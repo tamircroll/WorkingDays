@@ -45,7 +45,7 @@ namespace WorkingDaysApp.Logic
         {
             List<string> fileLines = FilesHandler.GetFileLines(TimeHandler.CurYear(), TimeHandler.CurMonth());
             int? rowToChange = null;
-            for (int i = 0; i < fileLines.Count; i++)
+            for (int i = 0; i < fileLines.Count; i++)  //TODO: first, to find the currect line - rowInt = findCurRow() -> setCurTime(eColumn) -> addDuration()
             {
                 string[] lineArr = fileLines[i].Split(ROW_SEPARATOR);
 
