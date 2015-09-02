@@ -10,6 +10,11 @@ namespace WorkingDaysApp.Logic
             return dt.Year;
         }
 
+        public static int NextYear()
+        {
+            return CurYear() + 1;
+        }
+
         public static int CurMonth()
         {
             DateTime dt = DateTime.Now;

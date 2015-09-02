@@ -9,10 +9,8 @@ namespace WorkingDaysApp.Logic
     public class WorkingDays
     {
         public const char ROW_SEPARATOR = '-';
-        public const string WORKING_DAY = "Working day";
-        public const string HOLIDAY = "Holiday";
-        public const string HALF_DAY = "Half day";
-        public const string ROW_FORMAT = "{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}";
+        public const string WORKING_DAY = "Working day", HOLIDAY = "Holiday", HALF_DAY = "Half day", 
+            ROW_FORMAT = "{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}";
 
         private List<FileInfo> AllFiles;
 
@@ -34,6 +32,7 @@ namespace WorkingDaysApp.Logic
                     years.Add(curYear);
                 }
             }
+            if(!years.Contains(TimeHandler.NextYear().ToString())) years.Add(TimeHandler.NextYear().ToString());
 
             return years;
         }
@@ -43,7 +42,9 @@ namespace WorkingDaysApp.Logic
             int lineToChange = day - 1;
             List<string> fileLines = FilesHandler.GetFileLines(year, month);
             string[] lineArr = fileLines[lineToChange].Split(ROW_SEPARATOR);
+
             if (column == eColumn.Arrival && lineArr[lineToChange] != "" && !toChangeData()) return;
+
             setRowClockTime(fileLines, lineToChange, column, timeToSet);
             File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()), fileLines.ToArray());
         }
