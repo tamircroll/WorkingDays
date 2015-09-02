@@ -38,39 +38,17 @@ namespace WorkingDaysApp.Logic
             return years;
         }
 
-        public void SetTime(int year, int month, eColumn dayInMonth, string timeToSet)
+        public void SetTime(int year, int month, int day, eColumn column, string timeToSet)
         {
+            int lineToChange = day - 1;
             List<string> fileLines = FilesHandler.GetFileLines(year, month);
-            int? rowToChange = null;
-            for (int i = 0; i < fileLines.Count; i++)  //TODO: first, to find the currect line - rowInt = findCurRow() -> setCurTime(eColumn) -> addDuration()
-            {
-                string[] lineArr = fileLines[i].Split(ROW_SEPARATOR);
-
-                if (lineArr.Length < 2) continue;
-
-                if (int.Parse(lineArr[(int)eColumn.Day]) == TimeHandler.CurDay())
-                {
-                    if (dayInMonth == eColumn.Arrival && !toChangeData()) return;
-
-                    rowToChange = i;
-                }
-            }
-
-            if (rowToChange != null)
-            {
-                setRowForNow(fileLines, (int)rowToChange, dayInMonth, timeToSet);
-            }
-            else
-            {
-                fileLines.Add(string.Format("{0}{0}{0}{0}{0}", ROW_SEPARATOR));
-                setRowForNow(fileLines, fileLines.Count - 1, dayInMonth, timeToSet);
-            }
-
-            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
-                fileLines.ToArray());
+            string[] lineArr = fileLines[lineToChange].Split(ROW_SEPARATOR);
+            if (column == eColumn.Arrival && lineArr[lineToChange] != "" && !toChangeData()) return;
+            setRowClockTime(fileLines, lineToChange, column, timeToSet);
+            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()), fileLines.ToArray());
         }
         
-        private void setRowForNow(List<string> i_FileLines, int i_LineToChange, eColumn i_Column, string i_TimeToSet)
+        private void setRowClockTime(List<string> i_FileLines, int i_LineToChange, eColumn i_Column, string i_TimeToSet)
         {
             string[] lineArr = i_FileLines[i_LineToChange].Split(ROW_SEPARATOR);
             lineArr[(int)i_Column] = i_TimeToSet;

@@ -15,22 +15,27 @@ namespace WorkingDaysApp.FormUI
         {
             r_WorkingDays = i_WorkingDays;
             InitializeComponent();
-            setTimeToNow();
-            initForm();
+            setTime();
         }
 
-        private void setTimeToNow()
+        private void setTime()
         {
-            chosenYearInt = TimeHandler.CurYear();
-            chosenMonthInt = TimeHandler.CurMonth();
+            setTime(TimeHandler.CurYear(), TimeHandler.CurMonth());
         }
 
-        private void initForm()
+        private void setTime(int year, int Month)
         {
-            setForm();
+            chosenYearInt = year;
+            chosenMonthInt = Month;
+            refreshView();
+        }
+
+        private void refreshView()
+        {
             chooseMonth.Text = chosenMonthInt.ToString();
             chooseYear.Text = chosenYearInt.ToString();
             setListViewTitle();
+            setGrid();
         }
 
         private void setListViewTitle()
@@ -61,21 +66,15 @@ namespace WorkingDaysApp.FormUI
         private void setChoosenYear(int i_Year)
         {
             chosenYearInt = i_Year;
-            setForm();
+            refreshView();
         }
 
         private void setChoosenMonth(int i_Month)
         {
             chosenMonthInt = i_Month;
-            setForm();
+            refreshView();
         }
-
-        private void setForm()
-        {
-            setListViewTitle();
-            setGrid();
-        }
-
+        
         private void setGrid()
         {
             List<string> allDaysInMonth = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
@@ -112,16 +111,16 @@ namespace WorkingDaysApp.FormUI
         
         private void Leaving_Click(object sender, EventArgs e)
         {
-            setTimeToNow();
-            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), eColumn.Leaving, TimeHandler.getCurrClockTime());
-            setForm();
+            setTime();
+            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), TimeHandler.CurDay(),eColumn.Leaving, TimeHandler.getCurrClockTime());
+            refreshView();
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
-            setTimeToNow();
-            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), eColumn.Arrival, TimeHandler.getCurrClockTime());
-            setForm();
+            setTime();
+            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
+            refreshView();
         }
 
         private void daysGridView_CellContentClick(object i_Sender, EventArgs e)
