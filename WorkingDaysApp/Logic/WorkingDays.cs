@@ -38,9 +38,9 @@ namespace WorkingDaysApp.Logic
             return years;
         }
 
-        public void SetCurrentTime(eColumn columnToSetForNow)
+        public void SetTime(int year, int month, eColumn dayInMonth, string timeToSet)
         {
-            List<string> fileLines = FilesHandler.GetFileLines(TimeHandler.CurYear(), TimeHandler.CurMonth());
+            List<string> fileLines = FilesHandler.GetFileLines(year, month);
             int? rowToChange = null;
             for (int i = 0; i < fileLines.Count; i++)  //TODO: first, to find the currect line - rowInt = findCurRow() -> setCurTime(eColumn) -> addDuration()
             {
@@ -48,9 +48,9 @@ namespace WorkingDaysApp.Logic
 
                 if (lineArr.Length < 2) continue;
 
-                if (int.Parse(lineArr[0]) == TimeHandler.CurDay())
+                if (int.Parse(lineArr[(int)eColumn.Day]) == TimeHandler.CurDay())
                 {
-                    if (columnToSetForNow == eColumn.Arrival && !toChangeData()) return;
+                    if (dayInMonth == eColumn.Arrival && !toChangeData()) return;
 
                     rowToChange = i;
                 }
@@ -58,22 +58,22 @@ namespace WorkingDaysApp.Logic
 
             if (rowToChange != null)
             {
-                setRowForNow(fileLines, (int)rowToChange, columnToSetForNow);
+                setRowForNow(fileLines, (int)rowToChange, dayInMonth, timeToSet);
             }
             else
             {
                 fileLines.Add(string.Format("{0}{0}{0}{0}{0}", ROW_SEPARATOR));
-                setRowForNow(fileLines, fileLines.Count - 1, columnToSetForNow);
+                setRowForNow(fileLines, fileLines.Count - 1, dayInMonth, timeToSet);
             }
 
             File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
                 fileLines.ToArray());
         }
         
-        private void setRowForNow(List<string> i_FileLines, int i_LineToChange, eColumn i_Column)
+        private void setRowForNow(List<string> i_FileLines, int i_LineToChange, eColumn i_Column, string i_TimeToSet)
         {
             string[] lineArr = i_FileLines[i_LineToChange].Split(ROW_SEPARATOR);
-            lineArr[(int)i_Column] = TimeHandler.getCurrClockTime();
+            lineArr[(int)i_Column] = i_TimeToSet;
             lineArr[(int) eColumn.Day] = TimeHandler.CurDay().ToString();
             i_FileLines[i_LineToChange] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3], lineArr[4], lineArr[5], ROW_SEPARATOR);
         }

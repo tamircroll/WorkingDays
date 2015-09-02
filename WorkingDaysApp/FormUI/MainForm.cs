@@ -113,14 +113,14 @@ namespace WorkingDaysApp.FormUI
         private void Leaving_Click(object sender, EventArgs e)
         {
             setTimeToNow();
-            r_WorkingDays.SetCurrentTime(eColumn.Leaving);
+            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), eColumn.Leaving, TimeHandler.getCurrClockTime());
             setForm();
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
             setTimeToNow();
-            r_WorkingDays.SetCurrentTime(eColumn.Arrival);
+            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), eColumn.Arrival, TimeHandler.getCurrClockTime());
             setForm();
         }
 
