@@ -166,7 +166,9 @@ namespace WorkingDaysApp.FormUI
 
         private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-//            WorkingDays.Instance.setComment("msg");
+            int row = e.RowIndex;
+            String msg = (string)monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
+            WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
         }
     }
 }

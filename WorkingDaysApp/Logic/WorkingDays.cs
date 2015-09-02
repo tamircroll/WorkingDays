@@ -56,26 +56,20 @@ namespace WorkingDaysApp.Logic
             string[] lineArr = fileLines[lineToEdit].Split(ROW_SEPARATOR);
 
             if (column == eColumn.Arrival && lineArr[(int)column] != "" && !toChangeData()) return;
-
-            setCellData(fileLines, lineToEdit, column, timeToSet);
-            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
-                fileLines.ToArray());
+            setCellData(lineToEdit, column, timeToSet);
         }
 
-        private void setCellData(List<string> i_FileLines, int i_RowToSet, eColumn i_ColumnToSet, string i_DataToSet)
+        public void setCellData(int i_RowToSet, eColumn i_ColumnToSet, string i_DataToSet)
         {
+            List<string> i_FileLines = FilesHandler.GetFileLines(chosenYearInt, chosenMonthInt);
             string[] lineArr = i_FileLines[i_RowToSet].Split(ROW_SEPARATOR);
+
             lineArr[(int) i_ColumnToSet] = i_DataToSet;
             lineArr[(int) eColumn.MonthDay] = TimeHandler.CurDay().ToString();
             i_FileLines[i_RowToSet] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3],
                 lineArr[4], lineArr[5],lineArr[6], ROW_SEPARATOR);
-        }
-
-
-
-        public void setComment(List<string> i_FileLines, int i_RowToSet, eColumn i_ColumnToSet, string i_Msg)
-        {
-            
+            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
+                i_FileLines.ToArray());
         }
 
         private static bool toChangeData()
