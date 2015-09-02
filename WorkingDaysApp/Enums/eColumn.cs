@@ -2,11 +2,12 @@
 {
     public enum eColumn : byte
     {
-        Day = 0,
-        Arrival = 1,
-        Leaving = 2,
-        TotalHours = 3,
-        DayType = 4,
-        Comment = 5
+        MonthDay = 0,
+        WeekDay = 1,
+        Arrival = 2,
+        Leaving = 3,
+        TotalHours = 4,
+        DayType = 5,
+        Comment = 6
     }
 }

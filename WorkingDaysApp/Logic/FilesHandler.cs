@@ -46,10 +46,25 @@ namespace WorkingDaysApp.Logic
             List<string> newFile = new List<string>();
             for (int i = 1; i <= TimeHandler.DaysInMonth(Year, Month); i++)
             {
-                newFile.Add(string.Format(WorkingDays.ROW_FORMAT, i,"","","","","", WorkingDays.ROW_SEPARATOR));
+                newFile.Add(string.Format(
+                    WorkingDays.ROW_FORMAT,
+                    i,
+                    TimeHandler.getWeekDayStr(Year, Month, i),
+                    "", 
+                    "", 
+                    "",
+                    getDayType(TimeHandler.getWeekDayInt(Year, Month, i)),
+                    "",
+                    WorkingDays.ROW_SEPARATOR));
             }
 
             return newFile.ToArray();
+        }
+
+        private static string getDayType(int day)
+        {
+            if (day == 5 || day == 6) return WorkingDays.HOLIDAY;
+            return WorkingDays.WORKING_DAY;
         }
     }
 }

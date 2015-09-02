@@ -9,7 +9,7 @@ namespace WorkingDaysApp
         {
             var wd = new WorkingDays();
             wd.start();
-            new MainForm(wd).ShowDialog();
+            new MainForm().ShowDialog();
         }
     }
 }

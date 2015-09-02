@@ -63,7 +63,19 @@ namespace WorkingDaysApp.Logic
                 return time.ToString();
             }
 
-            return "_";
+            return "";
+        }
+
+        public static int getWeekDayInt(int year, int month, int monthDay)
+        {
+            DateTime dateValue = new DateTime(year, month, monthDay);
+            return (int)dateValue.DayOfWeek;   
+        }
+
+        public static string getWeekDayStr(int year, int month, int monthDay)
+        {
+            DateTime dateValue = new DateTime(year, month, monthDay);
+            return dateValue.DayOfWeek.ToString();
         }
     }
 }

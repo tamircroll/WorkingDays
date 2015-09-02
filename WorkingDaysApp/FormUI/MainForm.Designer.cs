@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Leaving = new System.Windows.Forms.Button();
             this.Arrival = new System.Windows.Forms.Button();
             this.listViewTitle = new System.Windows.Forms.Label();
@@ -42,11 +43,13 @@
             this.monthGridView = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.Day = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.weekDayCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StartTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.EndTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TotalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dayType = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Comment = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sendComment = new System.Windows.Forms.DataGridViewButtonColumn();
             this.chooseDateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).BeginInit();
             this.SuspendLayout();
@@ -146,37 +149,51 @@
             // 
             // monthGridView
             // 
+            this.monthGridView.AllowUserToAddRows = false;
             this.monthGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.monthGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.monthGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.monthGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.monthGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Day,
+            this.weekDayCol,
             this.StartTime,
             this.EndTime,
             this.TotalTime,
             this.dayType,
-            this.Comment});
-            this.monthGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.Comment,
+            this.sendComment});
             this.monthGridView.EnableHeadersVisualStyles = false;
             this.monthGridView.GridColor = System.Drawing.Color.DimGray;
             this.monthGridView.Location = new System.Drawing.Point(611, 75);
             this.monthGridView.Name = "monthGridView";
             this.monthGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.monthGridView.Size = new System.Drawing.Size(859, 542);
+            this.monthGridView.Size = new System.Drawing.Size(936, 709);
             this.monthGridView.TabIndex = 5;
             this.monthGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.daysGridView_CellContentClick);
             // 
             // Day
             // 
-            this.Day.FillWeight = 141.1765F;
+            this.Day.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Day.FillWeight = 2F;
             this.Day.HeaderText = "Day";
-            this.Day.MinimumWidth = 20;
+            this.Day.MinimumWidth = 40;
             this.Day.Name = "Day";
+            this.Day.ReadOnly = true;
             this.Day.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Day.Width = 40;
+            // 
+            // weekDayCol
+            // 
+            this.weekDayCol.FillWeight = 2F;
+            this.weekDayCol.HeaderText = "Week Day";
+            this.weekDayCol.MinimumWidth = 80;
+            this.weekDayCol.Name = "weekDayCol";
+            this.weekDayCol.ReadOnly = true;
             // 
             // StartTime
             // 
+            this.StartTime.FillWeight = 2F;
             this.StartTime.HeaderText = "Start Time";
             this.StartTime.MinimumWidth = 80;
             this.StartTime.Name = "StartTime";
@@ -185,6 +202,7 @@
             // 
             // EndTime
             // 
+            this.EndTime.FillWeight = 2F;
             this.EndTime.HeaderText = "End Time";
             this.EndTime.MinimumWidth = 80;
             this.EndTime.Name = "EndTime";
@@ -195,34 +213,48 @@
             // 
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.TotalTime.DefaultCellStyle = dataGridViewCellStyle1;
+            this.TotalTime.FillWeight = 2F;
             this.TotalTime.HeaderText = "Total Time";
+            this.TotalTime.MinimumWidth = 80;
             this.TotalTime.Name = "TotalTime";
+            this.TotalTime.ReadOnly = true;
             // 
             // dayType
             // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dayType.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dayType.FillWeight = 1F;
             this.dayType.HeaderText = "dayType";
-            this.dayType.MinimumWidth = 110;
+            this.dayType.MinimumWidth = 80;
             this.dayType.Name = "dayType";
             this.dayType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Comment
             // 
             this.Comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Comment.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Comment.FillWeight = 58.82353F;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Comment.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Comment.FillWeight = 10F;
             this.Comment.HeaderText = "Comment";
-            this.Comment.MinimumWidth = 250;
+            this.Comment.MinimumWidth = 300;
             this.Comment.Name = "Comment";
             this.Comment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Comment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // sendComment
+            // 
+            this.sendComment.DividerWidth = 2;
+            this.sendComment.FillWeight = 3F;
+            this.sendComment.HeaderText = "set";
+            this.sendComment.Name = "sendComment";
+            this.sendComment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.sendComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1482, 723);
+            this.ClientSize = new System.Drawing.Size(1559, 967);
             this.Controls.Add(this.monthGridView);
             this.Controls.Add(this.chooseDateGroupBox);
             this.Controls.Add(this.listViewTitle);
@@ -231,7 +263,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "SetCommentForm";
             this.chooseDateGroupBox.ResumeLayout(false);
             this.chooseDateGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).EndInit();
@@ -253,11 +285,13 @@
         private System.Windows.Forms.DataGridView monthGridView;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Day;
+        private System.Windows.Forms.DataGridViewTextBoxColumn weekDayCol;
         private System.Windows.Forms.DataGridViewButtonColumn StartTime;
         private System.Windows.Forms.DataGridViewButtonColumn EndTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalTime;
         private System.Windows.Forms.DataGridViewButtonColumn dayType;
-        private System.Windows.Forms.DataGridViewButtonColumn Comment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
+        private System.Windows.Forms.DataGridViewButtonColumn sendComment;
 
     }
 }

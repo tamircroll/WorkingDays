@@ -8,45 +8,42 @@ namespace WorkingDaysApp.FormUI
 {
     public partial class MainForm : Form
     {
-        private readonly WorkingDays r_WorkingDays;
-//        private readonly WorkingDays _workingDays;
 
-        public MainForm(WorkingDays i_WorkingDays)
+        public MainForm()
         {
-            r_WorkingDays = i_WorkingDays;
             InitializeComponent();
-            setTime();
+            setTimeToNow();
         }
 
 
-        private void setTime()
+        private void setTimeToNow()
         {
             setTime(TimeHandler.CurYear(), TimeHandler.CurMonth());
         }
 
         private void setTime(int year, int Month)
         {
-            r_WorkingDays.chosenYearInt = year;
-            r_WorkingDays.chosenMonthInt = Month;
+            WorkingDays.Instance.chosenYearInt = year;
+            WorkingDays.Instance.chosenMonthInt = Month;
             refreshView();
         }
 
         private void refreshView()
         {
-            chooseMonth.Text = r_WorkingDays.chosenMonthInt.ToString();
-            chooseYear.Text = r_WorkingDays.chosenYearInt.ToString();
+            chooseMonth.Text = WorkingDays.Instance.chosenMonthInt.ToString();
+            chooseYear.Text = WorkingDays.Instance.chosenYearInt.ToString();
             setListViewTitle();
             setGrid();
         }
 
         private void setListViewTitle()
         {
-            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", r_WorkingDays.chosenYearInt, r_WorkingDays.chosenMonthInt);
+            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", WorkingDays.Instance.chosenYearInt, WorkingDays.Instance.chosenMonthInt);
         }
 
         private void setYearsToggle()
         {
-            List<string> years = r_WorkingDays.GetYears();
+            List<string> years = WorkingDays.Instance.GetYears();
 
             chooseYear.Items.Clear();
             foreach (var hour in years)
@@ -66,19 +63,17 @@ namespace WorkingDaysApp.FormUI
 
         private void setChoosenYear(int i_Year)
         {
-            r_WorkingDays.chosenYearInt = i_Year;
-            refreshView();
+            WorkingDays.Instance.chosenYearInt = i_Year;
         }
 
         private void setChoosenMonth(int i_Month)
         {
-            r_WorkingDays.chosenMonthInt = i_Month;
-            refreshView();
+            WorkingDays.Instance.chosenMonthInt = i_Month;
         }
         
         private void setGrid()
         {
-            List<string> allDaysInMonth = FilesHandler.GetFileLines(r_WorkingDays.chosenYearInt, r_WorkingDays.chosenMonthInt);
+            List<string> allDaysInMonth = FilesHandler.GetFileLines(WorkingDays.Instance.chosenYearInt, WorkingDays.Instance.chosenMonthInt);
             
             monthGridView.Rows.Clear();
             foreach (var dayInfo in allDaysInMonth)
@@ -112,15 +107,15 @@ namespace WorkingDaysApp.FormUI
         
         private void Leaving_Click(object sender, EventArgs e)
         {
-            setTime();
-            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), TimeHandler.CurDay(),eColumn.Leaving, TimeHandler.getCurrClockTime());
+            setTimeToNow();
+            WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
             refreshView();
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
-            setTime();
-            r_WorkingDays.SetTime(TimeHandler.CurYear(), TimeHandler.CurMonth(), TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
+            setTimeToNow();
+            WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
             refreshView();
         }
 
@@ -129,7 +124,7 @@ namespace WorkingDaysApp.FormUI
             var a = e as DataGridViewCellEventArgs;
             switch (a.ColumnIndex)
             {
-                case (int)eColumn.Day:
+                case (int)eColumn.MonthDay:
                     return;
                 case (int)eColumn.Arrival:
                     return;
@@ -158,6 +153,7 @@ namespace WorkingDaysApp.FormUI
             ComboBox cb = sender as ComboBox;
             String s = cb.Text;
             setChoosenYear(int.Parse(s));
+            refreshView();
         }
 
         private void chooseMonth_SelectedIndexChanged(object i_Sender, EventArgs e)
@@ -165,6 +161,12 @@ namespace WorkingDaysApp.FormUI
             ComboBox cb = i_Sender as ComboBox;
             String s = cb.Text;
             setChoosenMonth(int.Parse(s));
+            refreshView();
+        }
+
+        private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+//            WorkingDays.Instance.setComment("msg");
         }
     }
 }
