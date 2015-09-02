@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -33,12 +32,24 @@ namespace WorkingDaysApp.Logic
 
             if (!File.Exists(filePath))
             {
-                File.WriteAllLines(filePath, new[] { "" });
+                string[] newFile = createNewMonthArray(Year, Month);
+                File.WriteAllLines(filePath, newFile);
             }
 
             List<string> fileLines = new List<string>(File.ReadAllLines(filePath, Encoding.UTF8));
 
             return fileLines;
+        }
+
+        private static string[] createNewMonthArray(int Year, int Month)
+        {
+            List<string> newFile = new List<string>();
+            for (int i = 1; i <= TimeHandler.DaysInMonth(Year, Month); i++)
+            {
+                newFile.Add(string.Format(WorkingDays.ROW_FORMAT, i,"","","","","", WorkingDays.ROW_SEPARATOR));
+            }
+
+            return newFile.ToArray();
         }
     }
 }

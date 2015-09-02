@@ -8,14 +8,11 @@ namespace WorkingDaysApp.Logic
 {
     public class WorkingDays
     {
-        private const char ROW_SEPARATOR = '-';
-        private const string WORKING_DAY = "Working day";
-        private const string HOLIDAY = "Holiday";
-        private const string HALF_DAY = "Half day";
-
-        private static readonly string ROW_FORMAT = 
-            string.Format("{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}",
-            "{0}", "{1}", "{2}", "{3}", "{4}","{5}", ROW_SEPARATOR);
+        public const char ROW_SEPARATOR = '-';
+        public const string WORKING_DAY = "Working day";
+        public const string HOLIDAY = "Holiday";
+        public const string HALF_DAY = "Half day";
+        public const string ROW_FORMAT = "{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}";
 
         private List<FileInfo> AllFiles;
 
@@ -78,7 +75,7 @@ namespace WorkingDaysApp.Logic
             string[] lineArr = i_FileLines[i_LineToChange].Split(ROW_SEPARATOR);
             lineArr[(int)i_Column] = TimeHandler.getCurrClockTime();
             lineArr[(int) eColumn.Day] = TimeHandler.CurDay().ToString();
-            i_FileLines[i_LineToChange] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3], lineArr[4], lineArr[5]);
+            i_FileLines[i_LineToChange] = String.Format(ROW_FORMAT, lineArr[0], lineArr[1], lineArr[2], lineArr[3], lineArr[4], lineArr[5], ROW_SEPARATOR);
         }
 
         private static bool toChangeData()
