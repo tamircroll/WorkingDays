@@ -55,23 +55,7 @@ namespace WorkingDaysApp.Logic
             AllFiles = FilesHandler.GetAllFiles();
         }
 
-        public List<string> GetYears()
-        {
-            List<string> years = new List<string>();
-            AllFiles = FilesHandler.GetAllFiles();
 
-            foreach (var file in AllFiles)
-            {
-                string curYear = file.Name.Split(ROW_SEPARATOR)[0];
-                if (!years.Contains(curYear))
-                {
-                    years.Add(curYear);
-                }
-            }
-            if (!years.Contains(TimeHandler.NextYear().ToString())) years.Add(TimeHandler.NextYear().ToString());
-
-            return years;
-        }
         
         public void SetTime(int monthDay, eColumn column, string timeToSet)
         {

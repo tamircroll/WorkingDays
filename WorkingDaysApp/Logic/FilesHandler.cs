@@ -66,5 +66,23 @@ namespace WorkingDaysApp.Logic
             if (day == 5 || day == 6) return WorkingDays.HOLIDAY;
             return WorkingDays.WORKING_DAY;
         }
+
+        public static List<string> GetYears()
+        {
+            List<string> years = new List<string>();
+            List<FileInfo> AllFiles = FilesHandler.GetAllFiles();
+
+            foreach (var file in AllFiles)
+            {
+                string curYear = file.Name.Split(WorkingDays.ROW_SEPARATOR)[0];
+                if (!years.Contains(curYear))
+                {
+                    years.Add(curYear);
+                }
+            }
+            if (!years.Contains(TimeHandler.NextYear().ToString())) years.Add(TimeHandler.NextYear().ToString());
+
+            return years;
+        }
     }
 }
