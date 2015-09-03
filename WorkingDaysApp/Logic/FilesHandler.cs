@@ -8,7 +8,9 @@ namespace WorkingDaysApp.Logic
     {
         public static string GetMonthsFilesPath()
         {
-            return Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory())) + "\\monthFiles";
+            var path = Path.GetDirectoryName(Directory.GetCurrentDirectory() + "\\monthFiles");
+            Directory.CreateDirectory(path);
+            return Path.GetDirectoryName(path);
         }
 
         public static List<FileInfo> GetAllFiles()
