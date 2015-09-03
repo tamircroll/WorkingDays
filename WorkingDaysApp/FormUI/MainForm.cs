@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using WorkingDaysApp.Enums;
 using WorkingDaysApp.Logic;
@@ -44,7 +43,7 @@ namespace WorkingDaysApp.FormUI
 
         private void setYearsToggle()
         {
-            List<string> years = WorkingDays.Instance.GetYears();
+            List<string> years = FilesHandler.GetYears();
 
             chooseYear.Items.Clear();
             foreach (var hour in years)
