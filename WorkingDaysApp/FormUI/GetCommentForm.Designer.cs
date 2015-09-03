@@ -1,6 +1,6 @@
 ﻿namespace WorkingDaysApp.FormUI
 {
-    partial class GetDayTypeWindowForm
+    partial class GetCommentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -38,20 +38,20 @@
             this.DayTypeBox.BackColor = System.Drawing.SystemColors.Window;
             this.DayTypeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.DayTypeBox.FormattingEnabled = true;
-            this.DayTypeBox.Location = new System.Drawing.Point(100, 80);
+            this.DayTypeBox.Location = new System.Drawing.Point(123, 74);
             this.DayTypeBox.Name = "DayTypeBox";
             this.DayTypeBox.Size = new System.Drawing.Size(206, 33);
-            this.DayTypeBox.TabIndex = 8;
+            this.DayTypeBox.TabIndex = 11;
             // 
             // Cancel
             // 
             this.Cancel.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.Cancel.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel.Location = new System.Drawing.Point(237, 185);
+            this.Cancel.Location = new System.Drawing.Point(260, 179);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(141, 49);
-            this.Cancel.TabIndex = 6;
+            this.Cancel.TabIndex = 10;
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = false;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
@@ -59,26 +59,24 @@
             // OK
             // 
             this.OK.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.OK.Location = new System.Drawing.Point(28, 185);
+            this.OK.Location = new System.Drawing.Point(51, 179);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(141, 49);
-            this.OK.TabIndex = 5;
+            this.OK.TabIndex = 9;
             this.OK.Text = "Accept";
             this.OK.UseVisualStyleBackColor = false;
             this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
-            // GetDayTypeWindowForm
+            // GetCommentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 297);
+            this.ClientSize = new System.Drawing.Size(452, 302);
             this.Controls.Add(this.DayTypeBox);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.OK);
-            this.Name = "GetDayTypeWindowForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "GetDayTypeWindowForm";
-            this.Load += new System.EventHandler(this.GetDayTypeWindowForm_Load);
+            this.Name = "GetCommentForm";
+            this.Text = "GetCommentForm";
             this.ResumeLayout(false);
 
         }

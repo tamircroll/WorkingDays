@@ -70,16 +70,5 @@ namespace WorkingDaysApp.FormUI
             data = null;
             Close();
         }
-
-        private void HoursBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setData();
-        }
-
-        private void MinutesBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setData();
-
-        }
     }
 }

@@ -3,7 +3,7 @@
     public enum eDayType
     {
         WorkDay = 0,
-        DayOff = 0,
-        HalfDay = 0
+        DayOff = 1,
+        HalfDay = 2
     }
 }

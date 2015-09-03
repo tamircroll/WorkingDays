@@ -174,6 +174,7 @@ namespace WorkingDaysApp.FormUI
             this.monthGridView.Size = new System.Drawing.Size(936, 719);
             this.monthGridView.TabIndex = 5;
             this.monthGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.daysGridView_CellContentClick);
+            this.monthGridView.RowHeadersVisible = false;
             // 
             // Day
             // 

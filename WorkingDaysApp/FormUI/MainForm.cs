@@ -150,7 +150,6 @@ namespace WorkingDaysApp.FormUI
 
             switch ((eColumn)e.ColumnIndex)
             {
-
                 case eColumn.Arrival:
                 case eColumn.Leaving:
                     msg = new GetTimeDataForm().ShowDialog();
@@ -164,6 +163,9 @@ namespace WorkingDaysApp.FormUI
                 case eColumn.MonthDay:
                     return;
                 case eColumn.DayType:
+                    string chosneDayType = (string)monthGridView.Rows[row].Cells[(int)eColumn.DayType].Value;
+                    msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
+                    if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.DayType, msg);
                     return;
             }
         }

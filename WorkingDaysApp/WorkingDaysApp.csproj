@@ -43,6 +43,12 @@
   <ItemGroup>
     <Compile Include="Enums\eColumn.cs" />
     <Compile Include="Enums\eDayType.cs" />
+    <Compile Include="FormUI\GetDayTypeWindowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUI\GetDayTypeWindowForm.Designer.cs">
+      <DependentUpon>GetDayTypeWindowForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormUI\GetTimeDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,11 +61,15 @@
     <Compile Include="FormUI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\DayTypeFactory.cs" />
     <Compile Include="Logic\FilesHandler.cs" />
     <Compile Include="Logic\TimeHandler.cs" />
     <Compile Include="Logic\WorkingDays.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormUI\GetDayTypeWindowForm.resx">
+      <DependentUpon>GetDayTypeWindowForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormUI\GetTimeDataForm.resx">
       <DependentUpon>GetTimeDataForm.cs</DependentUpon>
     </EmbeddedResource>

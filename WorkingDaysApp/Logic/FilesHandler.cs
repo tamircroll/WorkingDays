@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using WorkingDaysApp.Enums;
 
 namespace WorkingDaysApp.Logic
 {
@@ -48,12 +49,14 @@ namespace WorkingDaysApp.Logic
             List<string> newFile = new List<string>();
             for (int i = 1; i <= TimeHandler.DaysInMonth(Year, Month); i++)
             {
+                string monthDay = TimeHandler.getWeekDayStr(Year, Month, i);
+
                 newFile.Add(string.Format(
                     WorkingDays.ROW_FORMAT,
-                    i,
+                    ((i < 10) ? "0" : "") + i,
                     TimeHandler.getWeekDayStr(Year, Month, i),
-                    "", 
-                    "", 
+                    "",
+                    "",
                     "",
                     getDayType(TimeHandler.getWeekDayInt(Year, Month, i)),
                     "",
@@ -65,8 +68,8 @@ namespace WorkingDaysApp.Logic
 
         private static string getDayType(int day)
         {
-            if (day == 5 || day == 6) return WorkingDays.HOLIDAY;
-            return WorkingDays.WORKING_DAY;
+            if (day == 5 || day == 6) return DayTypeFactory.Get(eDayType.DayOff);
+            return DayTypeFactory.Get(eDayType.WorkDay);
         }
 
         public static List<string> GetYears()

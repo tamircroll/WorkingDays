@@ -65,7 +65,7 @@
             this.HoursBox.Name = "HoursBox";
             this.HoursBox.Size = new System.Drawing.Size(96, 33);
             this.HoursBox.TabIndex = 2;
-            this.HoursBox.SelectedIndexChanged += new System.EventHandler(this.HoursBox_SelectedIndexChanged);
+//            this.HoursBox.SelectedIndexChanged += new System.EventHandler(this.HoursBox_SelectedIndexChanged);
             // 
             // MinutesBox
             // 
@@ -76,7 +76,7 @@
             this.MinutesBox.Name = "MinutesBox";
             this.MinutesBox.Size = new System.Drawing.Size(96, 33);
             this.MinutesBox.TabIndex = 3;
-            this.MinutesBox.SelectedIndexChanged += new System.EventHandler(this.MinutesBox_SelectedIndexChanged);
+//            this.MinutesBox.SelectedIndexChanged += new System.EventHandler(this.MinutesBox_SelectedIndexChanged);
             // 
             // label1
             // 
