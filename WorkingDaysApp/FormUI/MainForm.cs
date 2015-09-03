@@ -146,24 +146,25 @@ namespace WorkingDaysApp.FormUI
         private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int row = e.RowIndex;
-            String msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
-            
-            switch (e.ColumnIndex)
+            String msg = null;
+
+            switch ((eColumn)e.ColumnIndex)
             {
-                case (int)eColumn.MonthDay:
+
+                case eColumn.Arrival:
+                case eColumn.Leaving:
+                    msg = new GetTimeDataForm().ShowDialog();
+                    if (msg!= null) WorkingDays.Instance.setCellData(row, (eColumn)e.ColumnIndex, msg);
                     return;
-                case (int)eColumn.Arrival:
+                case eColumn.Comment:
+                case eColumn.SetComment:
+                    msg = (string)monthGridView.Rows[row].Cells[(int)eColumn.Comment].Value;
+                    if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
                     return;
-                case (int)eColumn.Leaving:
+                case eColumn.MonthDay:
                     return;
-                case (int)eColumn.DayType:
+                case eColumn.DayType:
                     return;
-                case (int)eColumn.Comment:
-                    WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
-                    break;
-                case (int)eColumn.SetComment:
-                    WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
-                    break;
             }
         }
     }

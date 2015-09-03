@@ -43,6 +43,12 @@
   <ItemGroup>
     <Compile Include="Enums\eColumn.cs" />
     <Compile Include="Enums\eDayType.cs" />
+    <Compile Include="FormUI\GetTimeDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUI\GetTimeDataForm.Designer.cs">
+      <DependentUpon>GetTimeDataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     <Compile Include="Logic\WorkingDays.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormUI\GetTimeDataForm.resx">
+      <DependentUpon>GetTimeDataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -66,6 +75,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
