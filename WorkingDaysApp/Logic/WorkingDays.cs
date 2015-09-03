@@ -10,8 +10,9 @@ namespace WorkingDaysApp.Logic
 
     public class WorkingDays
     {
-        public event ChangeWasMade m_Changed;
         static readonly WorkingDays _instance = new WorkingDays();
+        
+        public event ChangeWasMade m_Changed;
 
         public const char ROW_SEPARATOR = '-';
 
@@ -54,8 +55,6 @@ namespace WorkingDaysApp.Logic
         {
             AllFiles = FilesHandler.GetAllFiles();
         }
-
-
         
         public void SetTime(int monthDay, eColumn column, string timeToSet)
         {
@@ -70,11 +69,10 @@ namespace WorkingDaysApp.Logic
         public void setCellData(int i_RowToSet, eColumn i_ColumnToSet, string i_DataToSet)
         {
             List<string> fileLines = FilesHandler.GetFileLines(m_ChosenYearInt, m_ChosenMonthInt);
-            string[] rowToSetArr = fileLines[i_RowToSet].Split(ROW_SEPARATOR);
+            string[] dayDataToSetArr = fileLines[i_RowToSet].Split(ROW_SEPARATOR);
             
-            rowToSetArr[(int) i_ColumnToSet] = i_DataToSet;
-            fileLines[i_RowToSet] = String.Format(ROW_FORMAT, rowToSetArr[0], rowToSetArr[1], rowToSetArr[2], rowToSetArr[3],
-                rowToSetArr[4], rowToSetArr[5],rowToSetArr[6], ROW_SEPARATOR);
+            dayDataToSetArr[(int) i_ColumnToSet] = i_DataToSet;
+            fileLines[i_RowToSet] = dayDataArrTostring(dayDataToSetArr);
             File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
                 fileLines.ToArray());
             if (m_Changed != null) m_Changed.Invoke();
@@ -87,6 +85,12 @@ namespace WorkingDaysApp.Logic
 Set current time instead?",
                 @"Set Time",
                 MessageBoxButtons.YesNo) == DialogResult.Yes;
+        }
+
+        private string dayDataArrTostring(string[] dayDataToSetArr)
+        {
+            return String.Format(ROW_FORMAT, dayDataToSetArr[0], dayDataToSetArr[1], dayDataToSetArr[2], dayDataToSetArr[3],
+                dayDataToSetArr[4], dayDataToSetArr[5], dayDataToSetArr[6], ROW_SEPARATOR);
         }
     }
 }
