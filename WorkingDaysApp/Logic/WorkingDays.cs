@@ -73,8 +73,7 @@ namespace WorkingDaysApp.Logic
             
             dayDataToSetArr[(int) i_ColumnToSet] = i_DataToSet;
             fileLines[i_RowToSet] = dayDataArrTostring(dayDataToSetArr);
-            File.WriteAllLines(FilesHandler.BuildFilePath(TimeHandler.CurYear(), TimeHandler.CurMonth()),
-                fileLines.ToArray());
+            File.WriteAllLines(FilesHandler.BuildFilePath(ChosenYearInt, ChosenMonthInt), fileLines.ToArray());
             if (m_Changed != null) m_Changed.Invoke();
         }
 
