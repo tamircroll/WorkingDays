@@ -4,8 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using TimeWatchApp.Enums;
+using TimeWatchApp.Logic;
 
-namespace TimeWatchApp.Logic
+namespace WorkingDaysApp.Logic
 {
     public delegate void ChangeWasMade();
 
@@ -40,7 +41,7 @@ namespace TimeWatchApp.Logic
                 if (value != m_ChosenMonthInt)
                 {
                     m_ChosenMonthInt = value;
-                    Changed.Invoke();
+                    if (Changed != null) Changed.Invoke();
                 }
             }
         }
@@ -53,7 +54,7 @@ namespace TimeWatchApp.Logic
                 if (value != m_ChosenYearInt)
                 {
                     m_ChosenYearInt = value;
-                    Changed.Invoke();
+                    if (Changed != null) Changed.Invoke();
                 }
             }
         }

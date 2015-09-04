@@ -36,6 +36,7 @@
             // DayTypeBox
             // 
             this.DayTypeBox.BackColor = System.Drawing.SystemColors.Window;
+            this.DayTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DayTypeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.DayTypeBox.FormattingEnabled = true;
             this.DayTypeBox.Location = new System.Drawing.Point(100, 80);

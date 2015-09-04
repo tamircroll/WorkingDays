@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms.VisualStyles;
 using TimeWatchApp.Enums;
+using TimeWatchApp.Logic;
 
-namespace TimeWatchApp.Logic
+namespace WorkingDaysApp.Logic
 {
     static class FilesHandler
     {

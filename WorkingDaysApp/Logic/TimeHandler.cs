@@ -2,7 +2,7 @@
 using System.Globalization;
 using TimeWatchApp.Enums;
 
-namespace TimeWatchApp.Logic
+namespace WorkingDaysApp.Logic
 {
     public static class TimeHandler
     {

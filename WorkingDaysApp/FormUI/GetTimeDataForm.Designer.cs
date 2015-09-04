@@ -59,6 +59,7 @@
             // HoursBox
             // 
             this.HoursBox.BackColor = System.Drawing.SystemColors.Window;
+            this.HoursBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HoursBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.HoursBox.FormattingEnabled = true;
             this.HoursBox.Location = new System.Drawing.Point(131, 72);
@@ -69,6 +70,7 @@
             // MinutesBox
             // 
             this.MinutesBox.BackColor = System.Drawing.SystemColors.Window;
+            this.MinutesBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MinutesBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.MinutesBox.FormattingEnabled = true;
             this.MinutesBox.Location = new System.Drawing.Point(257, 72);

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using TimeWatchApp.Enums;
 using TimeWatchApp.Logic;
+using WorkingDaysApp.Logic;
 
 namespace TimeWatchApp.FormUI
 {
     public partial class MainForm : Form
     {
-
         private TimeWatch m_TimeWatch = TimeWatch.Instance;
 
         public MainForm()
@@ -104,24 +105,28 @@ namespace TimeWatchApp.FormUI
                 int currRowNum = monthGridView.Rows.Add();
                 var newRow = monthGridView.Rows[currRowNum];
 
-                for (int i = 0; i < dayArr.Length; i++)
+                for (int column = 0; column < dayArr.Length; column++)
                 {
-                    setGridRow(i, newRow, dayArr);
+                    setGridRow(column, newRow, dayArr);
                 }
             }
         }
 
-        private static void setGridRow(int i, DataGridViewRow newRow, string[] dayArr)
+        private static void setGridRow(int i_Column, DataGridViewRow i_NewRow, string[] i_DayArr)
         {
-            if (i == (int) eColumn.TotalHours)
+            if (i_Column == (int) eColumn.TotalHours)
             {
-                newRow.Cells[i].Value = TimeHandler.calcTime(
-                    (string) newRow.Cells[(int) eColumn.Arrival].Value,
-                    (string) newRow.Cells[(int) eColumn.Leaving].Value);
+                i_NewRow.Cells[i_Column].Value = TimeHandler.calcTime(
+                    (string) i_NewRow.Cells[(int) eColumn.Arrival].Value,
+                    (string) i_NewRow.Cells[(int) eColumn.Leaving].Value);
+                if (((string) i_NewRow.Cells[i_Column].Value).StartsWith("-"))
+                    i_NewRow.Cells[i_Column].Style.BackColor = Color.LightCoral;
+                else 
+                    i_NewRow.Cells[i_Column].Style.BackColor = DefaultBackColor;
             }
             else
             {
-                newRow.Cells[i].Value = dayArr[i];
+                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column];
             }
         }
 
@@ -144,7 +149,7 @@ namespace TimeWatchApp.FormUI
                         return;
                     case eColumn.Arrival:
                     case eColumn.Leaving:
-                        msg = (string)monthGridView.Rows[row].Cells[e.ColumnIndex].Value;  //TODO: Fix - not working so far
+                        msg = (string)monthGridView.Rows[row].Cells[e.ColumnIndex].Value; 
                         string hours = TimeHandler.getHoursStr(msg);
                         string minutes = TimeHandler.getMinutesStr(msg);
 
@@ -154,9 +159,9 @@ namespace TimeWatchApp.FormUI
                     case eColumn.MonthDay:
                         return;
                     case eColumn.DayType:
-                        string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value; //TODO: replace this (int) eColumn.DayType with e.ColumnIndex
+                        string chosneDayType = (string) monthGridView.Rows[row].Cells[e.ColumnIndex].Value;
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (msg != null) m_TimeWatch.setCellData(row, eColumn.DayType, msg);
+                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn)e.ColumnIndex, msg);
                         return;
                 }
             }
@@ -184,7 +189,7 @@ namespace TimeWatchApp.FormUI
             return summaryArr;
         }
 
-        private void Leaving_Click(object sender, EventArgs e)
+        private void Leaving_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
             m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
