@@ -150,6 +150,8 @@ namespace WorkingDaysApp.FormUI
                 int row = e.RowIndex;
                 String msg;
 
+                if (row < 0 || e.ColumnIndex < 0) return;
+
                 switch ((eColumn) e.ColumnIndex)
                 {
                     case eColumn.Comment:
@@ -175,6 +177,16 @@ namespace WorkingDaysApp.FormUI
             {
                 MessageBox.Show("Error occurred:\n" + exception.Message, "Exception!!", MessageBoxButtons.OK);
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
