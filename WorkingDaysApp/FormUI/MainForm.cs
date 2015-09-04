@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TimeWatchApp.Enums;
-using TimeWatchApp.Logic;
 using WorkingDaysApp.Logic;
 
 namespace TimeWatchApp.FormUI
@@ -25,10 +24,10 @@ namespace TimeWatchApp.FormUI
             setTime(TimeHandler.CurYear(), TimeHandler.CurMonth());
         }
 
-        private void setTime(int year, int Month)
+        private void setTime(int i_Year, int i_Month)
         {
-            m_TimeWatch.ChosenYearInt = year;
-            m_TimeWatch.ChosenMonthInt = Month;
+            m_TimeWatch.ChosenYearInt = i_Year;
+            m_TimeWatch.ChosenMonthInt = i_Month;
         }
 
         private void refreshView()
@@ -112,35 +111,34 @@ namespace TimeWatchApp.FormUI
             }
         }
 
-        private static void setGridRow(int i_Column, DataGridViewRow i_NewRow, string[] i_DayArr)
+        private void setGridRow(int i_Column, DataGridViewRow i_NewRow, IList<string> i_DayArr)
         {
             if (i_Column == (int) eColumn.TotalHours)
             {
                 i_NewRow.Cells[i_Column].Value = TimeHandler.calcTime(
                     (string) i_NewRow.Cells[(int) eColumn.Arrival].Value,
                     (string) i_NewRow.Cells[(int) eColumn.Leaving].Value);
-                if (((string) i_NewRow.Cells[i_Column].Value).StartsWith("-"))
-                    i_NewRow.Cells[i_Column].Style.BackColor = Color.LightCoral;
-                else 
-                    i_NewRow.Cells[i_Column].Style.BackColor = DefaultBackColor;
+                i_NewRow.Cells[i_Column].Style.BackColor = ((string) i_NewRow.Cells[i_Column].Value).StartsWith("-")
+                    ? Color.LightCoral
+                    : DefaultBackColor;
             }
             else
             {
-                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column];
+                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.DASH_REPLACER, TimeWatch.ROW_SEPARATOR.ToString());
             }
         }
 
 
-        private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
         {
             try
             {
-                int row = e.RowIndex;
+                int row = i_E.RowIndex;
                 String msg;
 
-                if (row < 0 || e.ColumnIndex < 0) return;
+                if (row < 0 || i_E.ColumnIndex < 0) return;
 
-                switch ((eColumn) e.ColumnIndex)
+                switch ((eColumn) i_E.ColumnIndex)
                 {
                     case eColumn.Comment:
                         msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
@@ -149,19 +147,19 @@ namespace TimeWatchApp.FormUI
                         return;
                     case eColumn.Arrival:
                     case eColumn.Leaving:
-                        msg = (string)monthGridView.Rows[row].Cells[e.ColumnIndex].Value; 
+                        msg = (string)monthGridView.Rows[row].Cells[i_E.ColumnIndex].Value; 
                         string hours = TimeHandler.getHoursStr(msg);
                         string minutes = TimeHandler.getMinutesStr(msg);
 
                         msg = new GetTimeDataForm(hours, minutes).ShowDialog();
-                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn) e.ColumnIndex, msg);
+                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn) i_E.ColumnIndex, msg);
                         return;
                     case eColumn.MonthDay:
                         return;
                     case eColumn.DayType:
-                        string chosneDayType = (string) monthGridView.Rows[row].Cells[e.ColumnIndex].Value;
+                        string chosneDayType = (string) monthGridView.Rows[row].Cells[i_E.ColumnIndex].Value;
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn)e.ColumnIndex, msg);
+                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn)i_E.ColumnIndex, msg);
                         return;
                 }
             }
@@ -195,34 +193,40 @@ namespace TimeWatchApp.FormUI
             m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
         }
 
-        private void Arrival_Click(object i_Sender, EventArgs e)
+        private void Arrival_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
             m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
         }
 
-        private void chooseYear_DropDown(object i_Sender, EventArgs e)
+        private void chooseYear_DropDown(object i_Sender, EventArgs i_)
         {
             setYearsToggle();
         }
 
-        private void chooseMonth_DropDown(object i_Sender, EventArgs e)
+        private void chooseMonth_DropDown(object i_Sender, EventArgs i_)
         {
             setMonthToggle();
         }
 
-        private void chooseYear_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox cb = sender as ComboBox;
-            String s = cb.Text;
-            setChoosenYear(int.Parse(s));
-        }
-
-        private void chooseMonth_SelectedIndexChanged(object i_Sender, EventArgs e)
+        private void chooseYear_SelectedIndexChanged(object i_Sender, EventArgs i_)
         {
             ComboBox cb = i_Sender as ComboBox;
-            String s = cb.Text;
-            setChoosenMonth(int.Parse(s));
+            if (cb != null)
+            {
+                String s = cb.Text;
+                setChoosenYear(int.Parse(s));
+            }
+        }
+
+        private void chooseMonth_SelectedIndexChanged(object i_Sender, EventArgs i_)
+        {
+            ComboBox cb = i_Sender as ComboBox;
+            if (cb != null)
+            {
+                String s = cb.Text;
+                setChoosenMonth(int.Parse(s));
+            }
         }
     }
 }

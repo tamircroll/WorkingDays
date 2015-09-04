@@ -8,11 +8,11 @@ namespace WorkingDaysApp.Logic
 {
     static class FilesHandler
     {
-        private const string DataFolderName = "\\monthsFiles";
+        private const string k_DataFolderName = "\\monthsFiles";
 
         public static string GetMonthsFilesPath()
         {
-            var path = Directory.GetCurrentDirectory() + DataFolderName;
+            var path = Directory.GetCurrentDirectory() + k_DataFolderName;
             Directory.CreateDirectory(path);
             return path;
         }
@@ -22,23 +22,23 @@ namespace WorkingDaysApp.Logic
             return new List<FileInfo>(new DirectoryInfo(GetMonthsFilesPath()).GetFiles("*"));
         }
 
-        public static string BuildFileName(int Year, int Month)
+        public static string BuildFileName(int i_Year, int i_Month)
         {
-            return Year + "-" + (Month <= 9 ? "0" : "") + Month;
+            return i_Year + "-" + (i_Month <= 9 ? "0" : "") + i_Month;
         }
 
-        public static string BuildFilePath(int Year, int Month)
+        public static string BuildFilePath(int i_Year, int i_Month)
         {
-            return GetMonthsFilesPath() + "\\" + BuildFileName(Year, Month);
+            return GetMonthsFilesPath() + "\\" + BuildFileName(i_Year, i_Month);
         }
 
-        public static List<string> GetFileLines(int Year, int Month)
+        public static List<string> GetFileLines(int i_Year, int i_Month)
         {
-            string filePath = BuildFilePath(Year, Month);
+            string filePath = BuildFilePath(i_Year, i_Month);
 
             if (!File.Exists(filePath))
             {
-                string[] newFile = createNewMonthArray(Year, Month);
+                string[] newFile = createNewMonthArray(i_Year, i_Month);
                 File.WriteAllLines(filePath, newFile);
             }
 
@@ -47,19 +47,19 @@ namespace WorkingDaysApp.Logic
             return fileLines;
         }
 
-        private static string[] createNewMonthArray(int Year, int Month)
+        private static string[] createNewMonthArray(int i_Year, int i_Month)
         {
             List<string> newFile = new List<string>();
-            for (int i = 1; i <= TimeHandler.DaysInMonth(Year, Month); i++)
+            for (int i = 1; i <= TimeHandler.DaysInMonth(i_Year, i_Month); i++)
             {
                 newFile.Add(string.Format(
                     TimeWatch.ROW_FORMAT,
                     ((i < 10) ? "0" : "") + i,
-                    TimeHandler.getWeekDayStr(Year, Month, i),
+                    TimeHandler.getWeekDayStr(i_Year, i_Month, i),
                     "",
                     "",
                     "",
-                    getDayType(TimeHandler.getWeekDayInt(Year, Month, i)),
+                    getDayType(TimeHandler.getWeekDayInt(i_Year, i_Month, i)),
                     "",
                     TimeWatch.ROW_SEPARATOR));
             }
@@ -67,18 +67,18 @@ namespace WorkingDaysApp.Logic
             return newFile.ToArray();
         }
 
-        private static string getDayType(int day)
+        private static string getDayType(int i_Day)
         {
-            if (day == 5 || day == 6) return DayTypeFactory.Get(eDayType.Holiday);
+            if (i_Day == 5 || i_Day == 6) return DayTypeFactory.Get(eDayType.Holiday);
             return DayTypeFactory.Get(eDayType.WorkDay);
         }
 
         public static List<string> GetYears()
         {
             List<string> years = new List<string>();
-            List<FileInfo> AllFiles = GetAllFiles();
+            List<FileInfo> allFiles = GetAllFiles();
 
-            foreach (var file in AllFiles)
+            foreach (var file in allFiles)
             {
                 string curYear = file.Name.Split(TimeWatch.ROW_SEPARATOR)[0];
                 if (!years.Contains(curYear))

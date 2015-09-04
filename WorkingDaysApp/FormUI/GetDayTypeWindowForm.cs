@@ -9,10 +9,10 @@ namespace TimeWatchApp.FormUI
     {
         protected string m_Data;
 
-        public GetDayTypeWindowForm(string currDayType)
+        public GetDayTypeWindowForm(string i_CurrDayType)
         {
             InitializeComponent();
-            DayTypeBox.Text = currDayType;
+            DayTypeBox.Text = i_CurrDayType;
         }
 
         public new string ShowDialog()
@@ -30,18 +30,18 @@ namespace TimeWatchApp.FormUI
             }
         }
 
-        private void GetDayTypeWindowForm_Load(object sender, EventArgs e)
+        private void GetDayTypeWindowForm_Load(object i_Sender, EventArgs i_)
         {
             setDayTypeBoxValues();
         }
 
-        private void OK_Click(object sender, EventArgs e)
+        private void OK_Click(object i_Sender, EventArgs i_)
         {
             m_Data = DayTypeBox.Text;
             Close();
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object i_Sender, EventArgs i_)
         {
             m_Data = null;
             Close();

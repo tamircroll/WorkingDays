@@ -41,10 +41,10 @@ namespace WorkingDaysApp.Logic
             return dt.Minute;
         }
 
-        public static int? DaysInMonth(int year, int month)
+        public static int? DaysInMonth(int i_Year, int i_Month)
         {
-            if (month < 1 || month > 12) return null;
-            return DateTime.DaysInMonth(year, month);
+            if (i_Month < 1 || i_Month > 12) return null;
+            return DateTime.DaysInMonth(i_Year, i_Month);
         }
 
         public static string getCurrClockTime()
@@ -52,11 +52,11 @@ namespace WorkingDaysApp.Logic
             return DateTime.Now.ToString("HH:mm:ss");
         }
 
-        public static string GetMonthName(int monthInt)
+        public static string GetMonthName(int i_MonthInt)
         {
-            if (monthInt < 1 || monthInt > 12) return null;
+            if (i_MonthInt < 1 || i_MonthInt > 12) return null;
             var ci = CultureInfo.CreateSpecificCulture("en");
-            return ci.DateTimeFormat.GetMonthName(monthInt);
+            return ci.DateTimeFormat.GetMonthName(i_MonthInt);
         }
 
         public static string calcTime(string i_FirstTime, string i_SecondTime)
@@ -76,21 +76,21 @@ namespace WorkingDaysApp.Logic
             return "";
         }
 
-        public static int getWeekDayInt(int year, int month, int monthDay)
+        public static int getWeekDayInt(int i_Year, int i_Month, int i_MonthDay)
         {
-            DateTime dateValue = new DateTime(year, month, monthDay);
+            DateTime dateValue = new DateTime(i_Year, i_Month, i_MonthDay);
             return (int) dateValue.DayOfWeek;
         }
 
-        public static string getWeekDayStr(int year, int month, int monthDay)
+        public static string getWeekDayStr(int i_Year, int i_Month, int i_MonthDay)
         {
-            DateTime dateValue = new DateTime(year, month, monthDay);
+            DateTime dateValue = new DateTime(i_Year, i_Month, i_MonthDay);
             return dateValue.DayOfWeek.ToString();
         }
 
-        public static string totalWorkingHoursInDay(string[] lineArr)
+        public static string totalWorkingHoursInDay(string[] i_LineArr)
         {
-            return calcTime(lineArr[(int) eColumn.Arrival], lineArr[(int) eColumn.Leaving]);
+            return calcTime(i_LineArr[(int) eColumn.Arrival], i_LineArr[(int) eColumn.Leaving]);
         }
 
         public static float dayWorkScope(string[] i_DayArr)
@@ -103,10 +103,10 @@ namespace WorkingDaysApp.Logic
             return 0.0f;
         }
 
-        public static int getMinutes(string time)
+        public static int getMinutes(string i_Time)
         {
             TimeSpan toReturn;
-            TimeSpan.TryParse(time, out toReturn);
+            TimeSpan.TryParse(i_Time, out toReturn);
             return (int) toReturn.TotalMinutes;
         }
 
@@ -118,15 +118,15 @@ namespace WorkingDaysApp.Logic
             return toReturn;
         }
 
-        public static string getHoursStr(string clockTime)
+        public static string getHoursStr(string i_ClockTime)
         {
-            string[] timeArr = clockTime.Split(':');
+            string[] timeArr = i_ClockTime.Split(':');
             return timeArr.Length > 1 ? timeArr [0]: "";
         }
 
-        public static string getMinutesStr(string clockTime)
+        public static string getMinutesStr(string i_ClockTime)
         {
-            string[] timeArr = clockTime.Split(':');
+            string[] timeArr = i_ClockTime.Split(':');
             return timeArr.Length > 1 ? timeArr[1] : "";
         }
 

@@ -7,10 +7,10 @@ namespace TimeWatchApp.FormUI
     {
         protected string m_Data;
 
-        public GetCommentForm(string currComment)
+        public GetCommentForm(string i_CurrComment)
         {
             InitializeComponent();
-            commentText.Text = currComment;
+            commentText.Text = i_CurrComment;
         }
 
         public new string ShowDialog()
@@ -19,26 +19,26 @@ namespace TimeWatchApp.FormUI
             return m_Data;
         }
 
-        private void OK_Click(object sender, EventArgs e)
+        private void OK_Click(object i_Sender, EventArgs i_)
         {
             m_Data = commentText.Text;
             Close();
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object i_Sender, EventArgs i_)
         {
             m_Data = null;
             Close();
         }
 
-        private void GetCommentForm_Load(object sender, EventArgs e)
+        private void GetCommentForm_Load(object i_Sender, EventArgs i_)
         {
             ActiveControl = commentText;
         }
 
-        private void GetCommentForm_KeyDown(object sender, KeyEventArgs e)
+        private void GetCommentForm_KeyDown(object i_Sender, KeyEventArgs i_)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (i_.KeyCode == Keys.Enter)
             {
                 m_Data = commentText.Text;
                 Close();

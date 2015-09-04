@@ -16,7 +16,8 @@ namespace WorkingDaysApp.Logic
         
         public event ChangeWasMade Changed;
 
-        public const char ROW_SEPARATOR = '-';
+        public static readonly char ROW_SEPARATOR = '-';
+        public static readonly string DASH_REPLACER = "%%";
         public const int FULL_DAY_MINUTES = 6 * 60;
         public const int HALF_DAY_MINUTES = 2 * 60;
         
@@ -59,14 +60,14 @@ namespace WorkingDaysApp.Logic
             }
         }
         
-        public void SetTime(int monthDay, eColumn column, string timeToSet)
+        public void SetTime(int i_MonthDay, eColumn i_Column, string i_TimeToSet)
         {
-            int lineToEdit = monthDay - 1;
+            int lineToEdit = i_MonthDay - 1;
             List<string> fileLines = FilesHandler.GetFileLines(m_ChosenYearInt, m_ChosenMonthInt);
             string[] lineArr = fileLines[lineToEdit].Split(ROW_SEPARATOR);
 
-            if (column == eColumn.Arrival && lineArr[(int)column] != "" && !toChangeData()) return;
-            setCellData(lineToEdit, column, timeToSet);
+            if (i_Column == eColumn.Arrival && lineArr[(int)i_Column] != "" && !toChangeData()) return;
+            setCellData(lineToEdit, i_Column, i_TimeToSet);
         }
 
         public void setCellData(int i_RowToSet, eColumn i_ColumnToSet, string i_DataToSet)
@@ -90,16 +91,20 @@ Set current time instead?",
                 MessageBoxButtons.YesNo) == DialogResult.Yes;
         }
 
-        private string dayDataArrTostring(string[] dayDataToSetArr)
+        private string dayDataArrTostring(string[] i_DayDataToSetArr)
         {
-            return String.Format(ROW_FORMAT, dayDataToSetArr[0], dayDataToSetArr[1], dayDataToSetArr[2], dayDataToSetArr[3],
-                dayDataToSetArr[4], dayDataToSetArr[5], dayDataToSetArr[6], ROW_SEPARATOR);
+            for (int i = 0 ; i < i_DayDataToSetArr.Length ; i++)
+            {
+                i_DayDataToSetArr[i] = i_DayDataToSetArr[i].Replace(ROW_SEPARATOR.ToString(), DASH_REPLACER);
+            }
+            return String.Format(ROW_FORMAT, i_DayDataToSetArr[0], i_DayDataToSetArr[1], i_DayDataToSetArr[2], i_DayDataToSetArr[3],
+                i_DayDataToSetArr[4], i_DayDataToSetArr[5], i_DayDataToSetArr[6], ROW_SEPARATOR);
         }
 
         public string[] GetSummaryArr()
         {
             Array values = Enum.GetValues(typeof (eSummaryFeilds));
-            string[] summaryArr = new string[values.Length], dayArr;
+            string[] summaryArr = new string[values.Length];
             TimeSpan sum = TimeSpan.Parse("00:00");
             float workingDays = 0, sickDays = 0, vacationDays = 0, holidays = 0;
 
@@ -107,7 +112,7 @@ Set current time instead?",
             List<string> month = FilesHandler.GetFileLines(ChosenYearInt, ChosenMonthInt);
             foreach (string day in month)
             {
-                dayArr = day.Split(ROW_SEPARATOR);
+                string[] dayArr = day.Split(ROW_SEPARATOR);
 
                 sum += TimeHandler.getDailyTotalHours(dayArr);
                 workingDays += getDailyWorkScope(dayArr);
@@ -124,8 +129,6 @@ Set current time instead?",
             
             return summaryArr;
         }
-
-
 
         private float holidayScope(string i_DayType)
         {

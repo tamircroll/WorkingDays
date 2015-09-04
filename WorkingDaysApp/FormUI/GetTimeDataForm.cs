@@ -7,9 +7,9 @@ namespace TimeWatchApp.FormUI
 {
     public partial class GetTimeDataForm : Form
     {
-        private const string emptyChoose = "";
-        protected string data;
-        private string hours, minutes ;
+        private const string k_EmptyChoose = "";
+        protected string m_Data;
+        private string m_Hours, m_Minutes ;
 
         public GetTimeDataForm()
         {
@@ -19,22 +19,22 @@ namespace TimeWatchApp.FormUI
         public GetTimeDataForm(string i_Hours, string i_Minutes)
         {
             InitializeComponent();
-            hours = i_Hours;
-            minutes = i_Minutes;
+            m_Hours = i_Hours;
+            m_Minutes = i_Minutes;
         }
 
-        private void getDataBaseForm_Load(object sender, EventArgs e)
+        private void getDataBaseForm_Load(object i_Sender, EventArgs i_)
         {
-            MinutesBox.Items.Add(emptyChoose);
-            HoursBox.Items.Add(emptyChoose);
+            MinutesBox.Items.Add(k_EmptyChoose);
+            HoursBox.Items.Add(k_EmptyChoose);
             setBoxesValues();
             setBoxesText();
         }
 
         private void setBoxesText()
         {
-            HoursBox.Text = (hours != "")? hours : TimeHandler.getCurrClockTime().Split(':')[0];
-            MinutesBox.Text = (minutes != "") ? minutes : TimeHandler.getCurrClockTime().Split(':')[1];
+            HoursBox.Text = (m_Hours != "")? m_Hours : TimeHandler.getCurrClockTime().Split(':')[0];
+            MinutesBox.Text = (m_Minutes != "") ? m_Minutes : TimeHandler.getCurrClockTime().Split(':')[1];
         }
 
         private void setBoxesValues()
@@ -53,30 +53,30 @@ namespace TimeWatchApp.FormUI
 
         private void setData()
         {
-            if (HoursBox.Text == emptyChoose || MinutesBox.Text == emptyChoose)
+            if (HoursBox.Text == k_EmptyChoose || MinutesBox.Text == k_EmptyChoose)
             {
-                data = "";
+                m_Data = "";
                 return;
             }
 
-            data = string.Format("{0}:{1}:00", HoursBox.Text, MinutesBox.Text);
+            m_Data = string.Format("{0}:{1}:00", HoursBox.Text, MinutesBox.Text);
         }
 
         public string ShowDialog()
         {
             base.ShowDialog();
-            return data;
+            return m_Data;
         }
 
-        protected virtual void Accept_Click(object sender, EventArgs e)
+        protected virtual void Accept_Click(object i_Sender, EventArgs i_)
         {
             setData();
             Close();
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object i_Sender, EventArgs i_)
         {
-            data = null;
+            m_Data = null;
             Close();
         }
     }
