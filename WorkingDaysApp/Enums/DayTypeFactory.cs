@@ -7,9 +7,11 @@ namespace WorkingDaysApp.Logic
     {
         public static string Get(eDayType dayType)
         {
-            if (dayType == eDayType.DayOff) return "Day Off";
-            if (dayType == eDayType.HalfDay) return "Half Day";
+            if (dayType == eDayType.Holyday) return "Holiday";
+            if (dayType == eDayType.HalfDay) return "Half Vaction Day";
             if (dayType == eDayType.WorkDay) return "Work Day";
+            if (dayType == eDayType.Vacation) return "Vacation";
+            if (dayType == eDayType.SickDay) return "Sick day";
 
             throw new Exception("Bad eDayType parmeter input");
         }

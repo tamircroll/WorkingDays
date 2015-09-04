@@ -14,7 +14,7 @@ namespace WorkingDaysApp.Logic
         
         public event ChangeWasMade m_Changed;
 
-        public const char ROW_SEPARATOR = '-';
+        public const char ROW_SEPARATOR = '-'; // Todo:  make sure no '-' is in comment
 
         public const string WORKING_DAY = "Working day",
             HOLIDAY = "Holiday",

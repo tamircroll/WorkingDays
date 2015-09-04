@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms.VisualStyles;
 using WorkingDaysApp.Enums;
 
 namespace WorkingDaysApp.Logic
 {
     static class FilesHandler
     {
+        private const string DataFolderName = "\\monthFiles";
+
         public static string GetMonthsFilesPath()
         {
-            var path = Path.GetDirectoryName(Directory.GetCurrentDirectory() + "\\monthFiles");
+            var path = Directory.GetCurrentDirectory() + DataFolderName;
             Directory.CreateDirectory(path);
-            return Path.GetDirectoryName(path);
+            return path;
         }
 
         public static List<FileInfo> GetAllFiles()
@@ -21,7 +24,7 @@ namespace WorkingDaysApp.Logic
 
         public static string BuildFileName(int Year, int Month)
         {
-            return Year + "-" + (Month <= 9 ? "0" : "") + Month + ".txt";
+            return Year + "-" + (Month <= 9 ? "0" : "") + Month;
         }
 
         public static string BuildFilePath(int Year, int Month)
@@ -68,7 +71,7 @@ namespace WorkingDaysApp.Logic
 
         private static string getDayType(int day)
         {
-            if (day == 5 || day == 6) return DayTypeFactory.Get(eDayType.DayOff);
+            if (day == 5 || day == 6) return DayTypeFactory.Get(eDayType.Vacation);
             return DayTypeFactory.Get(eDayType.WorkDay);
         }
 

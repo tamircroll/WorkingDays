@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace WorkingDaysApp.Logic
 {
@@ -47,6 +48,12 @@ namespace WorkingDaysApp.Logic
         public static string getCurrClockTime()
         {
             return DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        public static string GetMonthName(int monthInt)
+        {
+           var ci= CultureInfo.CreateSpecificCulture("en");
+           return ci.DateTimeFormat.GetMonthName(monthInt);
         }
 
         public static string calcTime(string i_FirstTime, string i_SecondTime)

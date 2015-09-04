@@ -38,7 +38,9 @@ namespace WorkingDaysApp.FormUI
 
         private void setListViewTitle()
         {
-            listViewTitle.Text = string.Format("Year: {0}, Month: {1}", WorkingDays.Instance.ChosenYearInt, WorkingDays.Instance.ChosenMonthInt);
+            listViewTitle.Text = string.Format(
+                "Year: {0}, Month: {1}", 
+                WorkingDays.Instance.ChosenYearInt, TimeHandler.GetMonthName(WorkingDays.Instance.ChosenMonthInt));
         }
 
         private void setYearsToggle()
