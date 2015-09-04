@@ -28,7 +28,7 @@ namespace WorkingDaysApp.FormUI
             WorkingDays.Instance.ChosenMonthInt = Month;
         }
 
-        private void refreshView()
+        private void refreshView()  //TODO: Scroll To choosen element every grid refresh
         {
             chooseMonth.Text = WorkingDays.Instance.ChosenMonthInt.ToString();
             chooseYear.Text = WorkingDays.Instance.ChosenYearInt.ToString();
@@ -39,7 +39,12 @@ namespace WorkingDaysApp.FormUI
 
         private void setSummary()
         {
-            string[] summaryArr = WorkingDays.Instance.getSummary();
+            SummaryLabel.Text = "";
+            List<string> summaryArr = new List<string>(WorkingDays.Instance.getSummary());
+            foreach (string s in summaryArr)
+            {
+                SummaryLabel.Text += s + Environment.NewLine;
+            }
         }
 
         private void setListViewTitle()
@@ -124,8 +129,6 @@ namespace WorkingDaysApp.FormUI
             setTimeToNow();
             WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
         }
-
-
 
         private void chooseYear_DropDown(object i_Sender, EventArgs e)
         {

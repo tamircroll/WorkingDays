@@ -32,9 +32,9 @@ namespace WorkingDaysApp.FormUI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Leaving = new System.Windows.Forms.Button();
             this.Arrival = new System.Windows.Forms.Button();
             this.listViewTitle = new System.Windows.Forms.Label();
@@ -52,8 +52,8 @@ namespace WorkingDaysApp.FormUI
             this.dayType = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Comment = new System.Windows.Forms.DataGridViewButtonColumn();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.listView1 = new System.Windows.Forms.ListView();
             this.SummaryTitle = new System.Windows.Forms.Label();
+            this.SummaryLabel = new System.Windows.Forms.Label();
             this.chooseDateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).BeginInit();
             this.SuspendLayout();
@@ -223,8 +223,8 @@ namespace WorkingDaysApp.FormUI
             // 
             // TotalTime
             // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle1;
             this.TotalTime.FillWeight = 2F;
             this.TotalTime.HeaderText = "Total Time";
             this.TotalTime.MinimumWidth = 80;
@@ -234,8 +234,8 @@ namespace WorkingDaysApp.FormUI
             // 
             // dayType
             // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.dayType.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dayType.DefaultCellStyle = dataGridViewCellStyle2;
             this.dayType.FillWeight = 1F;
             this.dayType.HeaderText = "dayType";
             this.dayType.MinimumWidth = 80;
@@ -246,23 +246,14 @@ namespace WorkingDaysApp.FormUI
             // Comment
             // 
             this.Comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Comment.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Comment.DefaultCellStyle = dataGridViewCellStyle3;
             this.Comment.FillWeight = 10F;
             this.Comment.HeaderText = "Comment";
             this.Comment.MinimumWidth = 300;
             this.Comment.Name = "Comment";
             this.Comment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Comment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            // 
-            // listView1
-            // 
-            this.listView1.Location = new System.Drawing.Point(811, 804);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(568, 79);
-            this.listView1.TabIndex = 6;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // SummaryTitle
             // 
@@ -274,14 +265,23 @@ namespace WorkingDaysApp.FormUI
             this.SummaryTitle.TabIndex = 7;
             this.SummaryTitle.Text = "Summary";
             // 
+            // SummaryLabel
+            // 
+            this.SummaryLabel.AutoSize = true;
+            this.SummaryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.SummaryLabel.Location = new System.Drawing.Point(806, 810);
+            this.SummaryLabel.Name = "SummaryLabel";
+            this.SummaryLabel.Size = new System.Drawing.Size(0, 29);
+            this.SummaryLabel.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1846, 935);
+            this.Controls.Add(this.SummaryLabel);
             this.Controls.Add(this.SummaryTitle);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.monthGridView);
             this.Controls.Add(this.chooseDateGroupBox);
             this.Controls.Add(this.listViewTitle);
@@ -313,7 +313,6 @@ namespace WorkingDaysApp.FormUI
         private System.Windows.Forms.Label chooseYearTitle;
         private System.Windows.Forms.DataGridView monthGridView;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label SummaryTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn Day;
         private System.Windows.Forms.DataGridViewTextBoxColumn weekDayCol;
@@ -322,6 +321,7 @@ namespace WorkingDaysApp.FormUI
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalTime;
         private System.Windows.Forms.DataGridViewButtonColumn dayType;
         private System.Windows.Forms.DataGridViewButtonColumn Comment;
+        private System.Windows.Forms.Label SummaryLabel;
 
     }
 }
