@@ -144,13 +144,17 @@ namespace WorkingDaysApp.FormUI
                         return;
                     case eColumn.Arrival:
                     case eColumn.Leaving:
-                        msg = new GetTimeDataForm().ShowDialog();
+                        msg = (string)monthGridView.Rows[row].Cells[e.ColumnIndex].Value;  //TODO: Fix - not working so far
+                        string hours = TimeHandler.getHoursStr(msg);
+                        string minutes = TimeHandler.getMinutesStr(msg);
+
+                        msg = new GetTimeDataForm(hours, minutes).ShowDialog();
                         if (msg != null) workingDays.setCellData(row, (eColumn) e.ColumnIndex, msg);
                         return;
                     case eColumn.MonthDay:
                         return;
                     case eColumn.DayType:
-                        string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value;
+                        string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value; //TODO: replace this (int) eColumn.DayType with e.ColumnIndex
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
                         if (msg != null) workingDays.setCellData(row, eColumn.DayType, msg);
                         return;

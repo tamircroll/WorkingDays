@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Forms;
 using WorkingDaysApp.Enums;
 
 namespace WorkingDaysApp.Logic
@@ -96,8 +97,8 @@ namespace WorkingDaysApp.Logic
             string totalDay = totalWorkingHoursInDay(i_DayArr);
             int minutes = getMinutes(totalDay);
 
-            if (minutes > WorkingDays.FULL_DAY_MINUTES) return 1.0f;
-            if (minutes > WorkingDays.Half_DAY_MINUTES) return 0.5f;
+            if (minutes >= WorkingDays.FULL_DAY_MINUTES) return 1.0f;
+            if (minutes >= WorkingDays.Half_DAY_MINUTES) return 0.5f;
             return 0.0f;
         }
 
@@ -108,12 +109,25 @@ namespace WorkingDaysApp.Logic
             return (int) toReturn.TotalMinutes;
         }
 
-        public static TimeSpan dayHoursSummary(string[] i_DayArr)
+        public static TimeSpan getDailyTotalHours(string[] i_DayArr)
         {
             TimeSpan toReturn;
             string totalDay = totalWorkingHoursInDay(i_DayArr);
             TimeSpan.TryParse(totalDay, out toReturn);
             return toReturn;
         }
+
+        public static string getHoursStr(string clockTime)
+        {
+            string[] timeArr = clockTime.Split(':');
+            return timeArr.Length > 1 ? timeArr [0]: "";
+        }
+
+        public static string getMinutesStr(string clockTime)
+        {
+            string[] timeArr = clockTime.Split(':');
+            return timeArr.Length > 1 ? timeArr[1] : "";
+        }
+
     }
 }

@@ -8,10 +8,18 @@ namespace WorkingDaysApp.FormUI
     {
         private const string emptyChoose = "";
         protected string data;
+        private string hours, minutes ;
 
         public GetTimeDataForm()
         {
             InitializeComponent();
+        }
+
+        public GetTimeDataForm(string i_Hours, string i_Minutes)
+        {
+            InitializeComponent();
+            hours = i_Hours;
+            minutes = i_Minutes;
         }
 
         private void getDataBaseForm_Load(object sender, EventArgs e)
@@ -24,8 +32,8 @@ namespace WorkingDaysApp.FormUI
 
         private void setBoxesText()
         {
-            HoursBox.Text = TimeHandler.getCurrClockTime().Split(':')[0];
-            MinutesBox.Text = TimeHandler.getCurrClockTime().Split(':')[1];
+            HoursBox.Text = (hours != "")? hours : TimeHandler.getCurrClockTime().Split(':')[0];
+            MinutesBox.Text = (minutes != "") ? minutes : TimeHandler.getCurrClockTime().Split(':')[1];
         }
 
         private void setBoxesValues()

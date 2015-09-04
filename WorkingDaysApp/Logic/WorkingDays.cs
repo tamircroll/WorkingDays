@@ -101,18 +101,19 @@ Set current time instead?",
             foreach (string day in month)
             {
                 dayArr = day.Split(ROW_SEPARATOR);
-                sum += TimeHandler.dayHoursSummary(dayArr);
-                workingDays += actualWorkDayScope(dayArr);
+
+                sum += TimeHandler.getDailyTotalHours(dayArr);
+                workingDays += getDailyWorkScope(dayArr);
                 holidays += holidayScope(dayArr[(int)eColumn.DayType]);
                 sickDays += dayArr[(int) eColumn.DayType] == DayTypeFactory.Get(eDayType.SickDay) ? 1 : 0;
                 vacationDays += dayArr[(int) eColumn.DayType] == DayTypeFactory.Get(eDayType.PersonalVacation) ? 1 : 0;
             }
 
             summaryArr[(int)eSummaryFeilds.WorkingHours] = sum.ToString();
-            summaryArr[(int)eSummaryFeilds.WorkingDays] = workingDays.ToString();
-            summaryArr[(int)eSummaryFeilds.SickDays] = sickDays.ToString();
-            summaryArr[(int)eSummaryFeilds.PersonalVecation] = vacationDays.ToString();
-            summaryArr[(int)eSummaryFeilds.Holidays] = holidays.ToString();
+            summaryArr[(int)eSummaryFeilds.WorkingDays] = workingDays.ToString(CultureInfo.InvariantCulture);
+            summaryArr[(int)eSummaryFeilds.SickDays] = sickDays.ToString(CultureInfo.InvariantCulture);
+            summaryArr[(int)eSummaryFeilds.PersonalVecation] = vacationDays.ToString(CultureInfo.InvariantCulture);
+            summaryArr[(int)eSummaryFeilds.Holidays] = holidays.ToString(CultureInfo.InvariantCulture);
             
             return summaryArr;
         }
@@ -126,7 +127,7 @@ Set current time instead?",
             return 0.0f;
         }
 
-        public float actualWorkDayScope(string[] i_DayArr)
+        public float getDailyWorkScope(string[] i_DayArr)
         {
             string totalDay = TimeHandler.totalWorkingHoursInDay(i_DayArr);
             int minutes = TimeHandler.getMinutes(totalDay);
