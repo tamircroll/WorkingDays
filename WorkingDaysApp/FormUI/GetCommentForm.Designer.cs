@@ -1,4 +1,6 @@
-﻿namespace WorkingDaysApp.FormUI
+﻿using System.Windows.Forms;
+
+namespace TimeWatchApp.FormUI
 {
     partial class GetCommentForm
     {
@@ -66,6 +68,8 @@
             this.commentText.Name = "commentText";
             this.commentText.Size = new System.Drawing.Size(428, 27);
             this.commentText.TabIndex = 11;
+            this.commentText.KeyDown += new KeyEventHandler(this.GetCommentForm_KeyDown);
+
             // 
             // commentHeader
             // 
@@ -89,9 +93,11 @@
             this.Name = "GetCommentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GetCommentForm";
+            this.Load += new System.EventHandler(this.GetCommentForm_Load);
+            this.KeyDown += new KeyEventHandler(this.GetCommentForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            this.KeyDown += this.GetCommentForm_KeyDown;
         }
 
         #endregion

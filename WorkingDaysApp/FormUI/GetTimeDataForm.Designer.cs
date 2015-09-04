@@ -1,4 +1,4 @@
-﻿namespace WorkingDaysApp.FormUI
+﻿namespace TimeWatchApp.FormUI
 {
     partial class GetTimeDataForm
     {

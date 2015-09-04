@@ -3,42 +3,45 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
-using WorkingDaysApp.Enums;
+using TimeWatchApp.Enums;
 
-namespace WorkingDaysApp.Logic
+namespace TimeWatchApp.Logic
 {
     public delegate void ChangeWasMade();
 
-    public class WorkingDays
+    public class TimeWatch
     {
-        static readonly WorkingDays _instance = new WorkingDays();
+        static readonly TimeWatch sr_Instance = new TimeWatch();
         
         public event ChangeWasMade Changed;
 
-        public const char ROW_SEPARATOR = '-'; // Todo:  make sure no '-' is in comment
+        public const char ROW_SEPARATOR = '-';
         public const int FULL_DAY_MINUTES = 6 * 60;
-        public const int Half_DAY_MINUTES = 2 * 60;
+        public const int HALF_DAY_MINUTES = 2 * 60;
         
-        public const string WORKING_DAY = "Working day",
-            HOLIDAY = "Holiday",
-            HALF_DAY = "Half day",
-            ROW_FORMAT = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
+        public const string WORKING_DAY = "Working day", ROW_FORMAT = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
+        
+        private int m_ChosenYearInt, m_ChosenMonthInt;
 
-        public static WorkingDays Instance
+        public static TimeWatch Instance
         {
-            get { return _instance; }
+            get { return sr_Instance; }
         }
 
-        private int m_ChosenYearInt = TimeHandler.CurYear(), 
-            m_ChosenMonthInt = TimeHandler.CurMonth();
+        private TimeWatch()
+        {
+        }
 
         public int ChosenMonthInt
         {
             get { return m_ChosenMonthInt; }
             set
             {
-                m_ChosenMonthInt = value;
-                Changed.Invoke();
+                if (value != m_ChosenMonthInt)
+                {
+                    m_ChosenMonthInt = value;
+                    Changed.Invoke();
+                }
             }
         }
 
@@ -47,8 +50,11 @@ namespace WorkingDaysApp.Logic
             get { return m_ChosenYearInt;}
             set
             {
-                m_ChosenYearInt = value;
-                Changed.Invoke();
+                if (value != m_ChosenYearInt)
+                {
+                    m_ChosenYearInt = value;
+                    Changed.Invoke();
+                }
             }
         }
         
@@ -133,7 +139,7 @@ Set current time instead?",
             int minutes = TimeHandler.getMinutes(totalDay);
 
             if (minutes > FULL_DAY_MINUTES) return 1.0f;
-            if (minutes > Half_DAY_MINUTES) return 0.5f;
+            if (minutes > HALF_DAY_MINUTES) return 0.5f;
             return 0.0f;
         }
     }

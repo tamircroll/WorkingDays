@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WorkingDaysApp.Properties
+namespace TimeWatchApp.Properties
 {
 
 

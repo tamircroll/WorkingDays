@@ -1,4 +1,4 @@
-﻿namespace WorkingDaysApp.Enums
+﻿namespace TimeWatchApp.Enums
 {
     public enum eColumn : byte
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace WorkingDaysApp.FormUI
+namespace TimeWatchApp.FormUI
 {
     partial class MainForm
     {

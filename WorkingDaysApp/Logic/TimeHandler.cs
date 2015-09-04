@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Forms;
-using WorkingDaysApp.Enums;
+using TimeWatchApp.Enums;
 
-namespace WorkingDaysApp.Logic
+namespace TimeWatchApp.Logic
 {
     public static class TimeHandler
     {
@@ -42,8 +41,9 @@ namespace WorkingDaysApp.Logic
             return dt.Minute;
         }
 
-        public static int DaysInMonth(int year, int month)
+        public static int? DaysInMonth(int year, int month)
         {
+            if (month < 1 || month > 12) return null;
             return DateTime.DaysInMonth(year, month);
         }
 
@@ -54,6 +54,7 @@ namespace WorkingDaysApp.Logic
 
         public static string GetMonthName(int monthInt)
         {
+            if (monthInt < 1 || monthInt > 12) return null;
             var ci = CultureInfo.CreateSpecificCulture("en");
             return ci.DateTimeFormat.GetMonthName(monthInt);
         }
@@ -97,8 +98,8 @@ namespace WorkingDaysApp.Logic
             string totalDay = totalWorkingHoursInDay(i_DayArr);
             int minutes = getMinutes(totalDay);
 
-            if (minutes >= WorkingDays.FULL_DAY_MINUTES) return 1.0f;
-            if (minutes >= WorkingDays.Half_DAY_MINUTES) return 0.5f;
+            if (minutes >= TimeWatch.FULL_DAY_MINUTES) return 1.0f;
+            if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
             return 0.0f;
         }
 

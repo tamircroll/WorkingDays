@@ -1,7 +1,7 @@
 ﻿using System;
-using WorkingDaysApp.Enums;
+using TimeWatchApp.Enums;
 
-namespace WorkingDaysApp.Logic
+namespace TimeWatchApp.Logic
 {
     public static class DayTypeFactory
     {

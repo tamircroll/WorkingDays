@@ -1,7 +1,7 @@
-﻿using WorkingDaysApp.FormUI;
-using WorkingDaysApp.Logic;
+﻿using TimeWatchApp.FormUI;
+using TimeWatchApp.Logic;
 
-namespace WorkingDaysApp
+namespace TimeWatchApp
 {
     static class Program
     {

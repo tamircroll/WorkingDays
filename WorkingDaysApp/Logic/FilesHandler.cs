@@ -2,9 +2,9 @@
 using System.IO;
 using System.Text;
 using System.Windows.Forms.VisualStyles;
-using WorkingDaysApp.Enums;
+using TimeWatchApp.Enums;
 
-namespace WorkingDaysApp.Logic
+namespace TimeWatchApp.Logic
 {
     static class FilesHandler
     {
@@ -53,7 +53,7 @@ namespace WorkingDaysApp.Logic
             for (int i = 1; i <= TimeHandler.DaysInMonth(Year, Month); i++)
             {
                 newFile.Add(string.Format(
-                    WorkingDays.ROW_FORMAT,
+                    TimeWatch.ROW_FORMAT,
                     ((i < 10) ? "0" : "") + i,
                     TimeHandler.getWeekDayStr(Year, Month, i),
                     "",
@@ -61,7 +61,7 @@ namespace WorkingDaysApp.Logic
                     "",
                     getDayType(TimeHandler.getWeekDayInt(Year, Month, i)),
                     "",
-                    WorkingDays.ROW_SEPARATOR));
+                    TimeWatch.ROW_SEPARATOR));
             }
 
             return newFile.ToArray();
@@ -80,7 +80,7 @@ namespace WorkingDaysApp.Logic
 
             foreach (var file in AllFiles)
             {
-                string curYear = file.Name.Split(WorkingDays.ROW_SEPARATOR)[0];
+                string curYear = file.Name.Split(TimeWatch.ROW_SEPARATOR)[0];
                 if (!years.Contains(curYear))
                 {
                     years.Add(curYear);

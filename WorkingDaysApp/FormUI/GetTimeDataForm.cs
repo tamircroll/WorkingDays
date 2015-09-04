@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using WorkingDaysApp.Logic;
+using TimeWatchApp.Logic;
 
-namespace WorkingDaysApp.FormUI
+namespace TimeWatchApp.FormUI
 {
     public partial class GetTimeDataForm : Form
     {

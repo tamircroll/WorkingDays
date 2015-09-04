@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using WorkingDaysApp.Enums;
-using WorkingDaysApp.Logic;
+using TimeWatchApp.Enums;
+using TimeWatchApp.Logic;
 
-namespace WorkingDaysApp.FormUI
+namespace TimeWatchApp.FormUI
 {
     public partial class GetDayTypeWindowForm : Form
     {

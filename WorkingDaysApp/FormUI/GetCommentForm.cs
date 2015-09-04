@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WorkingDaysApp.FormUI
+namespace TimeWatchApp.FormUI
 {
     public partial class GetCommentForm : Form
     {
@@ -29,6 +29,20 @@ namespace WorkingDaysApp.FormUI
         {
             m_Data = null;
             Close();
+        }
+
+        private void GetCommentForm_Load(object sender, EventArgs e)
+        {
+            ActiveControl = commentText;
+        }
+
+        private void GetCommentForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                m_Data = commentText.Text;
+                Close();
+            }
         }
     }
 }

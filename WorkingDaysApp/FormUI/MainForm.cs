@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using WorkingDaysApp.Enums;
-using WorkingDaysApp.Logic;
+using TimeWatchApp.Enums;
+using TimeWatchApp.Logic;
 
-namespace WorkingDaysApp.FormUI
+namespace TimeWatchApp.FormUI
 {
     public partial class MainForm : Form
     {
 
-        private WorkingDays workingDays = WorkingDays.Instance;
+        private TimeWatch m_TimeWatch = TimeWatch.Instance;
 
         public MainForm()
         {
-            workingDays.Changed += refreshView;
+            m_TimeWatch.Changed += refreshView;
             InitializeComponent();
             setTimeToNow();
         }
@@ -26,14 +26,14 @@ namespace WorkingDaysApp.FormUI
 
         private void setTime(int year, int Month)
         {
-            workingDays.ChosenYearInt = year;
-            workingDays.ChosenMonthInt = Month;
+            m_TimeWatch.ChosenYearInt = year;
+            m_TimeWatch.ChosenMonthInt = Month;
         }
 
         private void refreshView()
         {
-            chooseMonth.Text = workingDays.ChosenMonthInt.ToString();
-            chooseYear.Text = workingDays.ChosenYearInt.ToString();
+            chooseMonth.Text = m_TimeWatch.ChosenMonthInt.ToString();
+            chooseYear.Text = m_TimeWatch.ChosenYearInt.ToString();
             setListViewTitle();
             setGrid();
             setSummary();
@@ -57,7 +57,7 @@ namespace WorkingDaysApp.FormUI
         {
             listViewTitle.Text = string.Format(
                 "Year: {0}, Month: {1}",
-                workingDays.ChosenYearInt, TimeHandler.GetMonthName(workingDays.ChosenMonthInt));
+                m_TimeWatch.ChosenYearInt, TimeHandler.GetMonthName(m_TimeWatch.ChosenMonthInt));
         }
 
         private void setYearsToggle()
@@ -82,18 +82,18 @@ namespace WorkingDaysApp.FormUI
 
         private void setChoosenYear(int i_Year)
         {
-            workingDays.ChosenYearInt = i_Year;
+            m_TimeWatch.ChosenYearInt = i_Year;
         }
 
         private void setChoosenMonth(int i_Month)
         {
-            workingDays.ChosenMonthInt = i_Month;
+            m_TimeWatch.ChosenMonthInt = i_Month;
         }
 
         private void setGrid()
         {
-            List<string> allDaysInMonth = FilesHandler.GetFileLines(workingDays.ChosenYearInt,
-                workingDays.ChosenMonthInt);
+            List<string> allDaysInMonth = FilesHandler.GetFileLines(m_TimeWatch.ChosenYearInt,
+                m_TimeWatch.ChosenMonthInt);
 
             monthGridView.Rows.Clear();
             foreach (var dayInfo in allDaysInMonth)
@@ -140,7 +140,7 @@ namespace WorkingDaysApp.FormUI
                     case eColumn.Comment:
                         msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
                         msg = new GetCommentForm(msg).ShowDialog();
-                        if (msg != null) workingDays.setCellData(row, eColumn.Comment, msg);
+                        if (msg != null) m_TimeWatch.setCellData(row, eColumn.Comment, msg);
                         return;
                     case eColumn.Arrival:
                     case eColumn.Leaving:
@@ -149,14 +149,14 @@ namespace WorkingDaysApp.FormUI
                         string minutes = TimeHandler.getMinutesStr(msg);
 
                         msg = new GetTimeDataForm(hours, minutes).ShowDialog();
-                        if (msg != null) workingDays.setCellData(row, (eColumn) e.ColumnIndex, msg);
+                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn) e.ColumnIndex, msg);
                         return;
                     case eColumn.MonthDay:
                         return;
                     case eColumn.DayType:
                         string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value; //TODO: replace this (int) eColumn.DayType with e.ColumnIndex
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (msg != null) workingDays.setCellData(row, eColumn.DayType, msg);
+                        if (msg != null) m_TimeWatch.setCellData(row, eColumn.DayType, msg);
                         return;
                 }
             }
@@ -169,7 +169,7 @@ namespace WorkingDaysApp.FormUI
 
         private string[] getSummary()
         {
-            string[] summaryArr = workingDays.GetSummaryArr();
+            string[] summaryArr = m_TimeWatch.GetSummaryArr();
 
             summaryArr[(int) eSummaryFeilds.WorkingDays] = "Working Days: " +
                                                            summaryArr[(int) eSummaryFeilds.WorkingDays];
@@ -187,13 +187,13 @@ namespace WorkingDaysApp.FormUI
         private void Leaving_Click(object sender, EventArgs e)
         {
             setTimeToNow();
-            workingDays.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
+            m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
             setTimeToNow();
-            workingDays.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
+            m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
         }
 
         private void chooseYear_DropDown(object i_Sender, EventArgs e)
