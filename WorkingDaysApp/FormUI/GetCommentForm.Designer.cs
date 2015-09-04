@@ -28,27 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DayTypeBox = new System.Windows.Forms.ComboBox();
             this.Cancel = new System.Windows.Forms.Button();
             this.OK = new System.Windows.Forms.Button();
+            this.commentText = new System.Windows.Forms.TextBox();
+            this.commentHeader = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // DayTypeBox
-            // 
-            this.DayTypeBox.BackColor = System.Drawing.SystemColors.Window;
-            this.DayTypeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.DayTypeBox.FormattingEnabled = true;
-            this.DayTypeBox.Location = new System.Drawing.Point(123, 74);
-            this.DayTypeBox.Name = "DayTypeBox";
-            this.DayTypeBox.Size = new System.Drawing.Size(206, 33);
-            this.DayTypeBox.TabIndex = 11;
             // 
             // Cancel
             // 
             this.Cancel.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.Cancel.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel.Location = new System.Drawing.Point(260, 179);
+            this.Cancel.Location = new System.Drawing.Point(258, 101);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(141, 49);
             this.Cancel.TabIndex = 10;
@@ -59,7 +50,7 @@
             // OK
             // 
             this.OK.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.OK.Location = new System.Drawing.Point(51, 179);
+            this.OK.Location = new System.Drawing.Point(44, 101);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(141, 49);
             this.OK.TabIndex = 9;
@@ -67,24 +58,47 @@
             this.OK.UseVisualStyleBackColor = false;
             this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
+            // commentText
+            // 
+            this.commentText.AcceptsReturn = true;
+            this.commentText.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.commentText.Location = new System.Drawing.Point(12, 48);
+            this.commentText.Name = "commentText";
+            this.commentText.Size = new System.Drawing.Size(428, 27);
+            this.commentText.TabIndex = 11;
+            // 
+            // commentHeader
+            // 
+            this.commentHeader.AutoSize = true;
+            this.commentHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.commentHeader.Location = new System.Drawing.Point(151, 9);
+            this.commentHeader.Name = "commentHeader";
+            this.commentHeader.Size = new System.Drawing.Size(144, 25);
+            this.commentHeader.TabIndex = 12;
+            this.commentHeader.Text = "Add Comment:";
+            // 
             // GetCommentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(452, 302);
-            this.Controls.Add(this.DayTypeBox);
+            this.ClientSize = new System.Drawing.Size(452, 192);
+            this.Controls.Add(this.commentHeader);
+            this.Controls.Add(this.commentText);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.OK);
             this.Name = "GetCommentForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GetCommentForm";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox DayTypeBox;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Button OK;
+        private System.Windows.Forms.TextBox commentText;
+        private System.Windows.Forms.Label commentHeader;
     }
 }

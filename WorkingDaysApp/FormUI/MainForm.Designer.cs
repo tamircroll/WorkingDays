@@ -51,8 +51,7 @@ namespace WorkingDaysApp.FormUI
             this.EndTime = new System.Windows.Forms.DataGridViewButtonColumn();
             this.TotalTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dayType = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sendComment = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Comment = new System.Windows.Forms.DataGridViewButtonColumn();
             this.chooseDateGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).BeginInit();
             this.SuspendLayout();
@@ -72,10 +71,10 @@ namespace WorkingDaysApp.FormUI
             // 
             // Arrival
             // 
-            this.Arrival.BackColor = Color.PaleGoldenrod;
+            this.Arrival.BackColor = System.Drawing.Color.PaleGoldenrod;
             this.Arrival.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Arrival.Font = new Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.Arrival.Location = new Point(33, 75);
+            this.Arrival.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.Arrival.Location = new System.Drawing.Point(33, 75);
             this.Arrival.Name = "Arrival";
             this.Arrival.Size = new System.Drawing.Size(251, 85);
             this.Arrival.TabIndex = 0;
@@ -87,10 +86,10 @@ namespace WorkingDaysApp.FormUI
             // listViewTitle
             // 
             this.listViewTitle.AutoSize = true;
-            this.listViewTitle.Font = new Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.listViewTitle.Location = new Point(606, 29);
+            this.listViewTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.listViewTitle.Location = new System.Drawing.Point(683, 27);
             this.listViewTitle.Name = "listViewTitle";
-            this.listViewTitle.Size = new Size(91, 29);
+            this.listViewTitle.Size = new System.Drawing.Size(91, 29);
             this.listViewTitle.TabIndex = 3;
             this.listViewTitle.Text = "Month: ";
             // 
@@ -164,17 +163,16 @@ namespace WorkingDaysApp.FormUI
             this.EndTime,
             this.TotalTime,
             this.dayType,
-            this.Comment,
-            this.sendComment});
+            this.Comment});
             this.monthGridView.EnableHeadersVisualStyles = false;
             this.monthGridView.GridColor = System.Drawing.Color.DimGray;
-            this.monthGridView.Location = new System.Drawing.Point(611, 75);
+            this.monthGridView.Location = new System.Drawing.Point(688, 75);
             this.monthGridView.Name = "monthGridView";
+            this.monthGridView.RowHeadersVisible = false;
             this.monthGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.monthGridView.Size = new System.Drawing.Size(936, 719);
+            this.monthGridView.Size = new System.Drawing.Size(936, 720);
             this.monthGridView.TabIndex = 5;
             this.monthGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.daysGridView_CellContentClick);
-            this.monthGridView.RowHeadersVisible = false;
             // 
             // Day
             // 
@@ -186,6 +184,7 @@ namespace WorkingDaysApp.FormUI
             this.Day.Name = "Day";
             this.Day.ReadOnly = true;
             this.Day.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Day.ToolTipText = "Day in month";
             this.Day.Width = 40;
             // 
             // weekDayCol
@@ -197,6 +196,7 @@ namespace WorkingDaysApp.FormUI
             this.weekDayCol.MinimumWidth = 80;
             this.weekDayCol.Name = "weekDayCol";
             this.weekDayCol.ReadOnly = true;
+            this.weekDayCol.ToolTipText = "Week Day";
             this.weekDayCol.Width = 80;
             // 
             // StartTime
@@ -247,15 +247,7 @@ namespace WorkingDaysApp.FormUI
             this.Comment.MinimumWidth = 300;
             this.Comment.Name = "Comment";
             this.Comment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // sendComment
-            // 
-            this.sendComment.DividerWidth = 2;
-            this.sendComment.FillWeight = 3F;
-            this.sendComment.HeaderText = "set";
-            this.sendComment.Name = "sendComment";
-            this.sendComment.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.sendComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Comment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
             // 
@@ -272,6 +264,7 @@ namespace WorkingDaysApp.FormUI
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SetCommentForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.chooseDateGroupBox.ResumeLayout(false);
             this.chooseDateGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.monthGridView)).EndInit();
@@ -298,8 +291,7 @@ namespace WorkingDaysApp.FormUI
         private System.Windows.Forms.DataGridViewButtonColumn EndTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalTime;
         private System.Windows.Forms.DataGridViewButtonColumn dayType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
-        private System.Windows.Forms.DataGridViewButtonColumn sendComment;
+        private System.Windows.Forms.DataGridViewButtonColumn Comment;
 
     }
 }

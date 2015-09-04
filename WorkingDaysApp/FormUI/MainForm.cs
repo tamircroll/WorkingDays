@@ -145,28 +145,35 @@ namespace WorkingDaysApp.FormUI
 
         private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int row = e.RowIndex;
-            String msg = null;
-
-            switch ((eColumn)e.ColumnIndex)
+            try
             {
-                case eColumn.Arrival:
-                case eColumn.Leaving:
-                    msg = new GetTimeDataForm().ShowDialog();
-                    if (msg!= null) WorkingDays.Instance.setCellData(row, (eColumn)e.ColumnIndex, msg);
-                    return;
-                case eColumn.Comment:
-                case eColumn.SetComment:
-                    msg = (string)monthGridView.Rows[row].Cells[(int)eColumn.Comment].Value;
-                    if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
-                    return;
-                case eColumn.MonthDay:
-                    return;
-                case eColumn.DayType:
-                    string chosneDayType = (string)monthGridView.Rows[row].Cells[(int)eColumn.DayType].Value;
-                    msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                    if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.DayType, msg);
-                    return;
+                int row = e.RowIndex;
+                String msg;
+
+                switch ((eColumn) e.ColumnIndex)
+                {
+                    case eColumn.Comment:
+                        msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
+                        msg = new GetCommentForm(msg).ShowDialog();
+                        if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
+                        return;
+                    case eColumn.Arrival:
+                    case eColumn.Leaving:
+                        msg = new GetTimeDataForm().ShowDialog();
+                        if (msg != null) WorkingDays.Instance.setCellData(row, (eColumn) e.ColumnIndex, msg);
+                        return;
+                    case eColumn.MonthDay:
+                        return;
+                    case eColumn.DayType:
+                        string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value;
+                        msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
+                        if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.DayType, msg);
+                        return;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error occurred:\n" + exception.Message, "Exception!!", MessageBoxButtons.OK);
             }
         }
     }

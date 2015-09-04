@@ -61,28 +61,26 @@
             this.HoursBox.BackColor = System.Drawing.SystemColors.Window;
             this.HoursBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.HoursBox.FormattingEnabled = true;
-            this.HoursBox.Location = new System.Drawing.Point(127, 72);
+            this.HoursBox.Location = new System.Drawing.Point(131, 72);
             this.HoursBox.Name = "HoursBox";
             this.HoursBox.Size = new System.Drawing.Size(96, 33);
             this.HoursBox.TabIndex = 2;
-//            this.HoursBox.SelectedIndexChanged += new System.EventHandler(this.HoursBox_SelectedIndexChanged);
             // 
             // MinutesBox
             // 
             this.MinutesBox.BackColor = System.Drawing.SystemColors.Window;
             this.MinutesBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.MinutesBox.FormattingEnabled = true;
-            this.MinutesBox.Location = new System.Drawing.Point(242, 72);
+            this.MinutesBox.Location = new System.Drawing.Point(257, 72);
             this.MinutesBox.Name = "MinutesBox";
             this.MinutesBox.Size = new System.Drawing.Size(96, 33);
             this.MinutesBox.TabIndex = 3;
-//            this.MinutesBox.SelectedIndexChanged += new System.EventHandler(this.MinutesBox_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label1.Location = new System.Drawing.Point(224, 75);
+            this.label1.Location = new System.Drawing.Point(233, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(18, 25);
             this.label1.TabIndex = 4;

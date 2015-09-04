@@ -9,6 +9,5 @@
         TotalHours = 4,
         DayType = 5,
         Comment = 6,
-        SetComment = 7
     }
 }

@@ -33,6 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -43,6 +45,12 @@
   <ItemGroup>
     <Compile Include="Enums\eColumn.cs" />
     <Compile Include="Enums\eDayType.cs" />
+    <Compile Include="FormUI\GetCommentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUI\GetCommentForm.Designer.cs">
+      <DependentUpon>GetCommentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormUI\GetDayTypeWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +75,9 @@
     <Compile Include="Logic\WorkingDays.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormUI\GetCommentForm.resx">
+      <DependentUpon>GetCommentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormUI\GetDayTypeWindowForm.resx">
       <DependentUpon>GetDayTypeWindowForm.cs</DependentUpon>
     </EmbeddedResource>
