@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Enums\eColumn.cs" />
     <Compile Include="Enums\eDayType.cs" />
+    <Compile Include="Enums\eSummaryFeilds.cs" />
     <Compile Include="FormUI\GetCommentForm.cs">
       <SubType>Form</SubType>
     </Compile>

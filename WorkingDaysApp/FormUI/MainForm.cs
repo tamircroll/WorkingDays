@@ -34,6 +34,12 @@ namespace WorkingDaysApp.FormUI
             chooseYear.Text = WorkingDays.Instance.ChosenYearInt.ToString();
             setListViewTitle();
             setGrid();
+            setSummary();
+        }
+
+        private void setSummary()
+        {
+            string[] summaryArr = WorkingDays.Instance.getSummary();
         }
 
         private void setListViewTitle()

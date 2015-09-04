@@ -92,5 +92,18 @@ Set current time instead?",
             return String.Format(ROW_FORMAT, dayDataToSetArr[0], dayDataToSetArr[1], dayDataToSetArr[2], dayDataToSetArr[3],
                 dayDataToSetArr[4], dayDataToSetArr[5], dayDataToSetArr[6], ROW_SEPARATOR);
         }
+
+        public string[] getSummary()
+        {
+            Array values = Enum.GetValues(typeof (eSummaryFeilds));
+            string[] summaryArr = new string[values.Length];
+            summaryArr[(int)eSummaryFeilds.WorkingDays] = null;
+            summaryArr[(int)eSummaryFeilds.MissingDays] = null;
+            summaryArr[(int)eSummaryFeilds.SickDays] = null;
+            summaryArr[(int)eSummaryFeilds.VacationDays] = null;
+            summaryArr[(int)eSummaryFeilds.WorkingHours] = null;
+
+            return summaryArr;
+        }
     }
 }
