@@ -7,7 +7,7 @@ namespace WorkingDaysApp.FormUI
     public partial class GetTimeDataForm : Form
     {
         private const string emptyChoose = "";
-        protected string data = null;
+        protected string data;
 
         public GetTimeDataForm()
         {

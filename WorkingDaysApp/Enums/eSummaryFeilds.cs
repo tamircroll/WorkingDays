@@ -3,9 +3,9 @@
     public enum eSummaryFeilds
     {
         WorkingDays,
-        VacationDays,
+        Holidays,
         SickDays,
-        MissingDays,
-        WorkingHours
+        PersonalVecation,
+        WorkingHours,
     }
 }

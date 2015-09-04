@@ -13,11 +13,11 @@ namespace WorkingDaysApp.Logic
     {
         static readonly WorkingDays _instance = new WorkingDays();
         
-        public event ChangeWasMade m_Changed;
+        public event ChangeWasMade Changed;
 
         public const char ROW_SEPARATOR = '-'; // Todo:  make sure no '-' is in comment
-        private const int FULL_DAY_MINUTES = 6 * 60;
-        private const int Half_DAY_MINUTES = 2 * 60;
+        public const int FULL_DAY_MINUTES = 6 * 60;
+        public const int Half_DAY_MINUTES = 2 * 60;
         
         public const string WORKING_DAY = "Working day",
             HOLIDAY = "Holiday",
@@ -38,7 +38,7 @@ namespace WorkingDaysApp.Logic
             set
             {
                 m_ChosenMonthInt = value;
-                m_Changed.Invoke();
+                Changed.Invoke();
             }
         }
 
@@ -48,15 +48,8 @@ namespace WorkingDaysApp.Logic
             set
             {
                 m_ChosenYearInt = value;
-                m_Changed.Invoke();
+                Changed.Invoke();
             }
-        }
-
-        private List<FileInfo> AllFiles;
-        
-        public void start()
-        {
-            AllFiles = FilesHandler.GetAllFiles();
         }
         
         public void SetTime(int monthDay, eColumn column, string timeToSet)
@@ -78,7 +71,7 @@ namespace WorkingDaysApp.Logic
             fileLines[i_RowToSet] = dayDataArrTostring(dayDataToSetArr);
             File.WriteAllLines(FilesHandler.BuildFilePath(ChosenYearInt, ChosenMonthInt), fileLines.ToArray());
 
-            if (m_Changed != null) m_Changed.Invoke();
+            if (Changed != null) Changed.Invoke();
         }
 
         private static bool toChangeData()
@@ -96,70 +89,51 @@ Set current time instead?",
                 dayDataToSetArr[4], dayDataToSetArr[5], dayDataToSetArr[6], ROW_SEPARATOR);
         }
 
-        public string[] getSummary()
-        {
-            string[] summaryArr = GetSummaryArr();
-
-            summaryArr[(int)eSummaryFeilds.WorkingDays] = "Working Days: " + summaryArr[(int)eSummaryFeilds.WorkingDays];
-            summaryArr[(int)eSummaryFeilds.MissingDays] = "Missing Days: " + summaryArr[(int)eSummaryFeilds.MissingDays];
-            summaryArr[(int)eSummaryFeilds.SickDays] = "Sick Days: " + summaryArr[(int)eSummaryFeilds.SickDays];
-            summaryArr[(int)eSummaryFeilds.VacationDays] = "Vacation Days: " + summaryArr[(int)eSummaryFeilds.VacationDays]; ;
-            summaryArr[(int)eSummaryFeilds.WorkingHours] = "Working Hours: " + summaryArr[(int)eSummaryFeilds.WorkingHours]; ;
-
-            return summaryArr;
-        }
-
         public string[] GetSummaryArr()
         {
             Array values = Enum.GetValues(typeof (eSummaryFeilds));
             string[] summaryArr = new string[values.Length], dayArr;
             TimeSpan sum = TimeSpan.Parse("00:00");
-            float workingDays = 0;
+            float workingDays = 0, sickDays = 0, vacationDays = 0, holidays = 0;
 
 
             List<string> month = FilesHandler.GetFileLines(ChosenYearInt, ChosenMonthInt);
             foreach (string day in month)
             {
                 dayArr = day.Split(ROW_SEPARATOR);
-                sum += dayHoursSummary(dayArr);
-                workingDays += dayWork(dayArr);
-
+                sum += TimeHandler.dayHoursSummary(dayArr);
+                workingDays += actualWorkDayScope(dayArr);
+                holidays += holidayScope(dayArr[(int)eColumn.DayType]);
+                sickDays += dayArr[(int) eColumn.DayType] == DayTypeFactory.Get(eDayType.SickDay) ? 1 : 0;
+                vacationDays += dayArr[(int) eColumn.DayType] == DayTypeFactory.Get(eDayType.PersonalVacation) ? 1 : 0;
             }
 
-            summaryArr[(int) eSummaryFeilds.WorkingHours] = sum.ToString();
-            summaryArr[(int) eSummaryFeilds.WorkingDays] = workingDays.ToString();
+            summaryArr[(int)eSummaryFeilds.WorkingHours] = sum.ToString();
+            summaryArr[(int)eSummaryFeilds.WorkingDays] = workingDays.ToString();
+            summaryArr[(int)eSummaryFeilds.SickDays] = sickDays.ToString();
+            summaryArr[(int)eSummaryFeilds.PersonalVecation] = vacationDays.ToString();
+            summaryArr[(int)eSummaryFeilds.Holidays] = holidays.ToString();
+            
             return summaryArr;
         }
 
-        private float dayWork(string[] i_DayArr)
+
+
+        private float holidayScope(string i_DayType)
         {
-            string totalDay = totalWorkingInDay(i_DayArr);
-            int minutes = getMinutes(totalDay);
-
-            if (minutes > FULL_DAY_MINUTES) return 1.0f;
-            if (minutes > Half_DAY_MINUTES) return 0.5f;
-
+            if (i_DayType == DayTypeFactory.Get(eDayType.Holiday)) return 1.0f;
+            if (i_DayType == DayTypeFactory.Get(eDayType.HalfDay)) return 0.5f;
             return 0.0f;
         }
 
-        private int getMinutes(string time)
+        public float actualWorkDayScope(string[] i_DayArr)
         {
-            TimeSpan toReturn;
-            TimeSpan.TryParse(time, out toReturn);
-            return (int)toReturn.TotalMinutes;
-        }
+            string totalDay = TimeHandler.totalWorkingHoursInDay(i_DayArr);
+            int minutes = TimeHandler.getMinutes(totalDay);
 
-        private static TimeSpan dayHoursSummary(string[] i_DayArr)
-        {
-            TimeSpan toReturn;
-            string totalDay = totalWorkingInDay(i_DayArr);
-            TimeSpan.TryParse(totalDay, out toReturn);
-            return toReturn;
-        }
-
-        private static string totalWorkingInDay(string[] lineArr)
-        {
-            return TimeHandler.calcTime(lineArr[(int) eColumn.Arrival], lineArr[(int) eColumn.Leaving]);
+            if (minutes > FULL_DAY_MINUTES) return 1.0f;
+            if (minutes > Half_DAY_MINUTES) return 0.5f;
+            return 0.0f;
         }
     }
 }

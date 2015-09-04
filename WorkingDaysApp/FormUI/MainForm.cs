@@ -9,13 +9,15 @@ namespace WorkingDaysApp.FormUI
     public partial class MainForm : Form
     {
 
+        private WorkingDays workingDays = WorkingDays.Instance;
+
         public MainForm()
         {
-            WorkingDays.Instance.m_Changed += refreshView;
+            workingDays.Changed += refreshView;
             InitializeComponent();
             setTimeToNow();
         }
-        
+
 
         private void setTimeToNow()
         {
@@ -24,14 +26,14 @@ namespace WorkingDaysApp.FormUI
 
         private void setTime(int year, int Month)
         {
-            WorkingDays.Instance.ChosenYearInt = year;
-            WorkingDays.Instance.ChosenMonthInt = Month;
+            workingDays.ChosenYearInt = year;
+            workingDays.ChosenMonthInt = Month;
         }
 
-        private void refreshView()  //TODO: Scroll To choosen element every grid refresh
+        private void refreshView()
         {
-            chooseMonth.Text = WorkingDays.Instance.ChosenMonthInt.ToString();
-            chooseYear.Text = WorkingDays.Instance.ChosenYearInt.ToString();
+            chooseMonth.Text = workingDays.ChosenMonthInt.ToString();
+            chooseYear.Text = workingDays.ChosenYearInt.ToString();
             setListViewTitle();
             setGrid();
             setSummary();
@@ -39,19 +41,23 @@ namespace WorkingDaysApp.FormUI
 
         private void setSummary()
         {
-            SummaryLabel.Text = "";
-            List<string> summaryArr = new List<string>(WorkingDays.Instance.getSummary());
+            SummaryLabelLeft.Text = "";
+            SummaryLabelRight.Text = "";
+            bool left = true;
+            List<string> summaryArr = new List<string>(getSummary());
             foreach (string s in summaryArr)
             {
-                SummaryLabel.Text += s + Environment.NewLine;
+                if (left) SummaryLabelLeft.Text += s + Environment.NewLine + Environment.NewLine;
+                else SummaryLabelRight.Text += s + Environment.NewLine + Environment.NewLine;
+                left = !left;
             }
         }
 
         private void setListViewTitle()
         {
             listViewTitle.Text = string.Format(
-                "Year: {0}, Month: {1}", 
-                WorkingDays.Instance.ChosenYearInt, TimeHandler.GetMonthName(WorkingDays.Instance.ChosenMonthInt));
+                "Year: {0}, Month: {1}",
+                workingDays.ChosenYearInt, TimeHandler.GetMonthName(workingDays.ChosenMonthInt));
         }
 
         private void setYearsToggle()
@@ -76,18 +82,19 @@ namespace WorkingDaysApp.FormUI
 
         private void setChoosenYear(int i_Year)
         {
-            WorkingDays.Instance.ChosenYearInt = i_Year;
+            workingDays.ChosenYearInt = i_Year;
         }
 
         private void setChoosenMonth(int i_Month)
         {
-            WorkingDays.Instance.ChosenMonthInt = i_Month;
+            workingDays.ChosenMonthInt = i_Month;
         }
-        
+
         private void setGrid()
         {
-            List<string> allDaysInMonth = FilesHandler.GetFileLines(WorkingDays.Instance.ChosenYearInt, WorkingDays.Instance.ChosenMonthInt);
-            
+            List<string> allDaysInMonth = FilesHandler.GetFileLines(workingDays.ChosenYearInt,
+                workingDays.ChosenMonthInt);
+
             monthGridView.Rows.Clear();
             foreach (var dayInfo in allDaysInMonth)
             {
@@ -117,17 +124,72 @@ namespace WorkingDaysApp.FormUI
                 newRow.Cells[i].Value = dayArr[i];
             }
         }
-        
+
+
+        private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                int row = e.RowIndex;
+                String msg;
+
+                if (row < 0 || e.ColumnIndex < 0) return;
+
+                switch ((eColumn) e.ColumnIndex)
+                {
+                    case eColumn.Comment:
+                        msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
+                        msg = new GetCommentForm(msg).ShowDialog();
+                        if (msg != null) workingDays.setCellData(row, eColumn.Comment, msg);
+                        return;
+                    case eColumn.Arrival:
+                    case eColumn.Leaving:
+                        msg = new GetTimeDataForm().ShowDialog();
+                        if (msg != null) workingDays.setCellData(row, (eColumn) e.ColumnIndex, msg);
+                        return;
+                    case eColumn.MonthDay:
+                        return;
+                    case eColumn.DayType:
+                        string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value;
+                        msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
+                        if (msg != null) workingDays.setCellData(row, eColumn.DayType, msg);
+                        return;
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error occurred:\n" + exception.Message, "Exception!!", MessageBoxButtons.OK);
+            }
+        }
+
+
+        private string[] getSummary()
+        {
+            string[] summaryArr = workingDays.GetSummaryArr();
+
+            summaryArr[(int) eSummaryFeilds.WorkingDays] = "Working Days: " +
+                                                           summaryArr[(int) eSummaryFeilds.WorkingDays];
+            summaryArr[(int) eSummaryFeilds.PersonalVecation] = "Personal Vacation Days: " +
+                                                                summaryArr[(int) eSummaryFeilds.PersonalVecation];
+            summaryArr[(int) eSummaryFeilds.SickDays] = "Sick Days: " + summaryArr[(int) eSummaryFeilds.SickDays];
+            summaryArr[(int) eSummaryFeilds.Holidays] = "Holidays: " +
+                                                        summaryArr[(int) eSummaryFeilds.Holidays];
+            summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
+                                                            summaryArr[(int) eSummaryFeilds.WorkingHours];
+
+            return summaryArr;
+        }
+
         private void Leaving_Click(object sender, EventArgs e)
         {
             setTimeToNow();
-            WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
+            workingDays.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
         }
 
         private void Arrival_Click(object i_Sender, EventArgs e)
         {
             setTimeToNow();
-            WorkingDays.Instance.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
+            workingDays.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
         }
 
         private void chooseYear_DropDown(object i_Sender, EventArgs e)
@@ -152,52 +214,6 @@ namespace WorkingDaysApp.FormUI
             ComboBox cb = i_Sender as ComboBox;
             String s = cb.Text;
             setChoosenMonth(int.Parse(s));
-        }
-
-        private void daysGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                int row = e.RowIndex;
-                String msg;
-
-                if (row < 0 || e.ColumnIndex < 0) return;
-
-                switch ((eColumn) e.ColumnIndex)
-                {
-                    case eColumn.Comment:
-                        msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
-                        msg = new GetCommentForm(msg).ShowDialog();
-                        if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.Comment, msg);
-                        return;
-                    case eColumn.Arrival:
-                    case eColumn.Leaving:
-                        msg = new GetTimeDataForm().ShowDialog();
-                        if (msg != null) WorkingDays.Instance.setCellData(row, (eColumn) e.ColumnIndex, msg);
-                        return;
-                    case eColumn.MonthDay:
-                        return;
-                    case eColumn.DayType:
-                        string chosneDayType = (string) monthGridView.Rows[row].Cells[(int) eColumn.DayType].Value;
-                        msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (msg != null) WorkingDays.Instance.setCellData(row, eColumn.DayType, msg);
-                        return;
-                }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Error occurred:\n" + exception.Message, "Exception!!", MessageBoxButtons.OK);
-            }
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

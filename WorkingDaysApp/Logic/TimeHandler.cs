@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using WorkingDaysApp.Enums;
 
 namespace WorkingDaysApp.Logic
 {
-    static public class TimeHandler
+    public static class TimeHandler
     {
         public static int CurYear()
         {
@@ -52,8 +53,8 @@ namespace WorkingDaysApp.Logic
 
         public static string GetMonthName(int monthInt)
         {
-           var ci= CultureInfo.CreateSpecificCulture("en");
-           return ci.DateTimeFormat.GetMonthName(monthInt);
+            var ci = CultureInfo.CreateSpecificCulture("en");
+            return ci.DateTimeFormat.GetMonthName(monthInt);
         }
 
         public static string calcTime(string i_FirstTime, string i_SecondTime)
@@ -62,10 +63,10 @@ namespace WorkingDaysApp.Logic
             string[] secondTime = i_SecondTime.Split(':');
             if (firstTime.Length > 1 && secondTime.Length > 1)
             {
-                TimeSpan firsTimeSpan = new TimeSpan(int.Parse(firstTime[0]), int.Parse(firstTime[1]),
-                    int.Parse(firstTime[2]));
-                TimeSpan secondTimeSpan = new TimeSpan(int.Parse(secondTime[0]), int.Parse(secondTime[1]),
-                    int.Parse(secondTime[2]));
+                TimeSpan firsTimeSpan = new TimeSpan(Int32.Parse(firstTime[0]), Int32.Parse(firstTime[1]),
+                    Int32.Parse(firstTime[2]));
+                TimeSpan secondTimeSpan = new TimeSpan(Int32.Parse(secondTime[0]), Int32.Parse(secondTime[1]),
+                    Int32.Parse(secondTime[2]));
                 TimeSpan time = secondTimeSpan - firsTimeSpan;
                 return time.ToString();
             }
@@ -76,13 +77,43 @@ namespace WorkingDaysApp.Logic
         public static int getWeekDayInt(int year, int month, int monthDay)
         {
             DateTime dateValue = new DateTime(year, month, monthDay);
-            return (int)dateValue.DayOfWeek;   
+            return (int) dateValue.DayOfWeek;
         }
 
         public static string getWeekDayStr(int year, int month, int monthDay)
         {
             DateTime dateValue = new DateTime(year, month, monthDay);
             return dateValue.DayOfWeek.ToString();
+        }
+
+        public static string totalWorkingHoursInDay(string[] lineArr)
+        {
+            return calcTime(lineArr[(int) eColumn.Arrival], lineArr[(int) eColumn.Leaving]);
+        }
+
+        public static float dayWorkScope(string[] i_DayArr)
+        {
+            string totalDay = totalWorkingHoursInDay(i_DayArr);
+            int minutes = getMinutes(totalDay);
+
+            if (minutes > WorkingDays.FULL_DAY_MINUTES) return 1.0f;
+            if (minutes > WorkingDays.Half_DAY_MINUTES) return 0.5f;
+            return 0.0f;
+        }
+
+        public static int getMinutes(string time)
+        {
+            TimeSpan toReturn;
+            TimeSpan.TryParse(time, out toReturn);
+            return (int) toReturn.TotalMinutes;
+        }
+
+        public static TimeSpan dayHoursSummary(string[] i_DayArr)
+        {
+            TimeSpan toReturn;
+            string totalDay = totalWorkingHoursInDay(i_DayArr);
+            TimeSpan.TryParse(totalDay, out toReturn);
+            return toReturn;
         }
     }
 }

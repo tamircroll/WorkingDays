@@ -8,7 +8,7 @@ namespace WorkingDaysApp.Logic
 {
     static class FilesHandler
     {
-        private const string DataFolderName = "\\monthFiles";
+        private const string DataFolderName = "\\monthsFiles";
 
         public static string GetMonthsFilesPath()
         {
@@ -52,8 +52,6 @@ namespace WorkingDaysApp.Logic
             List<string> newFile = new List<string>();
             for (int i = 1; i <= TimeHandler.DaysInMonth(Year, Month); i++)
             {
-                string monthDay = TimeHandler.getWeekDayStr(Year, Month, i);
-
                 newFile.Add(string.Format(
                     WorkingDays.ROW_FORMAT,
                     ((i < 10) ? "0" : "") + i,
@@ -71,14 +69,14 @@ namespace WorkingDaysApp.Logic
 
         private static string getDayType(int day)
         {
-            if (day == 5 || day == 6) return DayTypeFactory.Get(eDayType.Vacation);
+            if (day == 5 || day == 6) return DayTypeFactory.Get(eDayType.Holiday);
             return DayTypeFactory.Get(eDayType.WorkDay);
         }
 
         public static List<string> GetYears()
         {
             List<string> years = new List<string>();
-            List<FileInfo> AllFiles = FilesHandler.GetAllFiles();
+            List<FileInfo> AllFiles = GetAllFiles();
 
             foreach (var file in AllFiles)
             {
