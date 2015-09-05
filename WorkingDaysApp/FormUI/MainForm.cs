@@ -18,7 +18,6 @@ namespace TimeWatchApp.FormUI
             setTimeToNow();
         }
 
-
         private void setTimeToNow()
         {
             setTime(TimeHandler.CurYear(), TimeHandler.CurMonth());
@@ -80,16 +79,6 @@ namespace TimeWatchApp.FormUI
             }
         }
 
-        private void setChoosenYear(int i_Year)
-        {
-            m_TimeWatch.ChosenYearInt = i_Year;
-        }
-
-        private void setChoosenMonth(int i_Month)
-        {
-            m_TimeWatch.ChosenMonthInt = i_Month;
-        }
-
         private void setGrid()
         {
             List<string> allDaysInMonth = FilesHandler.GetFileLines(m_TimeWatch.ChosenYearInt,
@@ -113,7 +102,7 @@ namespace TimeWatchApp.FormUI
 
         private void setGridRow(int i_Column, DataGridViewRow i_NewRow, IList<string> i_DayArr)
         {
-            if (i_Column == (int) eColumn.TotalHours)
+            if (i_Column == (int) eColumn.TotalTime)
             {
                 i_NewRow.Cells[i_Column].Value = TimeHandler.calcTime(
                     (string) i_NewRow.Cells[(int) eColumn.Arrival].Value,
@@ -124,10 +113,9 @@ namespace TimeWatchApp.FormUI
             }
             else
             {
-                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.DASH_REPLACER, TimeWatch.ROW_SEPARATOR.ToString());
+                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer, TimeWatch.sr_RowSeparator.ToString());
             }
         }
-
 
         private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
         {
@@ -159,7 +147,7 @@ namespace TimeWatchApp.FormUI
                     case eColumn.DayType:
                         string chosneDayType = (string) monthGridView.Rows[row].Cells[i_E.ColumnIndex].Value;
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn)i_E.ColumnIndex, msg);
+                        if (!string.IsNullOrEmpty(msg)) m_TimeWatch.setCellData(row, (eColumn)i_E.ColumnIndex, msg);
                         return;
                 }
             }
@@ -168,7 +156,6 @@ namespace TimeWatchApp.FormUI
                 MessageBox.Show("Error occurred:\n" + exception.Message, "Exception!!", MessageBoxButtons.OK);
             }
         }
-
 
         private string[] getSummary()
         {
@@ -215,7 +202,7 @@ namespace TimeWatchApp.FormUI
             if (cb != null)
             {
                 String s = cb.Text;
-                setChoosenYear(int.Parse(s));
+                m_TimeWatch.ChosenYearInt = int.Parse(s);
             }
         }
 
@@ -225,7 +212,7 @@ namespace TimeWatchApp.FormUI
             if (cb != null)
             {
                 String s = cb.Text;
-                setChoosenMonth(int.Parse(s));
+                m_TimeWatch.ChosenMonthInt = int.Parse(s);
             }
         }
     }

@@ -6,7 +6,7 @@
         WeekDay = 1,
         Arrival = 2,
         Leaving = 3,
-        TotalHours = 4,
+        TotalTime = 4,
         DayType = 5,
         Comment = 6,
     }

@@ -61,7 +61,7 @@ namespace WorkingDaysApp.Logic
                     "",
                     getDayType(TimeHandler.getWeekDayInt(i_Year, i_Month, i)),
                     "",
-                    TimeWatch.ROW_SEPARATOR));
+                    TimeWatch.sr_RowSeparator));
             }
 
             return newFile.ToArray();
@@ -80,7 +80,7 @@ namespace WorkingDaysApp.Logic
 
             foreach (var file in allFiles)
             {
-                string curYear = file.Name.Split(TimeWatch.ROW_SEPARATOR)[0];
+                string curYear = file.Name.Split(TimeWatch.sr_RowSeparator)[0];
                 if (!years.Contains(curYear))
                 {
                     years.Add(curYear);

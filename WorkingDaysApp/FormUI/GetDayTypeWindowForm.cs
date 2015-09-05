@@ -8,11 +8,12 @@ namespace TimeWatchApp.FormUI
     public partial class GetDayTypeWindowForm : Form
     {
         protected string m_Data;
+        private readonly string m_CurrDayType;
 
         public GetDayTypeWindowForm(string i_CurrDayType)
         {
             InitializeComponent();
-            DayTypeBox.Text = i_CurrDayType;
+            m_CurrDayType = i_CurrDayType;
         }
 
         public new string ShowDialog()
@@ -33,6 +34,7 @@ namespace TimeWatchApp.FormUI
         private void GetDayTypeWindowForm_Load(object i_Sender, EventArgs i_)
         {
             setDayTypeBoxValues();
+            DayTypeBox.Text = m_CurrDayType;
         }
 
         private void OK_Click(object i_Sender, EventArgs i_)
