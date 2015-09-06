@@ -98,6 +98,18 @@ namespace TimeWatchApp.FormUI
                     setGridRow(column, newRow, dayArr);
                 }
             }
+
+            SetGridHeight();
+        }
+
+        private void SetGridHeight()
+        {
+            int totalRowHeight = monthGridView.ColumnHeadersHeight;
+            
+            foreach (DataGridViewRow row in monthGridView.Rows)
+                totalRowHeight += row.Height;
+            
+            monthGridView.Height = totalRowHeight + 2;
         }
 
         private void setGridRow(int i_Column, DataGridViewRow i_NewRow, IList<string> i_DayArr)
@@ -115,6 +127,7 @@ namespace TimeWatchApp.FormUI
             {
                 i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer, TimeWatch.sr_RowSeparator.ToString());
             }
+
         }
 
         private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
