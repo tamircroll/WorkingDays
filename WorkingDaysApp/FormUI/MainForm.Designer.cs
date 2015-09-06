@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace TimeWatchApp.FormUI
 {
@@ -32,9 +33,9 @@ namespace TimeWatchApp.FormUI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Leaving = new System.Windows.Forms.Button();
             this.Arrival = new System.Windows.Forms.Button();
             this.listViewTitle = new System.Windows.Forms.Label();
@@ -122,7 +123,6 @@ namespace TimeWatchApp.FormUI
             // 
             // chooseMonth
             // 
-            this.chooseMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.chooseMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.chooseMonth.FormattingEnabled = true;
             this.chooseMonth.Location = new System.Drawing.Point(123, 104);
@@ -131,6 +131,7 @@ namespace TimeWatchApp.FormUI
             this.chooseMonth.TabIndex = 7;
             this.chooseMonth.DropDown += new System.EventHandler(this.chooseMonth_DropDown);
             this.chooseMonth.SelectedIndexChanged += new System.EventHandler(this.chooseMonth_SelectedIndexChanged);
+            this.chooseMonth.KeyDown += new KeyEventHandler(this.ChooseMonth_KeyDown);
             // 
             // chooseYearTitle
             // 
@@ -144,7 +145,6 @@ namespace TimeWatchApp.FormUI
             // 
             // chooseYear
             // 
-            this.chooseYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.chooseYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.chooseYear.FormattingEnabled = true;
             this.chooseYear.Location = new System.Drawing.Point(123, 39);
@@ -153,6 +153,8 @@ namespace TimeWatchApp.FormUI
             this.chooseYear.TabIndex = 5;
             this.chooseYear.DropDown += new System.EventHandler(this.chooseYear_DropDown);
             this.chooseYear.SelectedIndexChanged += new System.EventHandler(this.chooseYear_SelectedIndexChanged);
+            this.chooseYear.KeyDown += new KeyEventHandler(this.ChooseYear_KeyDown);
+
             // 
             // monthGridView
             // 
@@ -233,8 +235,8 @@ namespace TimeWatchApp.FormUI
             // TotalTime
             // 
             this.TotalTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle4;
             this.TotalTime.FillWeight = 2F;
             this.TotalTime.Frozen = true;
             this.TotalTime.HeaderText = "Total Time";
@@ -247,8 +249,8 @@ namespace TimeWatchApp.FormUI
             // dayType
             // 
             this.dayType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.dayType.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dayType.DefaultCellStyle = dataGridViewCellStyle5;
             this.dayType.FillWeight = 1F;
             this.dayType.Frozen = true;
             this.dayType.HeaderText = "dayType";
@@ -261,8 +263,8 @@ namespace TimeWatchApp.FormUI
             // Comment
             // 
             this.Comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Comment.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Comment.DefaultCellStyle = dataGridViewCellStyle6;
             this.Comment.FillWeight = 10F;
             this.Comment.HeaderText = "Comment";
             this.Comment.MinimumWidth = 400;

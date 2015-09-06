@@ -215,5 +215,35 @@ namespace TimeWatchApp.FormUI
                 m_TimeWatch.ChosenMonthInt = int.Parse(s);
             }
         }
+
+        private void ChooseYear_KeyDown(object i_Sender, KeyEventArgs i_)
+        {
+            int year;
+            ComboBox cb = i_Sender as ComboBox;
+            if (i_.KeyCode == Keys.Enter)
+            {
+                string s = cb.Text;
+                bool isNumber = int.TryParse(s, out year);
+                if (isNumber && year >= 2015 && year < 3000)
+                {
+                    m_TimeWatch.ChosenYearInt = int.Parse(s);
+                }
+            }
+        }
+
+        private void ChooseMonth_KeyDown(object i_Sender, KeyEventArgs i_)
+        {
+            int month;
+            ComboBox cb = i_Sender as ComboBox;
+            if (i_.KeyCode == Keys.Enter)
+            {
+                string s = cb.Text;
+                bool isNumber = int.TryParse(s, out month);
+                if (isNumber && month >= 1 && month <= 12)
+                {
+                    m_TimeWatch.ChosenMonthInt = int.Parse(s);
+                }
+            }
+        }
     }
 }
