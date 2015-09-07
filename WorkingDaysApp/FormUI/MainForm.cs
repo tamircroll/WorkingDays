@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TimeWatchApp.Enums;
+using TimeWatchApp.Logic;
 using WorkingDaysApp.Logic;
 
 namespace TimeWatchApp.FormUI
@@ -81,21 +82,21 @@ namespace TimeWatchApp.FormUI
 
         private void setGrid()
         {
-            List<string> allDaysInMonth = FilesHandler.GetFileLines(m_TimeWatch.ChosenYearInt,
+            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.ChosenYearInt,
                 m_TimeWatch.ChosenMonthInt);
 
             monthGridView.Rows.Clear();
-            foreach (var dayInfo in allDaysInMonth)
+            foreach (var row in allRowsFromFile)
             {
-                var dayArr = dayInfo.Split('-');
-                if (dayArr.Length < 6) continue;
+                var rowArr = row.Split('-');
+                if (rowArr.Length < 6) continue;
 
                 int currRowNum = monthGridView.Rows.Add();
                 var newRow = monthGridView.Rows[currRowNum];
 
-                for (int column = 0; column < dayArr.Length; column++)
+                for (int column = 0; column < rowArr.Length; column++)
                 {
-                    setGridRow(column, newRow, dayArr);
+                    setCell(column, newRow, rowArr);
                 }
             }
 
@@ -112,22 +113,40 @@ namespace TimeWatchApp.FormUI
             monthGridView.Height = totalRowHeight + 2;
         }
 
-        private void setGridRow(int i_Column, DataGridViewRow i_NewRow, IList<string> i_DayArr)
+        private void setCell(int i_Column, DataGridViewRow i_NewRow, IList<string> i_DayArr)
         {
             if (i_Column == (int) eColumn.TotalTime)
             {
-                i_NewRow.Cells[i_Column].Value = TimeHandler.calcTime(
-                    (string) i_NewRow.Cells[(int) eColumn.Arrival].Value,
-                    (string) i_NewRow.Cells[(int) eColumn.Leaving].Value);
-                i_NewRow.Cells[i_Column].Style.BackColor = ((string) i_NewRow.Cells[i_Column].Value).StartsWith("-")
-                    ? Color.LightCoral
-                    : DefaultBackColor;
+                setTotalTimeCellColor(i_Column, i_NewRow);
             }
             else
             {
                 i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer, TimeWatch.sr_RowSeparator.ToString());
             }
+            if (i_Column == (int)eColumn.DayType)
+            {
+                i_NewRow.Cells[i_Column].Style.BackColor = setDayTypeCellColor((string)i_NewRow.Cells[i_Column].Value);
+            }
+        }
 
+        private Color setDayTypeCellColor(string i_RowData)
+        {
+            if (DayTypeFactory.Get(eDayType.Holiday) == i_RowData)
+            {
+                return Color.Chartreuse;
+            }
+
+            return Color.White;
+        }
+
+        private static void setTotalTimeCellColor(int i_Column, DataGridViewRow i_NewRow)
+        {
+            i_NewRow.Cells[i_Column].Value = TimeHandler.calcTime(
+                (string) i_NewRow.Cells[(int) eColumn.Arrival].Value,
+                (string) i_NewRow.Cells[(int) eColumn.Leaving].Value);
+            i_NewRow.Cells[i_Column].Style.BackColor = ((string) i_NewRow.Cells[i_Column].Value).StartsWith("-")
+                ? Color.LightCoral
+                : DefaultBackColor;
         }
 
         private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
