@@ -106,7 +106,7 @@ Set current time instead?",
                 vacationDays += dayArr[(int) eColumn.DayType] == DayTypeFactory.Get(eDayType.PersonalVacation) ? 1 : 0;
             }
 
-            summaryArr[(int) eSummaryFeilds.WorkingHours] = sum.ToString();
+            summaryArr[(int)eSummaryFeilds.WorkingHours] = string.Format("{0}:{1}", sum.TotalHours.ToString().Split('.')[0], sum.Minutes.ToString().Split('.')[0]); //TODO: FIX THAT!!!
             summaryArr[(int) eSummaryFeilds.WorkingDays] = workingDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.SickDays] = sickDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.PersonalVecation] = vacationDays.ToString(CultureInfo.InvariantCulture);
