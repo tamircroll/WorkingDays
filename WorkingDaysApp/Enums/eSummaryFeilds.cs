@@ -7,5 +7,6 @@
         SickDays,
         PersonalVecation,
         WorkingHours,
+        DayAverage
     }
 }

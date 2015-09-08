@@ -106,22 +106,28 @@ Set current time instead?",
                 vacationDays += dayArr[(int) eColumn.DayType] == DayTypeFactory.Get(eDayType.PersonalVacation) ? 1 : 0;
             }
 
-            summaryArr[(int)eSummaryFeilds.WorkingHours] = getTotalHours(sum);
+            summaryArr[(int)eSummaryFeilds.WorkingHours] = getTotalHoursStr(sum);
             summaryArr[(int) eSummaryFeilds.WorkingDays] = workingDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.SickDays] = sickDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.PersonalVecation] = vacationDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.Holidays] = holidays.ToString(CultureInfo.InvariantCulture);
+            summaryArr[(int)eSummaryFeilds.DayAverage] = (getTotalHoursInt(sum) / workingDays).ToString();
 
             return summaryArr;
         }
 
-        private static string getTotalHours(TimeSpan sum)
+        private static string getTotalHoursStr(TimeSpan sum)
         {
             string hours = sum.TotalHours.ToString().Split('.')[0];
             string minutes = sum.Minutes.ToString().Split('.')[0];
             minutes = (minutes.Length < 2? "0" : "") + minutes;
             
             return string.Format("{0}:{1}", hours, minutes);
+        }
+
+        private static int getTotalHoursInt(TimeSpan sum)
+        {
+            return (int) sum.TotalMinutes / 60;
         }
 
         private string dayDataArrTostring(string[] i_DayDataToSetArr)
