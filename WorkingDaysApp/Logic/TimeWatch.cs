@@ -111,7 +111,7 @@ Set current time instead?",
             summaryArr[(int) eSummaryFeilds.SickDays] = sickDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.PersonalVecation] = vacationDays.ToString(CultureInfo.InvariantCulture);
             summaryArr[(int) eSummaryFeilds.Holidays] = holidays.ToString(CultureInfo.InvariantCulture);
-            summaryArr[(int)eSummaryFeilds.DayAverage] = (getTotalHoursInt(sum) / workingDays).ToString();
+            summaryArr[(int)eSummaryFeilds.DayAverage] = String.Format("{0:0.00}", getTotalHoursInt(sum) / workingDays);
 
             return summaryArr;
         }

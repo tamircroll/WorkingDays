@@ -202,7 +202,7 @@ namespace TimeWatchApp.FormUI
                                                         summaryArr[(int) eSummaryFeilds.Holidays];
             summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
                                                             summaryArr[(int) eSummaryFeilds.WorkingHours];
-            summaryArr[(int)eSummaryFeilds.DayAverage] = "Day Average: " +
+            summaryArr[(int)eSummaryFeilds.DayAverage] = "Working Hours: " +
                                                             summaryArr[(int)eSummaryFeilds.DayAverage];
 
 
