@@ -33,9 +33,9 @@ namespace TimeWatchApp.FormUI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Leaving = new System.Windows.Forms.Button();
             this.Arrival = new System.Windows.Forms.Button();
             this.listViewTitle = new System.Windows.Forms.Label();
@@ -131,7 +131,7 @@ namespace TimeWatchApp.FormUI
             this.chooseMonth.TabIndex = 7;
             this.chooseMonth.DropDown += new System.EventHandler(this.chooseMonth_DropDown);
             this.chooseMonth.SelectedIndexChanged += new System.EventHandler(this.chooseMonth_SelectedIndexChanged);
-            this.chooseMonth.KeyDown += new KeyEventHandler(this.ChooseMonth_KeyDown);
+            this.chooseMonth.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChooseMonth_KeyDown);
             // 
             // chooseYearTitle
             // 
@@ -153,8 +153,7 @@ namespace TimeWatchApp.FormUI
             this.chooseYear.TabIndex = 5;
             this.chooseYear.DropDown += new System.EventHandler(this.chooseYear_DropDown);
             this.chooseYear.SelectedIndexChanged += new System.EventHandler(this.chooseYear_SelectedIndexChanged);
-            this.chooseYear.KeyDown += new KeyEventHandler(this.ChooseYear_KeyDown);
-
+            this.chooseYear.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChooseYear_KeyDown);
             // 
             // monthGridView
             // 
@@ -177,7 +176,7 @@ namespace TimeWatchApp.FormUI
             this.monthGridView.Name = "monthGridView";
             this.monthGridView.RowHeadersVisible = false;
             this.monthGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.monthGridView.Size = new System.Drawing.Size(936, 739);
+            this.monthGridView.Size = new System.Drawing.Size(936, 698);
             this.monthGridView.TabIndex = 5;
             this.monthGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.daysGridView_CellContentClick);
             // 
@@ -235,8 +234,8 @@ namespace TimeWatchApp.FormUI
             // TotalTime
             // 
             this.TotalTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.TotalTime.DefaultCellStyle = dataGridViewCellStyle10;
             this.TotalTime.FillWeight = 2F;
             this.TotalTime.Frozen = true;
             this.TotalTime.HeaderText = "Total Time";
@@ -249,8 +248,8 @@ namespace TimeWatchApp.FormUI
             // dayType
             // 
             this.dayType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.dayType.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dayType.DefaultCellStyle = dataGridViewCellStyle11;
             this.dayType.FillWeight = 1F;
             this.dayType.Frozen = true;
             this.dayType.HeaderText = "dayType";
@@ -263,8 +262,8 @@ namespace TimeWatchApp.FormUI
             // Comment
             // 
             this.Comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.Comment.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.Comment.DefaultCellStyle = dataGridViewCellStyle12;
             this.Comment.FillWeight = 10F;
             this.Comment.HeaderText = "Comment";
             this.Comment.MinimumWidth = 400;
@@ -276,7 +275,7 @@ namespace TimeWatchApp.FormUI
             // 
             this.SummaryTitle.AutoSize = true;
             this.SummaryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.SummaryTitle.Location = new System.Drawing.Point(685, 846);
+            this.SummaryTitle.Location = new System.Drawing.Point(685, 825);
             this.SummaryTitle.Name = "SummaryTitle";
             this.SummaryTitle.Size = new System.Drawing.Size(128, 29);
             this.SummaryTitle.TabIndex = 7;
@@ -286,7 +285,7 @@ namespace TimeWatchApp.FormUI
             // 
             this.SummaryLabelLeft.AutoSize = true;
             this.SummaryLabelLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.SummaryLabelLeft.Location = new System.Drawing.Point(870, 846);
+            this.SummaryLabelLeft.Location = new System.Drawing.Point(870, 825);
             this.SummaryLabelLeft.Name = "SummaryLabelLeft";
             this.SummaryLabelLeft.Size = new System.Drawing.Size(52, 29);
             this.SummaryLabelLeft.TabIndex = 8;
@@ -296,7 +295,7 @@ namespace TimeWatchApp.FormUI
             // 
             this.SummaryLabelRight.AutoSize = true;
             this.SummaryLabelRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.SummaryLabelRight.Location = new System.Drawing.Point(1284, 846);
+            this.SummaryLabelRight.Location = new System.Drawing.Point(1285, 825);
             this.SummaryLabelRight.Name = "SummaryLabelRight";
             this.SummaryLabelRight.Size = new System.Drawing.Size(69, 29);
             this.SummaryLabelRight.TabIndex = 9;
