@@ -207,7 +207,7 @@ namespace TimeWatchApp.FormUI
             this.weekDayCol.ToolTipText = "Week Day";
             this.weekDayCol.Width = 80;
             // 
-            // StartTime
+            // ArrivalTime
             // 
             this.StartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.StartTime.FillWeight = 2F;

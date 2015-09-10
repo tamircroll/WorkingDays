@@ -71,7 +71,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\DayTypeFactory.cs" />
+    <Compile Include="Logic\DayData.cs" />
     <Compile Include="Logic\FilesHandler.cs" />
+    <Compile Include="Logic\HourData\DayTimeData.cs" />
     <Compile Include="Logic\TimeHandler.cs" />
     <Compile Include="Logic\TimeWatch.cs" />
     <Compile Include="Program.cs" />
