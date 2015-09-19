@@ -7,24 +7,24 @@ namespace WorkingDaysApp.Logic.HourData
 
     public class MonthData
     {
-        private List<DayData> m_AllDays;
-        private int m_Year, m_Month;
+        private readonly List<DayData> m_AllDays;
+        private readonly int m_Year, m_Month;
         public int NumOfDays { get; private set; }
 
         public MonthData(int i_Year, int i_Month)
         {
             m_Year = i_Year;
             m_Month = i_Month;
-            m_AllDays = new List<DayData>();
+            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             setNumOfDays(i_Year, i_Month);
-            createFileIfNeeded();
         }
 
         public MonthData(List<DayData> i_AllDays, int i_Year, int i_Month)
         {
-            m_AllDays = i_AllDays;
             m_Year = i_Year;
             m_Month = i_Month;
+            m_AllDays = i_AllDays;
+            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             setNumOfDays(i_Year, i_Month);
         }
 
@@ -33,6 +33,7 @@ namespace WorkingDaysApp.Logic.HourData
             m_AllDays = DayData.StringLstToDayDataLst(i_AllDays);
             m_Year = i_Year;
             m_Month = i_Month;
+            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             setNumOfDays(i_Year, i_Month);
         }
 
@@ -41,6 +42,11 @@ namespace WorkingDaysApp.Logic.HourData
             m_Year = FilesHandler.getFileYear(i_File.Name);
             m_Month = FilesHandler.getFileMonth(i_File.Name);
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(m_Year, m_Month));
+        }
+
+        public object this[int i_Day]
+        {
+            get { return m_AllDays[i_Day - 1]; }
         }
 
         public int Year
@@ -52,13 +58,7 @@ namespace WorkingDaysApp.Logic.HourData
         {
             get { return m_Month; }
         }
-
-        public void addDay(DayData i_DayToAdd, int i_DayInMonth)
-        {
-            if (i_DayInMonth > NumOfDays || i_DayInMonth < NumOfDays)
-                m_AllDays[i_DayInMonth - 1] = i_DayToAdd;
-        }
-
+        
         public float AllWorkingDays()
         {
             float sum = 0;
@@ -84,6 +84,22 @@ namespace WorkingDaysApp.Logic.HourData
             if (minutes >= TimeWatch.FULL_DAY_MINUTES) return 1.0f;
             if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
             return 0.0f;
+        }
+
+        private void createFileIfNeeded()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void writeToFile()
+        {
+            List<string> toWrite = new List<string>();
+            foreach (DayData day in m_AllDays)
+            {
+                toWrite.Add(day.ToString());
+            }
+
+            File.WriteAllLines(FilesHandler.BuildFilePath(Year, Month), toWrite.ToArray());
         }
     }
 }
