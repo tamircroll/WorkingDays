@@ -17,31 +17,35 @@ namespace WorkingDaysApp.Logic.HourData
             m_Month = i_Month;
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             setNumOfDays(i_Year, i_Month);
+            subscribeToAllDaysEvents();
         }
-
-        public MonthData(List<DayData> i_AllDays, int i_Year, int i_Month)
-        {
-            m_Year = i_Year;
-            m_Month = i_Month;
-            m_AllDays = i_AllDays;
-            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
-            setNumOfDays(i_Year, i_Month);
-        }
-
-        public MonthData(List<string> i_AllDays, int i_Year, int i_Month)
-        {
-            m_AllDays = DayData.StringLstToDayDataLst(i_AllDays);
-            m_Year = i_Year;
-            m_Month = i_Month;
-            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
-            setNumOfDays(i_Year, i_Month);
-        }
+//
+//        public MonthData(List<DayData> i_AllDays, int i_Year, int i_Month)
+//        {
+//            m_Year = i_Year;
+//            m_Month = i_Month;
+//            m_AllDays = i_AllDays;
+//            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
+//            NumOfDays = i_AllDays.Count;
+//            subscribeToAllDaysEvents();
+//        }
+//
+//        public MonthData(List<string> i_AllDays, int i_Year, int i_Month)
+//        {
+//            m_AllDays = DayData.StringLstToDayDataLst(i_AllDays);
+//            m_Year = i_Year;
+//            m_Month = i_Month;
+//            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
+//            NumOfDays = i_AllDays.Count;
+//            subscribeToAllDaysEvents();
+//        }
 
         public MonthData(FileInfo i_File)
         {
             m_Year = FilesHandler.getFileYear(i_File.Name);
             m_Month = FilesHandler.getFileMonth(i_File.Name);
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(m_Year, m_Month));
+            subscribeToAllDaysEvents();
         }
 
         public object this[int i_Day]
@@ -70,7 +74,6 @@ namespace WorkingDaysApp.Logic.HourData
             return sum;
         }
 
-
         private void setNumOfDays(int i_Year, int i_Month)
         {
             int? daysInMonth = TimeHandler.DaysInMonth(i_Year, i_Month);
@@ -85,12 +88,7 @@ namespace WorkingDaysApp.Logic.HourData
             if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
             return 0.0f;
         }
-
-        private void createFileIfNeeded()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         private void writeToFile()
         {
             List<string> toWrite = new List<string>();
@@ -100,6 +98,14 @@ namespace WorkingDaysApp.Logic.HourData
             }
 
             File.WriteAllLines(FilesHandler.BuildFilePath(Year, Month), toWrite.ToArray());
+        }
+
+        private void subscribeToAllDaysEvents()
+        {
+            foreach (DayData day in m_AllDays)
+            {
+                day.Changed += writeToFile;
+            }
         }
     }
 }

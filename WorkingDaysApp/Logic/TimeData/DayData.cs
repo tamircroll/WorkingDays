@@ -6,8 +6,12 @@ using TimeWatchApp.Logic;
 
 namespace WorkingDaysApp.Logic.TimeData
 {
+    public delegate void ChangeWasMade();
+
     public class DayData
     {
+        public event ChangeWasMade Changed;
+
         static readonly public char sr_Seperator = '-';
         public const string Day_FORMAT = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
 
@@ -55,7 +59,11 @@ namespace WorkingDaysApp.Logic.TimeData
         public eDayType DayType
         {
             get { return m_DayType; }
-            set { m_DayType = value; }
+            set
+            {
+                m_DayType = value;
+                if (Changed != null) Changed.Invoke();
+            }
         }
 
         public void setDayType(string i_DayTypeStr)
@@ -72,7 +80,11 @@ namespace WorkingDaysApp.Logic.TimeData
         public string Comment
         {
             get { return m_Comment; }
-            set { m_Comment = value; }
+            set
+            {
+                m_Comment = value;
+                if (Changed != null) Changed.Invoke();
+            }
         }
 
         public HourData ArrivalTime
@@ -82,13 +94,18 @@ namespace WorkingDaysApp.Logic.TimeData
             {
                 if (string.IsNullOrEmpty(m_ArrivalTime.Time) && askIfToChangeData())
                     m_ArrivalTime = value;
+                if (Changed != null) Changed.Invoke();
             }
         }
 
         public HourData LeavingTime
         {
             get { return m_LeavingTime; }
-            set { m_LeavingTime = value; }
+            set
+            {
+                m_LeavingTime = value;
+                if (Changed != null) Changed.Invoke();
+            }
         }
 
         public string TotalHoursStr()
