@@ -1,22 +1,25 @@
-﻿namespace WorkingDaysApp.Logic.HourData
+﻿using System;
+
+namespace WorkingDaysApp.Logic.TimeData
 {
-    using System;
-
-    public class DayTimeData
+    public class HourData
     {
-        private string m_Time;
+        private string m_Time = "";
 
-        public DayTimeData(string i_Time)
+        public HourData(string i_Time)
         {
-            m_Time = null;
-
             if (isTimeValid(i_Time))
             {
                 m_Time = i_Time;
             }
         }
 
-        public DayTimeData(DateTime i_Time)
+        public HourData()
+        {
+            m_Time = "";
+        }
+
+        public HourData(DateTime i_Time)
         {
             if (m_Time != null)
                 Time = string.Format("{0}:{1}:{2}", i_Time.Hour, i_Time.Minute, i_Time.Second);
@@ -34,17 +37,17 @@
 
         public string HourStr()
         {
-            return Time.Split(':')[0];
+            return isTimeSet()  ? "" : Time.Split(':')[0];
         }
 
         public string MinuteStr()
         {
-            return Time.Split(':')[0];
+            return isTimeSet() ? "" : Time.Split(':')[0];
         }
 
         public string SecondsStr()
         {
-            return Time.Split(':')[1];
+            return isTimeSet() ? "" : Time.Split(':')[1];
         }
 
         public int? HourInt()
@@ -65,12 +68,12 @@
             return int.TryParse(SecondsStr(), out seconds) ? seconds : (int?) null;
         }
 
-        public DateTime AsDateTime()
+        public DateTime? AsDateTime()
         {
-            return DateTime.Parse(m_Time);
+            return isTimeSet() ? (DateTime?)null : DateTime.Parse(m_Time);
         }
 
-        public string Subtract(DayTimeData toSubtract)
+        public string Subtract(HourData toSubtract)
         {
             if (isTimeSet() && toSubtract != null && toSubtract.isTimeSet())
             {
@@ -86,7 +89,7 @@
 
         public bool isTimeSet()
         {
-            return isTimeValid(m_Time);
+            return string.IsNullOrEmpty(m_Time);
         }
 
         private bool isTimeValid(string i_Time)
@@ -107,6 +110,17 @@
                 return false;
 
             return true;
+        }
+
+        public override string ToString()
+        {
+            return isTimeSet()? Time : "";
+        }
+
+        public override bool Equals(object i_Other)
+        {
+            HourData other = i_Other as HourData;
+            return other != null && Time == other.Time;
         }
     }
 }

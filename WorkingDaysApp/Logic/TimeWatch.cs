@@ -21,7 +21,7 @@ namespace WorkingDaysApp.Logic
         public const int FULL_DAY_MINUTES = 6 * 60;
         public const int HALF_DAY_MINUTES = 2 * 60;
 
-        public const string WORKING_DAY = "Working day", ROW_FORMAT = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
+        public const string ROW_FORMAT = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
 
         private int m_ChosenYearInt, m_ChosenMonthInt;
 
@@ -144,7 +144,7 @@ Set current time instead?",
         private float holidayScope(string i_DayType)
         {
             if (i_DayType == DayTypeFactory.Get(eDayType.Holiday)) return 1.0f;
-            if (i_DayType == DayTypeFactory.Get(eDayType.HalfDay)) return 0.5f;
+            if (i_DayType == DayTypeFactory.Get(eDayType.HalfHoliday)) return 0.5f;
             return 0.0f;
         }
 

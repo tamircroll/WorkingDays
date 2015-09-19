@@ -4,7 +4,7 @@
     {
         WorkDay,
         PersonalVacation,
-        HalfDay,
+        HalfHoliday,
         Holiday,
         SickDay,
     }

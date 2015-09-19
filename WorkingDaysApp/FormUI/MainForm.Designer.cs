@@ -219,7 +219,7 @@ namespace TimeWatchApp.FormUI
             this.StartTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.StartTime.Width = 88;
             // 
-            // EndTime
+            // LeavingTime
             // 
             this.EndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.EndTime.FillWeight = 2F;

@@ -129,6 +129,5 @@ namespace WorkingDaysApp.Logic
             string[] timeArr = i_ClockTime.Split(':');
             return timeArr.Length > 1 ? timeArr[1] : "";
         }
-
     }
 }

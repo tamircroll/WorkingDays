@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TimeWatchApp.Enums;
@@ -33,6 +34,21 @@ namespace WorkingDaysApp.Logic
         }
 
         public static List<string> GetFileLines(int i_Year, int i_Month)
+        {
+            string filePath = BuildFilePath(i_Year, i_Month);
+
+            if (!File.Exists(filePath))
+            {
+                string[] newFile = createNewMonthArray(i_Year, i_Month);
+                File.WriteAllLines(filePath, newFile);
+            }
+
+            List<string> fileLines = new List<string>(File.ReadAllLines(filePath, Encoding.UTF8));
+
+            return fileLines;
+        }
+
+        public static List<string> GetAllDaysData(int i_Year, int i_Month)
         {
             string filePath = BuildFilePath(i_Year, i_Month);
 
@@ -89,6 +105,16 @@ namespace WorkingDaysApp.Logic
             if (!years.Contains(TimeHandler.NextYear().ToString())) years.Add(TimeHandler.NextYear().ToString());
 
             return years;
+        }
+
+        public static int getFileYear(string i_FileName)
+        {
+            return int.Parse(i_FileName.Split('-')[0]);
+        }
+
+        public static int getFileMonth(string i_FileName)
+        {
+            return int.Parse(i_FileName.Split('-')[1]);
         }
     }
 }

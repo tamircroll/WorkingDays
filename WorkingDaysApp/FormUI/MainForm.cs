@@ -5,12 +5,13 @@ using System.Windows.Forms;
 using TimeWatchApp.Enums;
 using TimeWatchApp.Logic;
 using WorkingDaysApp.Logic;
+using WorkingDaysApp.Logic.TimeData;
 
 namespace TimeWatchApp.FormUI
 {
     public partial class MainForm : Form
     {
-        private TimeWatch m_TimeWatch = TimeWatch.Instance;
+        private readonly TimeWatch2 m_TimeWatch = TimeWatch2.Instance;
 
         public MainForm()
         {
@@ -26,8 +27,10 @@ namespace TimeWatchApp.FormUI
 
         private void setTime(int i_Year, int i_Month)
         {
-            m_TimeWatch.ChosenYearInt = i_Year;
-            m_TimeWatch.ChosenMonthInt = i_Month;
+            m_TimeWatch.SetCurrMonth(i_Year, i_Month);
+
+//            m_TimeWatch.ChosenYearInt = i_Year;
+//            m_TimeWatch.ChosenMonthInt = i_Month;
         }
 
         private void refreshView()
@@ -197,14 +200,14 @@ namespace TimeWatchApp.FormUI
                                                            summaryArr[(int) eSummaryFeilds.WorkingDays];
             summaryArr[(int) eSummaryFeilds.PersonalVecation] = "Personal Vacation Days: " +
                                                                 summaryArr[(int) eSummaryFeilds.PersonalVecation];
-            summaryArr[(int) eSummaryFeilds.SickDays] = "Sick Days: " + summaryArr[(int) eSummaryFeilds.SickDays];
-            summaryArr[(int) eSummaryFeilds.Holidays] = "Holidays: " +
-                                                        summaryArr[(int) eSummaryFeilds.Holidays];
+            summaryArr[(int) eSummaryFeilds.SickDays] = "Sick Days: " + 
+                                                            summaryArr[(int) eSummaryFeilds.SickDays];
+            summaryArr[(int) eSummaryFeilds.Holidays] = "Holidays: " + 
+                                                            summaryArr[(int) eSummaryFeilds.Holidays];
             summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
                                                             summaryArr[(int) eSummaryFeilds.WorkingHours];
-            summaryArr[(int)eSummaryFeilds.DayAverage] = "Working Hours: " +
-                                                            summaryArr[(int)eSummaryFeilds.DayAverage];
-
+            summaryArr[(int) eSummaryFeilds.DayAverage] = "Working Hours: " +
+                                                            summaryArr[(int) eSummaryFeilds.DayAverage];
 
             return summaryArr;
         }
