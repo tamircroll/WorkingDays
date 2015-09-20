@@ -30,9 +30,6 @@ namespace TimeWatchApp.FormUI
         private void setTime(int i_Year, int i_Month)
         {
             m_TimeWatch.SetCurrMonth(i_Year, i_Month);
-
-//            m_TimeWatch.ChosenYearInt = i_Year;
-//            m_TimeWatch.ChosenMonthInt = i_Month;
         }
 
         private void refreshView()
@@ -191,7 +188,8 @@ namespace TimeWatchApp.FormUI
                     case eColumn.DayType:
                         string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (!string.IsNullOrEmpty(msg)) m_TimeWatch.setCellData(day, (eColumn)i_E.ColumnIndex, msg);
+                        if (!string.IsNullOrEmpty(msg))
+                            m_TimeWatch.CurrMonth[day].DayType = DayTypeFactory.Get(msg);
                         return;
                 }
             }
