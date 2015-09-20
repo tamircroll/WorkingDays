@@ -86,7 +86,7 @@ namespace TimeWatchApp.FormUI
 //            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.CurrMonth.Year, m_TimeWatch.CurrMonth.Month);
 
             monthGridView.Rows.Clear();
-            foreach (var row in m_TimeWatch.CurrMonth.AllDays)
+            foreach (DayData row in m_TimeWatch.CurrMonth.AllDays)
             {
                 var rowArr = row.ToString().Split('-');
                 if (rowArr.Length < 6) continue;
