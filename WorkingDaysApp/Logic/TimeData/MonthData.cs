@@ -9,14 +9,15 @@ namespace WorkingDaysApp.Logic.HourData
     {
         private readonly List<DayData> m_AllDays;
         private readonly int m_Year, m_Month;
-        public int NumOfDays { get; private set; }
+        public int NumOfDays {
+            get { return m_AllDays.Count; }
+        }
 
         public MonthData(int i_Year, int i_Month)
         {
             m_Year = i_Year;
             m_Month = i_Month;
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
-            setNumOfDays(i_Year, i_Month);
             subscribeToAllDaysEvents();
         }
 //
@@ -48,7 +49,7 @@ namespace WorkingDaysApp.Logic.HourData
             subscribeToAllDaysEvents();
         }
 
-        public object this[int i_Day]
+        public DayData this[int i_Day]
         {
             get { return m_AllDays[i_Day - 1]; }
         }
@@ -72,12 +73,6 @@ namespace WorkingDaysApp.Logic.HourData
             }
 
             return sum;
-        }
-
-        private void setNumOfDays(int i_Year, int i_Month)
-        {
-            int? daysInMonth = TimeHandler.DaysInMonth(i_Year, i_Month);
-            if (daysInMonth != null) NumOfDays = (int) daysInMonth;
         }
 
         private static float dayWorkScope(DayData i_DayArr)

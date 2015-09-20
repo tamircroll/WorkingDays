@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 using TimeWatchApp.Enums;
 using TimeWatchApp.Logic;
 using WorkingDaysApp.Logic;
+using WorkingDaysApp.Logic.HourData;
 using WorkingDaysApp.Logic.TimeData;
 
 namespace TimeWatchApp.FormUI
@@ -35,32 +37,32 @@ namespace TimeWatchApp.FormUI
 
         private void refreshView()
         {
-            chooseMonth.Text = m_TimeWatch.ChosenMonthInt.ToString();
-            chooseYear.Text = m_TimeWatch.ChosenYearInt.ToString();
+            chooseMonth.Text = m_TimeWatch.CurrMonth.Month.ToString();
+            chooseYear.Text = m_TimeWatch.CurrMonth.Year.ToString();
             setListViewTitle();
             setGrid();
-            setSummary();
+//            setSummary();
         }
 
-        private void setSummary()
-        {
-            SummaryLabelLeft.Text = "";
-            SummaryLabelRight.Text = "";
-            bool left = true;
-            List<string> summaryArr = new List<string>(getSummary());
-            foreach (string s in summaryArr)
-            {
-                if (left) SummaryLabelLeft.Text += s + Environment.NewLine + Environment.NewLine;
-                else SummaryLabelRight.Text += s + Environment.NewLine + Environment.NewLine;
-                left = !left;
-            }
-        }
+//        private void setSummary()
+//        {
+//            SummaryLabelLeft.Text = "";
+//            SummaryLabelRight.Text = "";
+//            bool left = true;
+//            List<string> summaryArr = new List<string>(getSummary());
+//            foreach (string s in summaryArr)
+//            {
+//                if (left) SummaryLabelLeft.Text += s + Environment.NewLine + Environment.NewLine;
+//                else SummaryLabelRight.Text += s + Environment.NewLine + Environment.NewLine;
+//                left = !left;
+//            }
+//        }
 
         private void setListViewTitle()
         {
             listViewTitle.Text = string.Format(
                 "Year: {0}, Month: {1}",
-                m_TimeWatch.ChosenYearInt, TimeHandler.GetMonthName(m_TimeWatch.ChosenMonthInt));
+                m_TimeWatch.CurrMonth.Year, TimeHandler.GetMonthName(m_TimeWatch.CurrMonth.Month));
         }
 
         private void setYearsToggle()
@@ -85,8 +87,7 @@ namespace TimeWatchApp.FormUI
 
         private void setGrid()
         {
-            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.ChosenYearInt,
-                m_TimeWatch.ChosenMonthInt);
+            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.CurrMonth.Year, m_TimeWatch.CurrMonth.Month);
 
             monthGridView.Rows.Clear();
             foreach (var row in allRowsFromFile)
@@ -156,33 +157,41 @@ namespace TimeWatchApp.FormUI
         {
             try
             {
-                int row = i_E.RowIndex;
-                String msg;
+                int day = i_E.RowIndex + 1;
+                string msg, hours, minutes;
 
-                if (row < 0 || i_E.ColumnIndex < 0) return;
+                if (day < 0 || i_E.ColumnIndex < 0) return;
 
                 switch ((eColumn) i_E.ColumnIndex)
                 {
                     case eColumn.Comment:
-                        msg = (string) monthGridView.Rows[row].Cells[(int) eColumn.Comment].Value;
+                        msg = (string) monthGridView.Rows[day].Cells[(int) eColumn.Comment].Value;
                         msg = new GetCommentForm(msg).ShowDialog();
-                        if (msg != null) m_TimeWatch.setCellData(row, eColumn.Comment, msg);
+                        if (msg != null) m_TimeWatch.CurrMonth[day].Comment = msg; //.setCellData(row, eColumn.Comment, msg);
                         return;
                     case eColumn.Arrival:
-                    case eColumn.Leaving:
-                        msg = (string)monthGridView.Rows[row].Cells[i_E.ColumnIndex].Value; 
-                        string hours = TimeHandler.getHoursStr(msg);
-                        string minutes = TimeHandler.getMinutesStr(msg);
+                        msg = (string)monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value; 
+                        hours = TimeHandler.getHoursStr(msg);
+                        minutes = TimeHandler.getMinutesStr(msg);
 
                         msg = new GetTimeDataForm(hours, minutes).ShowDialog();
-                        if (msg != null) m_TimeWatch.setCellData(row, (eColumn) i_E.ColumnIndex, msg);
+                        if (msg != null) m_TimeWatch.CurrMonth[day].ArrivalTime = new HourData(msg);
+                        return;
+
+                    case eColumn.Leaving:
+                        msg = (string)monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value; 
+                        hours = TimeHandler.getHoursStr(msg);
+                        minutes = TimeHandler.getMinutesStr(msg);
+
+                        msg = new GetTimeDataForm(hours, minutes).ShowDialog();
+                        if (msg != null) m_TimeWatch.CurrMonth[day].LeavingTime = new HourData(msg);
                         return;
                     case eColumn.MonthDay:
                         return;
                     case eColumn.DayType:
-                        string chosneDayType = (string) monthGridView.Rows[row].Cells[i_E.ColumnIndex].Value;
+                        string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
                         msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (!string.IsNullOrEmpty(msg)) m_TimeWatch.setCellData(row, (eColumn)i_E.ColumnIndex, msg);
+                        if (!string.IsNullOrEmpty(msg)) m_TimeWatch.setCellData(day, (eColumn)i_E.ColumnIndex, msg);
                         return;
                 }
             }
@@ -192,36 +201,36 @@ namespace TimeWatchApp.FormUI
             }
         }
 
-        private string[] getSummary()
-        {
-            string[] summaryArr = m_TimeWatch.GetSummaryArr();
-
-            summaryArr[(int) eSummaryFeilds.WorkingDays] = "Working Days: " +
-                                                           summaryArr[(int) eSummaryFeilds.WorkingDays];
-            summaryArr[(int) eSummaryFeilds.PersonalVecation] = "Personal Vacation Days: " +
-                                                                summaryArr[(int) eSummaryFeilds.PersonalVecation];
-            summaryArr[(int) eSummaryFeilds.SickDays] = "Sick Days: " + 
-                                                            summaryArr[(int) eSummaryFeilds.SickDays];
-            summaryArr[(int) eSummaryFeilds.Holidays] = "Holidays: " + 
-                                                            summaryArr[(int) eSummaryFeilds.Holidays];
-            summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
-                                                            summaryArr[(int) eSummaryFeilds.WorkingHours];
-            summaryArr[(int) eSummaryFeilds.DayAverage] = "Working Hours: " +
-                                                            summaryArr[(int) eSummaryFeilds.DayAverage];
-
-            return summaryArr;
-        }
+//        private string[] getSummary()
+//        {
+//            string[] summaryArr = m_TimeWatch.GetSummaryArr();
+//
+//            summaryArr[(int) eSummaryFeilds.WorkingDays] = "Working Days: " +
+//                                                           summaryArr[(int) eSummaryFeilds.WorkingDays];
+//            summaryArr[(int) eSummaryFeilds.PersonalVecation] = "Personal Vacation Days: " +
+//                                                                summaryArr[(int) eSummaryFeilds.PersonalVecation];
+//            summaryArr[(int) eSummaryFeilds.SickDays] = "Sick Days: " + 
+//                                                            summaryArr[(int) eSummaryFeilds.SickDays];
+//            summaryArr[(int) eSummaryFeilds.Holidays] = "Holidays: " + 
+//                                                            summaryArr[(int) eSummaryFeilds.Holidays];
+//            summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
+//                                                            summaryArr[(int) eSummaryFeilds.WorkingHours];
+//            summaryArr[(int) eSummaryFeilds.DayAverage] = "Working Hours: " +
+//                                                            summaryArr[(int) eSummaryFeilds.DayAverage];
+//
+//            return summaryArr;
+//        }
 
         private void Leaving_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
-            m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Leaving, TimeHandler.getCurrClockTime());
+            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].LeavingTime = new HourData(TimeHandler.getCurrClockTime());
         }
 
         private void Arrival_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
-            m_TimeWatch.SetTime(TimeHandler.CurDay(), eColumn.Arrival, TimeHandler.getCurrClockTime());
+            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].ArrivalTime = new HourData(TimeHandler.getCurrClockTime());
         }
 
         private void chooseYear_DropDown(object i_Sender, EventArgs i_)
@@ -240,7 +249,7 @@ namespace TimeWatchApp.FormUI
             if (cb != null)
             {
                 String s = cb.Text;
-                m_TimeWatch.ChosenYearInt = int.Parse(s);
+                m_TimeWatch.ChangeCurrYear(int.Parse(s));
             }
         }
 
@@ -250,7 +259,7 @@ namespace TimeWatchApp.FormUI
             if (cb != null)
             {
                 String s = cb.Text;
-                m_TimeWatch.ChosenMonthInt = int.Parse(s);
+                m_TimeWatch.ChangeCurrMonth(int.Parse(s));
             }
         }
 
@@ -264,7 +273,7 @@ namespace TimeWatchApp.FormUI
                 bool isNumber = int.TryParse(s, out year);
                 if (isNumber && year >= 2015 && year < 3000)
                 {
-                    m_TimeWatch.ChosenYearInt = int.Parse(s);
+                    m_TimeWatch.ChangeCurrYear(int.Parse(s));
                 }
             }
         }
@@ -279,7 +288,7 @@ namespace TimeWatchApp.FormUI
                 bool isNumber = int.TryParse(s, out month);
                 if (isNumber && month >= 1 && month <= 12)
                 {
-                    m_TimeWatch.ChosenMonthInt = int.Parse(s);
+                    m_TimeWatch.ChangeCurrMonth(int.Parse(s));
                 }
             }
         }

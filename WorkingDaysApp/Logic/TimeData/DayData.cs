@@ -48,7 +48,6 @@ namespace WorkingDaysApp.Logic.TimeData
             m_DayType = DayTypeFactory.Get(i_DayType);
             m_ArrivalTime = new HourData();
             m_LeavingTime = new HourData();
-
         }
 
         public string MonthDay

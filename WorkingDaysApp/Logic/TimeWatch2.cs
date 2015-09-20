@@ -7,7 +7,7 @@ namespace WorkingDaysApp.Logic.TimeData
     public class TimeWatch2
     {
         private static readonly TimeWatch2 sr_Instance = new TimeWatch2();
-        
+        private MonthData m_CurrMonth;
         private static Dictionary<string, MonthData> s_AllMonthes;
 
         public event ChangeWasMade Changed;
@@ -34,7 +34,11 @@ namespace WorkingDaysApp.Logic.TimeData
             }
         }
 
-        public MonthData CurrMonth { get; set; }
+        public MonthData CurrMonth
+        {
+            get { return m_CurrMonth; }
+            private set { m_CurrMonth = value; }
+        }
 
         public void SetCurrMonth(int i_Year, int i_Month)
         {
