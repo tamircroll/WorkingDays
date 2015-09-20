@@ -122,7 +122,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public override string ToString()
         {
-            return string.Format(Day_FORMAT, MonthDay, WeekDay, ArrivalTime, LeavingTime, TotalHoursStr(), DayType, Comment);
+            return string.Format(Day_FORMAT, MonthDay, WeekDay, ArrivalTime, LeavingTime, TotalHoursStr(), DayType, Comment, "-");
         }
 
         private string setMonthDay(string i_Day)

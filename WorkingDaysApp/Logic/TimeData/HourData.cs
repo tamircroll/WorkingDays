@@ -37,17 +37,17 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public string HourStr()
         {
-            return isTimeSet()  ? "" : Time.Split(':')[0];
+            return isTimeSet()? Time.Split(':')[0] : "";
         }
 
         public string MinuteStr()
         {
-            return isTimeSet() ? "" : Time.Split(':')[0];
+            return isTimeSet() ? Time.Split(':')[0] : "";
         }
 
         public string SecondsStr()
         {
-            return isTimeSet() ? "" : Time.Split(':')[1];
+            return isTimeSet() ? Time.Split(':')[1] : "";
         }
 
         public int? HourInt()
@@ -84,12 +84,12 @@ namespace WorkingDaysApp.Logic.TimeData
                 return time.ToString();
             }
 
-            return null;
+            return "";
         }
 
         public bool isTimeSet()
         {
-            return string.IsNullOrEmpty(m_Time);
+            return !string.IsNullOrEmpty(m_Time);
         }
 
         private bool isTimeValid(string i_Time)

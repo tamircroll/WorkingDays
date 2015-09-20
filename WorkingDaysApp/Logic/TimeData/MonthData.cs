@@ -20,6 +20,11 @@ namespace WorkingDaysApp.Logic.HourData
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             subscribeToAllDaysEvents();
         }
+
+        public List<DayData> AllDays
+        {
+            get { return m_AllDays; }
+        }
 //
 //        public MonthData(List<DayData> i_AllDays, int i_Year, int i_Month)
 //        {

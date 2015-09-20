@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 using TimeWatchApp.Enums;
 using TimeWatchApp.Logic;
 using WorkingDaysApp.Logic;
-using WorkingDaysApp.Logic.HourData;
 using WorkingDaysApp.Logic.TimeData;
 
 namespace TimeWatchApp.FormUI
@@ -20,6 +18,7 @@ namespace TimeWatchApp.FormUI
             m_TimeWatch.Changed += refreshView;
             InitializeComponent();
             setTimeToNow();
+            refreshView();
         }
 
         private void setTimeToNow()
@@ -84,12 +83,12 @@ namespace TimeWatchApp.FormUI
 
         private void setGrid()
         {
-            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.CurrMonth.Year, m_TimeWatch.CurrMonth.Month);
+//            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.CurrMonth.Year, m_TimeWatch.CurrMonth.Month);
 
             monthGridView.Rows.Clear();
-            foreach (var row in allRowsFromFile)
+            foreach (var row in m_TimeWatch.CurrMonth.AllDays)
             {
-                var rowArr = row.Split('-');
+                var rowArr = row.ToString().Split('-');
                 if (rowArr.Length < 6) continue;
 
                 int currRowNum = monthGridView.Rows.Add();
