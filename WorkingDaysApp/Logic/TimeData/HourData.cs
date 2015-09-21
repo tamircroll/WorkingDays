@@ -80,8 +80,8 @@ namespace WorkingDaysApp.Logic.TimeData
                 TimeSpan firsTimeSpan = new TimeSpan((int) HourInt(), (int) MinutesInt(), (int) SecondsInt());
                 TimeSpan secondTimeSpan = new TimeSpan((int) toSubtract.HourInt(), (int) toSubtract.MinutesInt(),
                     (int) toSubtract.SecondsInt());
-                TimeSpan time = secondTimeSpan - firsTimeSpan;
-                return time.ToString();
+                TimeSpan time = firsTimeSpan - secondTimeSpan;
+                return time.ToString().Contains("-") ? "" : time.ToString();
             }
 
             return "";
