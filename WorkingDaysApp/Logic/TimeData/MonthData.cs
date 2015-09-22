@@ -1,12 +1,20 @@
 ﻿using System.IO;
+using TimeWatchApp.Enums;
 using WorkingDaysApp.Logic.TimeData;
+
+
 
 namespace WorkingDaysApp.Logic.HourData
 {
     using System.Collections.Generic;
 
+    public delegate void ChangeWasMade();
+
+
     public class MonthData
     {
+        public event ChangeWasMade Changed;
+
         private readonly List<DayData> m_AllDays;
         private readonly int m_Year, m_Month;
         public int NumOfDays {
@@ -25,26 +33,6 @@ namespace WorkingDaysApp.Logic.HourData
         {
             get { return m_AllDays; }
         }
-//
-//        public MonthData(List<DayData> i_AllDays, int i_Year, int i_Month)
-//        {
-//            m_Year = i_Year;
-//            m_Month = i_Month;
-//            m_AllDays = i_AllDays;
-//            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
-//            NumOfDays = i_AllDays.Count;
-//            subscribeToAllDaysEvents();
-//        }
-//
-//        public MonthData(List<string> i_AllDays, int i_Year, int i_Month)
-//        {
-//            m_AllDays = DayData.StringLstToDayDataLst(i_AllDays);
-//            m_Year = i_Year;
-//            m_Month = i_Month;
-//            m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
-//            NumOfDays = i_AllDays.Count;
-//            subscribeToAllDaysEvents();
-//        }
 
         public MonthData(FileInfo i_File)
         {
@@ -80,6 +68,64 @@ namespace WorkingDaysApp.Logic.HourData
             return sum;
         }
 
+        public float TotalVacationsDay()
+        {
+            float sum = 0;
+            foreach (DayData day in m_AllDays)
+            {
+                if(day.DayType == eDayType.PersonalVacation)
+                sum++;
+            }
+
+            return sum;
+        }
+
+        public int TotalSickDays()
+        {
+            int sum = 0;
+            foreach (DayData day in m_AllDays)
+            {
+                if (day.DayType == eDayType.SickDay)
+                    sum++;
+            }
+
+            return sum;
+        }
+
+        public float TotalHolidays()
+        {
+            float sum = 0;
+            foreach (DayData day in m_AllDays)
+            {
+                if (day.DayType == eDayType.Holiday) sum++;
+                else if (day.DayType == eDayType.HalfHoliday) sum += 0.5f;
+            }
+
+            return sum;
+        }
+
+        public float TotalHours()
+        {
+            TimeData.HourData total = new TimeData.HourData();
+            foreach (DayData day in m_AllDays)
+            {
+                if (day.DayType == eDayType.Holiday) sum++;
+                else if (day.DayType == eDayType.HalfHoliday) sum += 0.5f;
+            }
+
+            return sum;
+        }
+
+        public List<string> getDaysStringList()
+        {
+            List<string> toWrite = new List<string>();
+            foreach (DayData day in m_AllDays)
+            {
+                toWrite.Add(day.ToString());
+            }
+            return toWrite;
+        }
+
         private static float dayWorkScope(DayData i_DayArr)
         {
             int minutes = i_DayArr.TotalMinutesStr();
@@ -88,15 +134,10 @@ namespace WorkingDaysApp.Logic.HourData
             if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
             return 0.0f;
         }
-        
+
         private void writeToFile()
         {
-            List<string> toWrite = new List<string>();
-            foreach (DayData day in m_AllDays)
-            {
-                toWrite.Add(day.ToString());
-            }
-
+            List<string> toWrite = getDaysStringList();
             File.WriteAllLines(FilesHandler.BuildFilePath(Year, Month), toWrite.ToArray());
         }
 
@@ -104,8 +145,15 @@ namespace WorkingDaysApp.Logic.HourData
         {
             foreach (DayData day in m_AllDays)
             {
-                day.Changed += writeToFile;
+                day.Changed += change_EventHandler;
             }
         }
+
+        private void change_EventHandler()
+        {
+            writeToFile();
+            if (Changed != null) Changed.Invoke();
+        }
+
     }
 }

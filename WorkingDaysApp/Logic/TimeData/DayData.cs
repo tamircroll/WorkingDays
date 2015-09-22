@@ -91,7 +91,9 @@ namespace WorkingDaysApp.Logic.TimeData
             get { return m_ArrivalTime; }
             set
             {
-                if (string.IsNullOrEmpty(m_ArrivalTime.Time) && askIfToChangeData())
+                if (string.IsNullOrEmpty(m_ArrivalTime.Time))
+                    m_ArrivalTime = value;
+                else if(askIfToChangeData())
                     m_ArrivalTime = value;
                 if (Changed != null) Changed.Invoke();
             }

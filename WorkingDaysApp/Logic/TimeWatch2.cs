@@ -27,7 +27,9 @@ namespace WorkingDaysApp.Logic.TimeData
                 s_AllMonthes = new Dictionary<string, MonthData>();
                 foreach (FileInfo file in FilesHandler.GetAllFiles())
                 {
-                    s_AllMonthes.Add(file.Name, new MonthData(file));
+                    MonthData temp = new MonthData(file);
+                    temp.Changed += sr_Instance.change_EventHandler;
+                    s_AllMonthes.Add(file.Name, temp);
                 }
 
                 return sr_Instance;
@@ -36,7 +38,10 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public MonthData CurrMonth
         {
-            get { return m_CurrMonth; }
+            get
+            {
+                return m_CurrMonth; 
+            }
             private set { m_CurrMonth = value; }
         }
 
@@ -46,7 +51,9 @@ namespace WorkingDaysApp.Logic.TimeData
             if (s_AllMonthes.ContainsKey(fileName)) CurrMonth = s_AllMonthes[fileName];
             else
             {
-                s_AllMonthes.Add(fileName, new MonthData(i_Year, i_Month));
+                MonthData temp = new MonthData(i_Year, i_Month);
+                temp.Changed += change_EventHandler;
+                s_AllMonthes.Add(fileName, temp);
                 CurrMonth = s_AllMonthes[fileName];
             }
         }
@@ -59,6 +66,11 @@ namespace WorkingDaysApp.Logic.TimeData
         public void ChangeCurrYear(int i_Year)
         {
             SetCurrMonth(i_Year, CurrMonth.Month);
+        }
+
+        private void change_EventHandler()
+        {
+            Changed.Invoke();
         }
     }
 }

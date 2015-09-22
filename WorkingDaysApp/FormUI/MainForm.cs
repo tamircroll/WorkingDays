@@ -37,22 +37,22 @@ namespace TimeWatchApp.FormUI
             chooseYear.Text = m_TimeWatch.CurrMonth.Year.ToString();
             setListViewTitle();
             setGrid();
-//            setSummary();
+            setSummary();
         }
 
-//        private void setSummary()
-//        {
-//            SummaryLabelLeft.Text = "";
-//            SummaryLabelRight.Text = "";
-//            bool left = true;
-//            List<string> summaryArr = new List<string>(getSummary());
-//            foreach (string s in summaryArr)
-//            {
-//                if (left) SummaryLabelLeft.Text += s + Environment.NewLine + Environment.NewLine;
-//                else SummaryLabelRight.Text += s + Environment.NewLine + Environment.NewLine;
-//                left = !left;
-//            }
-//        }
+        private void setSummary()
+        {
+            SummaryLabelLeft.Text = "";
+            SummaryLabelRight.Text = "";
+            bool left = true;
+            List<string> summaryArr = getSummary();
+            foreach (string s in summaryArr)
+            {
+                if (left) SummaryLabelLeft.Text += s + Environment.NewLine + Environment.NewLine;
+                else SummaryLabelRight.Text += s + Environment.NewLine + Environment.NewLine;
+                left = !left;
+            }
+        }
 
         private void setListViewTitle()
         {
@@ -198,25 +198,23 @@ namespace TimeWatchApp.FormUI
             }
         }
 
-//        private string[] getSummary()
-//        {
-//            string[] summaryArr = m_TimeWatch.GetSummaryArr();
-//
-//            summaryArr[(int) eSummaryFeilds.WorkingDays] = "Working Days: " +
-//                                                           summaryArr[(int) eSummaryFeilds.WorkingDays];
-//            summaryArr[(int) eSummaryFeilds.PersonalVecation] = "Personal Vacation Days: " +
-//                                                                summaryArr[(int) eSummaryFeilds.PersonalVecation];
-//            summaryArr[(int) eSummaryFeilds.SickDays] = "Sick Days: " + 
-//                                                            summaryArr[(int) eSummaryFeilds.SickDays];
-//            summaryArr[(int) eSummaryFeilds.Holidays] = "Holidays: " + 
-//                                                            summaryArr[(int) eSummaryFeilds.Holidays];
+        private List<string> getSummary()
+        {
+            List<string> summaryArr = new List<string>();
+                // m_TimeWatch.GetSummaryArr();
+
+            summaryArr.Add("Working Days: " + m_TimeWatch.CurrMonth.AllWorkingDays());
+            summaryArr.Add("Personal Vacation Days: " + m_TimeWatch.CurrMonth.TotalVacationsDay());
+            summaryArr.Add("Sick Days: " + m_TimeWatch.CurrMonth.TotalSickDays());
+            summaryArr.Add("Holidays: " + m_TimeWatch.CurrMonth.TotalHolidays());
+
 //            summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
 //                                                            summaryArr[(int) eSummaryFeilds.WorkingHours];
 //            summaryArr[(int) eSummaryFeilds.DayAverage] = "Working Hours: " +
 //                                                            summaryArr[(int) eSummaryFeilds.DayAverage];
 //
-//            return summaryArr;
-//        }
+            return summaryArr;
+        }
 
         private void Leaving_Click(object i_Sender, EventArgs i_)
         {
