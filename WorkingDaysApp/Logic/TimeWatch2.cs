@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using WorkingDaysApp.Logic.HourData;
 
 namespace WorkingDaysApp.Logic.TimeData
 {
@@ -38,10 +37,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public MonthData CurrMonth
         {
-            get
-            {
-                return m_CurrMonth; 
-            }
+            get { return m_CurrMonth; }
             private set { m_CurrMonth = value; }
         }
 
@@ -56,6 +52,8 @@ namespace WorkingDaysApp.Logic.TimeData
                 s_AllMonthes.Add(fileName, temp);
                 CurrMonth = s_AllMonthes[fileName];
             }
+
+            change_EventHandler();
         }
 
         public void ChangeCurrMonth(int i_Month)

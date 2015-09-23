@@ -37,7 +37,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public string HourStr()
         {
-            return isTimeSet()? Time.Split(':')[0] : "";
+            return isTimeSet() ? Time.Split(':')[0] : "";
         }
 
         public string MinuteStr()
@@ -70,7 +70,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public DateTime? AsDateTime()
         {
-            return isTimeSet() ? (DateTime?)null : DateTime.Parse(m_Time);
+            return isTimeSet() ? (DateTime?) null : DateTime.Parse(m_Time);
         }
 
         public string Subtract(HourData toSubtract)
@@ -81,6 +81,20 @@ namespace WorkingDaysApp.Logic.TimeData
                 TimeSpan secondTimeSpan = new TimeSpan((int) toSubtract.HourInt(), (int) toSubtract.MinutesInt(),
                     (int) toSubtract.SecondsInt());
                 TimeSpan time = firsTimeSpan - secondTimeSpan;
+                return time.ToString().Contains("-") ? "" : time.ToString();
+            }
+
+            return "";
+        }
+
+        public string Add(HourData toSubtract)
+        {
+            if (isTimeSet() && toSubtract != null && toSubtract.isTimeSet())
+            {
+                TimeSpan firsTimeSpan = new TimeSpan((int) HourInt(), (int) MinutesInt(), (int) SecondsInt());
+                TimeSpan secondTimeSpan = new TimeSpan((int) toSubtract.HourInt(), (int) toSubtract.MinutesInt(),
+                    (int) toSubtract.SecondsInt());
+                TimeSpan time = firsTimeSpan + secondTimeSpan;
                 return time.ToString().Contains("-") ? "" : time.ToString();
             }
 
@@ -114,7 +128,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public override string ToString()
         {
-            return isTimeSet()? Time : "";
+            return isTimeSet() ? Time : "";
         }
 
         public override bool Equals(object i_Other)

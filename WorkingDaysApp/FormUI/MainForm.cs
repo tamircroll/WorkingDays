@@ -83,8 +83,6 @@ namespace TimeWatchApp.FormUI
 
         private void setGrid()
         {
-//            List<string> allRowsFromFile = FilesHandler.GetFileLines(m_TimeWatch.CurrMonth.Year, m_TimeWatch.CurrMonth.Month);
-
             monthGridView.Rows.Clear();
             foreach (DayData row in m_TimeWatch.CurrMonth.AllDays)
             {
@@ -207,12 +205,8 @@ namespace TimeWatchApp.FormUI
             summaryArr.Add("Personal Vacation Days: " + m_TimeWatch.CurrMonth.TotalVacationsDay());
             summaryArr.Add("Sick Days: " + m_TimeWatch.CurrMonth.TotalSickDays());
             summaryArr.Add("Holidays: " + m_TimeWatch.CurrMonth.TotalHolidays());
+            summaryArr.Add("Working Hours: " + m_TimeWatch.CurrMonth.TotalHours());
 
-//            summaryArr[(int) eSummaryFeilds.WorkingHours] = "Working Hours: " +
-//                                                            summaryArr[(int) eSummaryFeilds.WorkingHours];
-//            summaryArr[(int) eSummaryFeilds.DayAverage] = "Working Hours: " +
-//                                                            summaryArr[(int) eSummaryFeilds.DayAverage];
-//
             return summaryArr;
         }
 

@@ -68,6 +68,7 @@ namespace WorkingDaysApp.Logic.TimeData
         public void setDayType(string i_DayTypeStr)
         {
             DayType = DayTypeFactory.Get(i_DayTypeStr);
+            if (Changed != null) Changed.Invoke();
         }
 
 

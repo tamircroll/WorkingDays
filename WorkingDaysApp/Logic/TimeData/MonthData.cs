@@ -1,16 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using TimeWatchApp.Enums;
-using WorkingDaysApp.Logic.TimeData;
 
-
-
-namespace WorkingDaysApp.Logic.HourData
+namespace WorkingDaysApp.Logic.TimeData
 {
-    using System.Collections.Generic;
-
-    public delegate void ChangeWasMade();
-
-
     public class MonthData
     {
         public event ChangeWasMade Changed;
@@ -27,12 +20,9 @@ namespace WorkingDaysApp.Logic.HourData
             m_Month = i_Month;
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             subscribeToAllDaysEvents();
+            change_EventHandler();
         }
 
-        public List<DayData> AllDays
-        {
-            get { return m_AllDays; }
-        }
 
         public MonthData(FileInfo i_File)
         {
@@ -40,8 +30,13 @@ namespace WorkingDaysApp.Logic.HourData
             m_Month = FilesHandler.getFileMonth(i_File.Name);
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(m_Year, m_Month));
             subscribeToAllDaysEvents();
+            change_EventHandler();
         }
 
+        public List<DayData> AllDays
+        {
+            get { return m_AllDays; }
+        }
         public DayData this[int i_Day]
         {
             get { return m_AllDays[i_Day - 1]; }
@@ -104,16 +99,16 @@ namespace WorkingDaysApp.Logic.HourData
             return sum;
         }
 
-        public float TotalHours()
+        public string TotalHours()
         {
-            TimeData.HourData total = new TimeData.HourData();
+            HourData total = new HourData("00:00:00");
             foreach (DayData day in m_AllDays)
             {
-                if (day.DayType == eDayType.Holiday) sum++;
-                else if (day.DayType == eDayType.HalfHoliday) sum += 0.5f;
+                if (!string.IsNullOrEmpty(day.TotalHoursStr()))
+                    total = new HourData(total.Add(new HourData(day.TotalHoursStr())));
             }
 
-            return sum;
+            return total.ToString();
         }
 
         public List<string> getDaysStringList()
@@ -154,6 +149,5 @@ namespace WorkingDaysApp.Logic.HourData
             writeToFile();
             if (Changed != null) Changed.Invoke();
         }
-
     }
 }
