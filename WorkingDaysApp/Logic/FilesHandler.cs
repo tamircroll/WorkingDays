@@ -96,12 +96,13 @@ namespace WorkingDaysApp.Logic
 
             foreach (var file in allFiles)
             {
-                string curYear = file.Name.Split(TimeWatch.sr_RowSeparator)[0];
-                if (!years.Contains(curYear))
+                string year = getFileYear(file.Name).ToString();
+                if (!years.Contains(year))
                 {
-                    years.Add(curYear);
+                    years.Add(year);
                 }
             }
+
             if (!years.Contains(TimeHandler.NextYear().ToString())) years.Add(TimeHandler.NextYear().ToString());
 
             return years;

@@ -104,10 +104,10 @@ namespace TimeWatchApp.FormUI
         private void SetGridHeight()
         {
             int totalRowHeight = monthGridView.ColumnHeadersHeight;
-            
+
             foreach (DataGridViewRow row in monthGridView.Rows)
                 totalRowHeight += row.Height;
-            
+
             monthGridView.Height = totalRowHeight + 2;
         }
 
@@ -119,11 +119,12 @@ namespace TimeWatchApp.FormUI
             }
             else
             {
-                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer, TimeWatch.sr_RowSeparator.ToString());
+                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer,
+                    TimeWatch.sr_RowSeparator.ToString());
             }
-            if (i_Column == (int)eColumn.DayType)
+            if (i_Column == (int) eColumn.DayType)
             {
-                i_NewRow.Cells[i_Column].Style.BackColor = setDayTypeCellColor((string)i_NewRow.Cells[i_Column].Value);
+                i_NewRow.Cells[i_Column].Style.BackColor = setDayTypeCellColor((string) i_NewRow.Cells[i_Column].Value);
             }
         }
 
@@ -161,26 +162,12 @@ namespace TimeWatchApp.FormUI
                     case eColumn.Comment:
                         msg = (string) monthGridView.Rows[day].Cells[(int) eColumn.Comment].Value;
                         msg = new GetCommentForm(msg).ShowDialog();
-                        if (msg != null) m_TimeWatch.CurrMonth[day].Comment = msg; //.setCellData(row, eColumn.Comment, msg);
+                        if (msg != null)
+                            m_TimeWatch.CurrMonth[day].Comment = msg; //.setCellData(row, eColumn.Comment, msg);
                         return;
                     case eColumn.Arrival:
-                        msg = (string)monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value; 
-                        hours = TimeHandler.getHoursStr(msg);
-                        minutes = TimeHandler.getMinutesStr(msg);
-
-                        msg = new GetTimeDataForm(hours, minutes).ShowDialog();
-                        if (msg != null) m_TimeWatch.CurrMonth[day].ArrivalTime = new HourData(msg);
-                        return;
-
                     case eColumn.Leaving:
-                        msg = (string)monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value; 
-                        hours = TimeHandler.getHoursStr(msg);
-                        minutes = TimeHandler.getMinutesStr(msg);
-
-                        msg = new GetTimeDataForm(hours, minutes).ShowDialog();
-                        if (msg != null) m_TimeWatch.CurrMonth[day].LeavingTime = new HourData(msg);
-                        return;
-                    case eColumn.MonthDay:
+                        ArrivalOrLeavingPressed(i_E, day);
                         return;
                     case eColumn.DayType:
                         string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
@@ -196,16 +183,31 @@ namespace TimeWatchApp.FormUI
             }
         }
 
+        private void ArrivalOrLeavingPressed(DataGridViewCellEventArgs i_E, int i_Day)
+        {
+            string msg = (string) monthGridView.Rows[i_Day].Cells[i_E.ColumnIndex].Value;
+            string hours = TimeHandler.getHoursStr(msg);
+            string minutes = TimeHandler.getMinutesStr(msg);
+
+            msg = new GetTimeDataForm(hours, minutes).ShowDialog();
+            if (msg == null) return;
+
+            if ((eColumn) i_E.ColumnIndex == eColumn.Arrival)
+                m_TimeWatch.CurrMonth[i_Day].ArrivalTime = new HourData(msg);
+            else if ((eColumn) i_E.ColumnIndex == eColumn.Leaving)
+                m_TimeWatch.CurrMonth[i_Day].LeavingTime = new HourData(msg);
+        }
+
         private List<string> getSummary()
         {
-            List<string> summaryArr = new List<string>();
-                // m_TimeWatch.GetSummaryArr();
-
-            summaryArr.Add("Working Days: " + m_TimeWatch.CurrMonth.AllWorkingDays());
-            summaryArr.Add("Personal Vacation Days: " + m_TimeWatch.CurrMonth.TotalVacationsDay());
-            summaryArr.Add("Sick Days: " + m_TimeWatch.CurrMonth.TotalSickDays());
-            summaryArr.Add("Holidays: " + m_TimeWatch.CurrMonth.TotalHolidays());
-            summaryArr.Add("Working Hours: " + m_TimeWatch.CurrMonth.TotalHours());
+            List<string> summaryArr = new List<string>
+            {
+                "Working Days: " + m_TimeWatch.CurrMonth.AllWorkingDays(),
+                "Personal Vacation Days: " + m_TimeWatch.CurrMonth.TotalVacationsDay(),
+                "Sick Days: " + m_TimeWatch.CurrMonth.TotalSickDays(),
+                "Holidays: " + m_TimeWatch.CurrMonth.TotalHolidays(),
+                "Working Hours: " + m_TimeWatch.CurrMonth.TotalHours()
+            };
 
             return summaryArr;
         }
@@ -269,10 +271,10 @@ namespace TimeWatchApp.FormUI
 
         private void ChooseMonth_KeyDown(object i_Sender, KeyEventArgs i_)
         {
-            int month;
             ComboBox cb = i_Sender as ComboBox;
-            if (i_.KeyCode == Keys.Enter)
+            if (i_.KeyCode == Keys.Enter && cb != null)
             {
+                int month;
                 string s = cb.Text;
                 bool isNumber = int.TryParse(s, out month);
                 if (isNumber && month >= 1 && month <= 12)

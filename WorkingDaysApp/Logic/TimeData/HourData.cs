@@ -73,32 +73,36 @@ namespace WorkingDaysApp.Logic.TimeData
             return isTimeSet() ? (DateTime?) null : DateTime.Parse(m_Time);
         }
 
-        public string Subtract(HourData toSubtract)
+        public string Subtract(HourData i_ToSubtract)
         {
-            if (isTimeSet() && toSubtract != null && toSubtract.isTimeSet())
+            if (isTimeSet() && i_ToSubtract != null && i_ToSubtract.isTimeSet())
             {
-                TimeSpan firsTimeSpan = new TimeSpan((int) HourInt(), (int) MinutesInt(), (int) SecondsInt());
-                TimeSpan secondTimeSpan = new TimeSpan((int) toSubtract.HourInt(), (int) toSubtract.MinutesInt(),
-                    (int) toSubtract.SecondsInt());
-                TimeSpan time = firsTimeSpan - secondTimeSpan;
+                TimeSpan? time = AsTimeSpan() - i_ToSubtract.AsTimeSpan();
                 return time.ToString().Contains("-") ? "" : time.ToString();
             }
 
             return "";
         }
 
-        public string Add(HourData toSubtract)
+        public string Add(HourData i_ToAdd)
         {
-            if (isTimeSet() && toSubtract != null && toSubtract.isTimeSet())
+            if (isTimeSet() && i_ToAdd != null && i_ToAdd.isTimeSet())
             {
-                TimeSpan firsTimeSpan = new TimeSpan((int) HourInt(), (int) MinutesInt(), (int) SecondsInt());
-                TimeSpan secondTimeSpan = new TimeSpan((int) toSubtract.HourInt(), (int) toSubtract.MinutesInt(),
-                    (int) toSubtract.SecondsInt());
-                TimeSpan time = firsTimeSpan + secondTimeSpan;
+                TimeSpan? time = AsTimeSpan() + i_ToAdd.AsTimeSpan();
                 return time.ToString().Contains("-") ? "" : time.ToString();
             }
 
             return "";
+        }
+
+        public TimeSpan? AsTimeSpan()
+        {
+            int? hourInt = HourInt(), minutesInt = MinutesInt(), secondsInt = SecondsInt();
+
+            if (hourInt != null && minutesInt != null && secondsInt != null)
+                return new TimeSpan((int) hourInt, (int) minutesInt, (int) secondsInt);
+
+            return null;
         }
 
         public bool isTimeSet()

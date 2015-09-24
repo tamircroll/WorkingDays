@@ -118,6 +118,7 @@ namespace WorkingDaysApp.Logic.TimeData
             {
                 toWrite.Add(day.ToString());
             }
+
             return toWrite;
         }
 

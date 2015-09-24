@@ -58,7 +58,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public void ChangeCurrMonth(int i_Month)
         {
-            SetCurrMonth(CurrMonth.Month, i_Month);
+            SetCurrMonth(CurrMonth.Year, i_Month);
         }
 
         public void ChangeCurrYear(int i_Year)
