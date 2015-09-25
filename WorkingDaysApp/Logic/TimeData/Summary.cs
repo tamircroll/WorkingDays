@@ -48,16 +48,34 @@ namespace WorkingDaysApp.Logic.TimeData
             return sum;
         }
 
-        public string TotalHours()
+        public string TotalHoursStr()
         {
-            HourData total = new HourData("00:00:00");
+            TimeData total = new TimeData("00:00:00");
             foreach (DayData day in m_MonthData.AllDays)
             {
                 if (!String.IsNullOrEmpty(day.TotalHoursStr()))
-                    total = new HourData(total.Add(new HourData(day.TotalHoursStr())));
+                    total = new TimeData(total.Add(new TimeData(day.TotalHoursStr())));
             }
 
             return total.ToString();
+        }
+
+        public float TotalHours()
+        {
+            float total = 0;
+            foreach (DayData day in m_MonthData.AllDays)
+            {
+                if (!String.IsNullOrEmpty(day.TotalHoursStr()))
+                {
+                    TimeData hours = new TimeData(day.TotalHoursStr());
+                    int? hourInt = hours.HourInt();
+                    int? minutesInt = hours.MinutesInt();
+                    if (hourInt != null) total += (float)hourInt;
+                    if (minutesInt != null) total += (((float)minutesInt)/60);
+                }
+            }
+
+            return total;
         }
 
         public float AllWorkingDays()
@@ -78,6 +96,24 @@ namespace WorkingDaysApp.Logic.TimeData
             if (minutes >= TimeWatch.FULL_DAY_MINUTES) return 1.0f;
             if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
             return 0.0f;
+        }
+
+        public string AverageHours()
+        {
+            int? hourInt = new TimeData(TotalHoursStr()).HourInt();
+
+            if (hourInt == null || hourInt == 0) return String.Format("{0:0.00}", 0);
+            if (TotalHours() == 0) return String.Format("{0:0.00}", 0);
+
+            float time = TotalHours() / AllWorkingDays();
+            int minutes = (int)((time - (int)time) * 100);
+
+            minutes = minutes * 60 / 100;
+
+            string timeStr = time.ToString();
+            string hours = timeStr.Split('.')[0];
+
+            return String.Format("{0}:{1}", hours, minutes);
         }
     }
 }

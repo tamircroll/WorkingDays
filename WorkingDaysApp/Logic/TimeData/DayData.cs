@@ -17,10 +17,10 @@ namespace WorkingDaysApp.Logic.TimeData
 
         private readonly string m_WeekDay, m_MonthDay;
         private string m_Comment = "";
-        private HourData m_ArrivalTime, m_LeavingTime;
+        private TimeData m_ArrivalTime, m_LeavingTime;
         private eDayType m_DayType;
 
-        public DayData(string i_MonthDay, string i_WeekDay, HourData i_ArrivalTime, HourData i_LeavingTime, eDayType i_DayType, string i_Comment)
+        public DayData(string i_MonthDay, string i_WeekDay, TimeData i_ArrivalTime, TimeData i_LeavingTime, eDayType i_DayType, string i_Comment)
         {
             m_MonthDay = i_MonthDay;
             m_WeekDay = i_WeekDay;
@@ -35,8 +35,8 @@ namespace WorkingDaysApp.Logic.TimeData
             string[] sllDataArr = allData.Split(sr_Seperator);
             m_MonthDay = setMonthDay(sllDataArr[(int)eColumn.MonthDay]);
             m_WeekDay = sllDataArr[(int)eColumn.WeekDay];
-            m_ArrivalTime = new HourData(sllDataArr[(int)eColumn.Arrival]);
-            m_LeavingTime = new HourData(sllDataArr[(int)eColumn.Leaving]);
+            m_ArrivalTime = new TimeData(sllDataArr[(int)eColumn.Arrival]);
+            m_LeavingTime = new TimeData(sllDataArr[(int)eColumn.Leaving]);
             m_DayType = DayTypeFactory.Get(sllDataArr[(int)eColumn.DayType]);
             m_Comment = sllDataArr[(int)eColumn.Comment];
         }
@@ -46,8 +46,8 @@ namespace WorkingDaysApp.Logic.TimeData
             m_MonthDay = i_MonthDay;
             m_WeekDay = i_WeekDay;
             m_DayType = DayTypeFactory.Get(i_DayType);
-            m_ArrivalTime = new HourData();
-            m_LeavingTime = new HourData();
+            m_ArrivalTime = new TimeData();
+            m_LeavingTime = new TimeData();
         }
 
         public string MonthDay
@@ -87,7 +87,7 @@ namespace WorkingDaysApp.Logic.TimeData
             }
         }
 
-        public HourData ArrivalTime
+        public TimeData ArrivalTime
         {
             get { return m_ArrivalTime; }
             set
@@ -100,7 +100,7 @@ namespace WorkingDaysApp.Logic.TimeData
             }
         }
 
-        public HourData LeavingTime
+        public TimeData LeavingTime
         {
             get { return m_LeavingTime; }
             set

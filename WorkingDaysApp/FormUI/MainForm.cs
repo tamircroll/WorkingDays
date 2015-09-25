@@ -178,9 +178,9 @@ namespace TimeWatchApp.FormUI
             if (msg == null) return;
 
             if ((eColumn) i_E.ColumnIndex == eColumn.Arrival)
-                m_TimeWatch.CurrMonth[i_Day].ArrivalTime = new HourData(msg);
+                m_TimeWatch.CurrMonth[i_Day].ArrivalTime = new TimeData(msg);
             else if ((eColumn) i_E.ColumnIndex == eColumn.Leaving)
-                m_TimeWatch.CurrMonth[i_Day].LeavingTime = new HourData(msg);
+                m_TimeWatch.CurrMonth[i_Day].LeavingTime = new TimeData(msg);
         }
 
         private List<string> getSummary()
@@ -191,7 +191,8 @@ namespace TimeWatchApp.FormUI
                 "Personal Vacation Days: " + m_TimeWatch.CurrSummary.TotalVacationsDay(),
                 "Sick Days: " + m_TimeWatch.CurrSummary.TotalSickDays(),
                 "Holidays: " + m_TimeWatch.CurrSummary.TotalHolidays(),
-                "Working Hours: " + m_TimeWatch.CurrSummary.TotalHours()
+                "Working Hours: " + m_TimeWatch.CurrSummary.TotalHoursStr(),
+                "Avergae Hours A day: " + m_TimeWatch.CurrSummary.AverageHours()
             };
 
             return summaryArr;
@@ -200,13 +201,13 @@ namespace TimeWatchApp.FormUI
         private void Leaving_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
-            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].LeavingTime = new HourData(TimeHandler.getCurrClockTime());
+            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].LeavingTime = new TimeData(TimeHandler.getCurrClockTime());
         }
 
         private void Arrival_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
-            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].ArrivalTime = new HourData(TimeHandler.getCurrClockTime());
+            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].ArrivalTime = new TimeData(TimeHandler.getCurrClockTime());
         }
 
         private void chooseYear_DropDown(object i_Sender, EventArgs i_)

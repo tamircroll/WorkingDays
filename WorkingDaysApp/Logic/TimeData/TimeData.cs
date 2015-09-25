@@ -2,11 +2,11 @@
 
 namespace WorkingDaysApp.Logic.TimeData
 {
-    public class HourData
+    public class TimeData
     {
         private string m_Time = "";
 
-        public HourData(string i_Time)
+        public TimeData(string i_Time)
         {
             if (isTimeValid(i_Time))
             {
@@ -14,12 +14,12 @@ namespace WorkingDaysApp.Logic.TimeData
             }
         }
 
-        public HourData()
+        public TimeData()
         {
             m_Time = "";
         }
 
-        public HourData(DateTime i_Time)
+        public TimeData(DateTime i_Time)
         {
             if (m_Time != null)
                 Time = string.Format("{0}:{1}:{2}", i_Time.Hour, i_Time.Minute, i_Time.Second);
@@ -73,7 +73,7 @@ namespace WorkingDaysApp.Logic.TimeData
             return isTimeSet() ? (DateTime?) null : DateTime.Parse(m_Time);
         }
 
-        public string Subtract(HourData i_ToSubtract)
+        public string Subtract(TimeData i_ToSubtract)
         {
             if (isTimeSet() && i_ToSubtract != null && i_ToSubtract.isTimeSet())
             {
@@ -84,7 +84,7 @@ namespace WorkingDaysApp.Logic.TimeData
             return "";
         }
 
-        public string Add(HourData i_ToAdd)
+        public string Add(TimeData i_ToAdd)
         {
             if (isTimeSet() && i_ToAdd != null && i_ToAdd.isTimeSet())
             {
@@ -137,7 +137,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public override bool Equals(object i_Other)
         {
-            HourData other = i_Other as HourData;
+            TimeData other = i_Other as TimeData;
             return other != null && Time == other.Time;
         }
     }

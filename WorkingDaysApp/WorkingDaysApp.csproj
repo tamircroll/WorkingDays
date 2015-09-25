@@ -73,7 +73,7 @@
     <Compile Include="Enums\DayTypeFactory.cs" />
     <Compile Include="Logic\TimeData\DayData.cs" />
     <Compile Include="Logic\FilesHandler.cs" />
-    <Compile Include="Logic\TimeData\HourData.cs" />
+    <Compile Include="Logic\TimeData\TimeData.cs" />
     <Compile Include="Logic\TimeData\MonthData.cs" />
     <Compile Include="Logic\TimeData\Summary.cs" />
     <Compile Include="Logic\TimeWatch.cs" />
