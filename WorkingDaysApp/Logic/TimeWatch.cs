@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using WorkingDaysApp.Logic.TimeData;
 
-namespace WorkingDaysApp.Logic.TimeData
+namespace WorkingDaysApp.Logic
 {
     public class TimeWatch
     {
@@ -16,9 +17,6 @@ namespace WorkingDaysApp.Logic.TimeData
         public static readonly string sr_DashReplacer = "%%";
         public const int FULL_DAY_MINUTES = 6 * 60;
         public const int HALF_DAY_MINUTES = 2 * 60;
-
-        public const string WORKING_DAY = "Working day", ROW_FORMAT = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
-
 
         public static TimeWatch Instance
         {
@@ -77,7 +75,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         private void change_EventHandler()
         {
-            Changed.Invoke();
+            if (Changed != null) Changed.Invoke();
         }
     }
 }

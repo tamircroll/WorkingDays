@@ -13,7 +13,7 @@ namespace WorkingDaysApp.Logic.TimeData
         public event ChangeWasMade Changed;
 
         static readonly public char sr_Seperator = '-';
-        public const string Day_FORMAT = "{0}-{1}-{2}-{3}-{4}-{5}-{6}";
+        public static string m_RowFormat = "{0}{7}{1}{7}{2}{7}{3}{7}{4}{7}{5}{7}{6}";
 
         private readonly string m_WeekDay, m_MonthDay;
         private string m_Comment = "";
@@ -125,7 +125,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public override string ToString()
         {
-            return string.Format(Day_FORMAT, MonthDay, WeekDay, ArrivalTime, LeavingTime, TotalHoursStr(), DayTypeFactory.Get(DayType), Comment);
+            return string.Format(m_RowFormat, MonthDay, WeekDay, ArrivalTime, LeavingTime, TotalHoursStr(), DayTypeFactory.Get(DayType), Comment, TimeWatch.sr_RowSeparatorStr);
         }
 
         private string setMonthDay(string i_Day)

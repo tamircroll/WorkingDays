@@ -143,7 +143,7 @@ namespace TimeWatchApp.FormUI
         private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
         {
             int day = i_E.RowIndex + 1;
-            string msg, hours, minutes;
+            string msg;
 
             if (day < 0 || i_E.ColumnIndex < 0) return;
 
@@ -241,11 +241,11 @@ namespace TimeWatchApp.FormUI
 
         private void ChooseYear_KeyDown(object i_Sender, KeyEventArgs i_)
         {
-            int year;
             ComboBox cb = i_Sender as ComboBox;
-            if (i_.KeyCode == Keys.Enter)
+            if (i_.KeyCode == Keys.Enter && cb != null)
             {
                 string s = cb.Text;
+                int year;
                 bool isNumber = int.TryParse(s, out year);
                 if (isNumber && year >= 2015 && year < 3000)
                 {

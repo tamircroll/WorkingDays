@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TimeWatchApp.Enums;
@@ -70,7 +69,7 @@ namespace WorkingDaysApp.Logic
             for (int i = 1; i <= TimeHandler.DaysInMonth(i_Year, i_Month); i++)
             {
                 newFile.Add(string.Format(
-                    TimeWatch.ROW_FORMAT,
+                    DayData.m_RowFormat,
                     ((i < 10) ? "0" : "") + i,
                     TimeHandler.getWeekDayStr(i_Year, i_Month, i),
                     "",
