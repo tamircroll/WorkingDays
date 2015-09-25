@@ -82,7 +82,7 @@ namespace WorkingDaysApp.Logic.TimeData
             get { return m_Comment; }
             set
             {
-                m_Comment = value.Replace(TimeWatch2.sr_RowSeparatorStr, TimeWatch2.sr_DashReplacer);
+                m_Comment = value.Replace(TimeWatch.sr_RowSeparatorStr, TimeWatch.sr_DashReplacer);
                 if (Changed != null) Changed.Invoke();
             }
         }

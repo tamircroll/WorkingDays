@@ -75,9 +75,9 @@
     <Compile Include="Logic\FilesHandler.cs" />
     <Compile Include="Logic\TimeData\HourData.cs" />
     <Compile Include="Logic\TimeData\MonthData.cs" />
-    <Compile Include="Logic\TimeWatch2.cs" />
-    <Compile Include="Logic\TimeHandler.cs" />
+    <Compile Include="Logic\TimeData\Summary.cs" />
     <Compile Include="Logic\TimeWatch.cs" />
+    <Compile Include="Logic\TimeHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormUI\GetCommentForm.resx">

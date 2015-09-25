@@ -11,7 +11,7 @@ namespace TimeWatchApp.FormUI
 {
     public partial class MainForm : Form
     {
-        private readonly TimeWatch2 m_TimeWatch = TimeWatch2.Instance;
+        private readonly TimeWatch m_TimeWatch = TimeWatch.Instance;
 
         public MainForm()
         {
@@ -187,11 +187,11 @@ namespace TimeWatchApp.FormUI
         {
             List<string> summaryArr = new List<string>
             {
-                "Working Days: " + m_TimeWatch.CurrMonth.AllWorkingDays(),
-                "Personal Vacation Days: " + m_TimeWatch.CurrMonth.TotalVacationsDay(),
-                "Sick Days: " + m_TimeWatch.CurrMonth.TotalSickDays(),
-                "Holidays: " + m_TimeWatch.CurrMonth.TotalHolidays(),
-                "Working Hours: " + m_TimeWatch.CurrMonth.TotalHours()
+                "Working Days: " + m_TimeWatch.CurrSummary.AllWorkingDays(),
+                "Personal Vacation Days: " + m_TimeWatch.CurrSummary.TotalVacationsDay(),
+                "Sick Days: " + m_TimeWatch.CurrSummary.TotalSickDays(),
+                "Holidays: " + m_TimeWatch.CurrSummary.TotalHolidays(),
+                "Working Hours: " + m_TimeWatch.CurrSummary.TotalHours()
             };
 
             return summaryArr;

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using TimeWatchApp.Enums;
 using TimeWatchApp.Logic;
+using WorkingDaysApp.Logic.TimeData;
 
 namespace WorkingDaysApp.Logic
 {

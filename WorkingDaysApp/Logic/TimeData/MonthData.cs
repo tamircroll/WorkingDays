@@ -8,6 +8,7 @@ namespace WorkingDaysApp.Logic.TimeData
     {
         public event ChangeWasMade Changed;
 
+        private readonly Summary m_Summary;
         private readonly List<DayData> m_AllDays;
         private readonly int m_Year, m_Month;
         public int NumOfDays {
@@ -18,6 +19,7 @@ namespace WorkingDaysApp.Logic.TimeData
         {
             m_Year = i_Year;
             m_Month = i_Month;
+            m_Summary = new Summary(this);
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(i_Year, i_Month));
             subscribeToAllDaysEvents();
             change_EventHandler();
@@ -26,6 +28,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public MonthData(FileInfo i_File)
         {
+            m_Summary = new Summary(this);
             m_Year = FilesHandler.getFileYear(i_File.Name);
             m_Month = FilesHandler.getFileMonth(i_File.Name);
             m_AllDays = DayData.StringLstToDayDataLst(FilesHandler.GetFileLines(m_Year, m_Month));
@@ -51,64 +54,10 @@ namespace WorkingDaysApp.Logic.TimeData
         {
             get { return m_Month; }
         }
-        
-        public float AllWorkingDays()
+
+        public Summary Summary 
         {
-            float sum = 0;
-            foreach (DayData day in m_AllDays)
-            {
-                sum += dayWorkScope(day);
-            }
-
-            return sum;
-        }
-
-        public float TotalVacationsDay()
-        {
-            float sum = 0;
-            foreach (DayData day in m_AllDays)
-            {
-                if(day.DayType == eDayType.PersonalVacation)
-                sum++;
-            }
-
-            return sum;
-        }
-
-        public int TotalSickDays()
-        {
-            int sum = 0;
-            foreach (DayData day in m_AllDays)
-            {
-                if (day.DayType == eDayType.SickDay)
-                    sum++;
-            }
-
-            return sum;
-        }
-
-        public float TotalHolidays()
-        {
-            float sum = 0;
-            foreach (DayData day in m_AllDays)
-            {
-                if (day.DayType == eDayType.Holiday) sum++;
-                else if (day.DayType == eDayType.HalfHoliday) sum += 0.5f;
-            }
-
-            return sum;
-        }
-
-        public string TotalHours()
-        {
-            HourData total = new HourData("00:00:00");
-            foreach (DayData day in m_AllDays)
-            {
-                if (!string.IsNullOrEmpty(day.TotalHoursStr()))
-                    total = new HourData(total.Add(new HourData(day.TotalHoursStr())));
-            }
-
-            return total.ToString();
+            get { return m_Summary; }
         }
 
         public List<string> getDaysStringList()
@@ -120,15 +69,6 @@ namespace WorkingDaysApp.Logic.TimeData
             }
 
             return toWrite;
-        }
-
-        private static float dayWorkScope(DayData i_DayArr)
-        {
-            int minutes = i_DayArr.TotalMinutesStr();
-
-            if (minutes >= TimeWatch.FULL_DAY_MINUTES) return 1.0f;
-            if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
-            return 0.0f;
         }
 
         private void writeToFile()

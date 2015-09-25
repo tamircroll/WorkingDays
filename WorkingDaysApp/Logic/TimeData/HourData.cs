@@ -78,7 +78,7 @@ namespace WorkingDaysApp.Logic.TimeData
             if (isTimeSet() && i_ToSubtract != null && i_ToSubtract.isTimeSet())
             {
                 TimeSpan? time = AsTimeSpan() - i_ToSubtract.AsTimeSpan();
-                return time.ToString().Replace(TimeWatch2.sr_RowSeparatorStr, TimeWatch2.sr_DashReplacer);
+                return time.ToString().Replace(TimeWatch.sr_RowSeparatorStr, TimeWatch.sr_DashReplacer);
             }
 
             return "";
@@ -89,7 +89,7 @@ namespace WorkingDaysApp.Logic.TimeData
             if (isTimeSet() && i_ToAdd != null && i_ToAdd.isTimeSet())
             {
                 TimeSpan? time = AsTimeSpan() + i_ToAdd.AsTimeSpan();
-                return time.ToString().Replace(TimeWatch2.sr_RowSeparatorStr, TimeWatch2.sr_DashReplacer);
+                return time.ToString().Replace(TimeWatch.sr_RowSeparatorStr, TimeWatch.sr_DashReplacer);
             }
 
             return "";
