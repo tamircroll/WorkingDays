@@ -12,6 +12,7 @@ namespace WorkingDaysApp.Logic.TimeData
         public event ChangeWasMade Changed;
 
         public static readonly char sr_RowSeparator = '-';
+        public static readonly string sr_RowSeparatorStr = sr_RowSeparator.ToString();
         public static readonly string sr_DashReplacer = "%%";
         public const int FULL_DAY_MINUTES = 6 * 60;
         public const int HALF_DAY_MINUTES = 2 * 60;

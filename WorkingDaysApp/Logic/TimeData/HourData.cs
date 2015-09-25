@@ -42,12 +42,12 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public string MinuteStr()
         {
-            return isTimeSet() ? Time.Split(':')[0] : "";
+            return isTimeSet() ? Time.Split(':')[1] : "";
         }
 
         public string SecondsStr()
         {
-            return isTimeSet() ? Time.Split(':')[1] : "";
+            return isTimeSet() ? Time.Split(':')[2] : "";
         }
 
         public int? HourInt()
@@ -58,8 +58,8 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public int? MinutesInt()
         {
-            int hour;
-            return int.TryParse(MinuteStr(), out hour) ? hour : (int?) null;
+            int minute;
+            return int.TryParse(MinuteStr(), out minute) ? minute : (int?)null;
         }
 
         public int? SecondsInt()
@@ -78,7 +78,7 @@ namespace WorkingDaysApp.Logic.TimeData
             if (isTimeSet() && i_ToSubtract != null && i_ToSubtract.isTimeSet())
             {
                 TimeSpan? time = AsTimeSpan() - i_ToSubtract.AsTimeSpan();
-                return time.ToString().Contains("-") ? "" : time.ToString();
+                return time.ToString().Replace(TimeWatch2.sr_RowSeparatorStr, TimeWatch2.sr_DashReplacer);
             }
 
             return "";
@@ -89,7 +89,7 @@ namespace WorkingDaysApp.Logic.TimeData
             if (isTimeSet() && i_ToAdd != null && i_ToAdd.isTimeSet())
             {
                 TimeSpan? time = AsTimeSpan() + i_ToAdd.AsTimeSpan();
-                return time.ToString().Contains("-") ? "" : time.ToString();
+                return time.ToString().Replace(TimeWatch2.sr_RowSeparatorStr, TimeWatch2.sr_DashReplacer);
             }
 
             return "";

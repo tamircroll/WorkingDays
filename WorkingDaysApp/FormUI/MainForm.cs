@@ -84,9 +84,9 @@ namespace TimeWatchApp.FormUI
         private void setGrid()
         {
             monthGridView.Rows.Clear();
-            foreach (DayData row in m_TimeWatch.CurrMonth.AllDays)
+            foreach (DayData day in m_TimeWatch.CurrMonth.AllDays)
             {
-                var rowArr = row.ToString().Split('-');
+                string[] rowArr = day.ToString().Split('-');
                 if (rowArr.Length < 6) continue;
 
                 int currRowNum = monthGridView.Rows.Add();
@@ -101,30 +101,17 @@ namespace TimeWatchApp.FormUI
             SetGridHeight();
         }
 
-        private void SetGridHeight()
-        {
-            int totalRowHeight = monthGridView.ColumnHeadersHeight;
-
-            foreach (DataGridViewRow row in monthGridView.Rows)
-                totalRowHeight += row.Height;
-
-            monthGridView.Height = totalRowHeight + 2;
-        }
-
         private void setCell(int i_Column, DataGridViewRow i_NewRow, IList<string> i_DayArr)
         {
-            if (i_Column == (int) eColumn.TotalTime)
-            {
-                setTotalTimeCellColor(i_Column, i_NewRow);
-            }
-            else
-            {
-                i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer,
-                    TimeWatch.sr_RowSeparator.ToString());
-            }
+            i_NewRow.Cells[i_Column].Value = i_DayArr[i_Column].Replace(TimeWatch.sr_DashReplacer,
+                TimeWatch.sr_RowSeparator.ToString());
             if (i_Column == (int) eColumn.DayType)
             {
                 i_NewRow.Cells[i_Column].Style.BackColor = setDayTypeCellColor((string) i_NewRow.Cells[i_Column].Value);
+            }
+            else if (i_Column == (int) eColumn.TotalTime)
+            {
+                i_NewRow.Cells[i_Column].Style.BackColor = setTotalTimeCellColor((string) i_NewRow.Cells[i_Column].Value);
             }
         }
 
@@ -138,48 +125,46 @@ namespace TimeWatchApp.FormUI
             return Color.White;
         }
 
-        private static void setTotalTimeCellColor(int i_Column, DataGridViewRow i_NewRow)
+        private static Color setTotalTimeCellColor(string i_Value)
         {
-            i_NewRow.Cells[i_Column].Value = TimeHandler.calcTime(
-                (string) i_NewRow.Cells[(int) eColumn.Arrival].Value,
-                (string) i_NewRow.Cells[(int) eColumn.Leaving].Value);
-            i_NewRow.Cells[i_Column].Style.BackColor = ((string) i_NewRow.Cells[i_Column].Value).StartsWith("-")
-                ? Color.LightCoral
-                : DefaultBackColor;
+            return i_Value.StartsWith("-") ? Color.LightCoral : DefaultBackColor;
+        }
+
+        private void SetGridHeight()
+        {
+            int totalRowHeight = monthGridView.ColumnHeadersHeight;
+
+            foreach (DataGridViewRow row in monthGridView.Rows)
+                totalRowHeight += row.Height;
+
+            monthGridView.Height = totalRowHeight + 2;
         }
 
         private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
         {
-            try
-            {
-                int day = i_E.RowIndex + 1;
-                string msg, hours, minutes;
+            int day = i_E.RowIndex + 1;
+            string msg, hours, minutes;
 
-                if (day < 0 || i_E.ColumnIndex < 0) return;
+            if (day < 0 || i_E.ColumnIndex < 0) return;
 
-                switch ((eColumn) i_E.ColumnIndex)
-                {
-                    case eColumn.Comment:
-                        msg = (string) monthGridView.Rows[day].Cells[(int) eColumn.Comment].Value;
-                        msg = new GetCommentForm(msg).ShowDialog();
-                        if (msg != null)
-                            m_TimeWatch.CurrMonth[day].Comment = msg; //.setCellData(row, eColumn.Comment, msg);
-                        return;
-                    case eColumn.Arrival:
-                    case eColumn.Leaving:
-                        ArrivalOrLeavingPressed(i_E, day);
-                        return;
-                    case eColumn.DayType:
-                        string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
-                        msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
-                        if (!string.IsNullOrEmpty(msg))
-                            m_TimeWatch.CurrMonth[day].DayType = DayTypeFactory.Get(msg);
-                        return;
-                }
-            }
-            catch (Exception exception)
+            switch ((eColumn) i_E.ColumnIndex)
             {
-                MessageBox.Show("Error occurred:\n" + exception.Message, "Exception!!", MessageBoxButtons.OK);
+                case eColumn.Comment:
+                    msg = (string) monthGridView.Rows[day].Cells[(int) eColumn.Comment].Value;
+                    msg = new GetCommentForm(msg).ShowDialog();
+                    if (msg != null)
+                        m_TimeWatch.CurrMonth[day].Comment = msg;
+                    return;
+                case eColumn.Arrival:
+                case eColumn.Leaving:
+                    ArrivalOrLeavingPressed(i_E, day);
+                    return;
+                case eColumn.DayType:
+                    string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
+                    msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
+                    if (!string.IsNullOrEmpty(msg))
+                        m_TimeWatch.CurrMonth[day].DayType = DayTypeFactory.Get(msg);
+                    return;
             }
         }
 
