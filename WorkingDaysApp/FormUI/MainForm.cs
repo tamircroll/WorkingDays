@@ -121,6 +121,10 @@ namespace TimeWatchApp.FormUI
             {
                 return Color.Chartreuse;
             }
+            if (DayTypeFactory.Get(eDayType.HalfHoliday) == i_RowData)
+            {
+                return Color.Yellow;
+            }
 
             return Color.White;
         }

@@ -62,6 +62,12 @@ namespace WorkingDaysApp.Logic.TimeData
             return int.TryParse(MinuteStr(), out minute) ? minute : (int?)null;
         }
 
+        public double TotalMinutesInt()
+        {
+            TimeSpan time = (TimeSpan) AsTimeSpan();
+            return time.TotalMinutes;
+        }
+
         public int? SecondsInt()
         {
             int seconds;
@@ -83,18 +89,7 @@ namespace WorkingDaysApp.Logic.TimeData
 
             return "";
         }
-
-        public string Add(TimeData i_ToAdd)
-        {
-            if (isTimeSet() && i_ToAdd != null && i_ToAdd.isTimeSet())
-            {
-                TimeSpan? time = AsTimeSpan() + i_ToAdd.AsTimeSpan();
-                return time.ToString().Replace(TimeWatch.sr_RowSeparatorStr, TimeWatch.sr_DashReplacer);
-            }
-
-            return "";
-        }
-
+        
         public TimeSpan? AsTimeSpan()
         {
             int? hourInt = HourInt(), minutesInt = MinutesInt(), secondsInt = SecondsInt();
