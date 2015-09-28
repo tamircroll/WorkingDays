@@ -28,13 +28,13 @@ namespace TimeWatchApp.FormUI
 
         private void setTime(int i_Year, int i_Month)
         {
-            m_TimeWatch.SetCurrMonth(i_Year, i_Month);
+            m_TimeWatch.UpdateCurrMonth(i_Year, i_Month);
         }
 
         private void refreshView()
         {
-            chooseMonth.Text = m_TimeWatch.CurrMonth.Month.ToString();
-            chooseYear.Text = m_TimeWatch.CurrMonth.Year.ToString();
+            chooseMonth.Text = m_TimeWatch.Month.ToString();
+            chooseYear.Text = m_TimeWatch.Year.ToString();
             setListViewTitle();
             setGrid();
             setSummary();
@@ -58,7 +58,7 @@ namespace TimeWatchApp.FormUI
         {
             listViewTitle.Text = string.Format(
                 "Year: {0}, Month: {1}",
-                m_TimeWatch.CurrMonth.Year, TimeHandler.GetMonthName(m_TimeWatch.CurrMonth.Month));
+                m_TimeWatch.Year, TimeHandler.GetMonthName(m_TimeWatch.Month));
         }
 
         private void setYearsToggle()
@@ -84,7 +84,7 @@ namespace TimeWatchApp.FormUI
         private void setGrid()
         {
             monthGridView.Rows.Clear();
-            foreach (DayData day in m_TimeWatch.CurrMonth.AllDays)
+            foreach (DayData day in m_TimeWatch.AllDays)
             {
                 string[] rowArr = day.ToString().Split('-');
                 if (rowArr.Length < 6) continue;
@@ -157,7 +157,7 @@ namespace TimeWatchApp.FormUI
                     msg = (string) monthGridView.Rows[day].Cells[(int) eColumn.Comment].Value;
                     msg = new GetCommentForm(msg).ShowDialog();
                     if (msg != null)
-                        m_TimeWatch.CurrMonth[day].Comment = msg;
+                        m_TimeWatch.AllDays[day - 1].Comment = msg;
                     return;
                 case eColumn.Arrival:
                 case eColumn.Leaving:
@@ -167,7 +167,7 @@ namespace TimeWatchApp.FormUI
                     string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
                     msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
                     if (!string.IsNullOrEmpty(msg))
-                        m_TimeWatch.CurrMonth[day].DayType = DayTypeFactory.Get(msg);
+                        m_TimeWatch.AllDays[day - 1].DayType = DayTypeFactory.Get(msg);
                     return;
             }
         }
@@ -182,9 +182,9 @@ namespace TimeWatchApp.FormUI
             if (msg == null) return;
 
             if ((eColumn) i_E.ColumnIndex == eColumn.Arrival)
-                m_TimeWatch.CurrMonth[i_Day].ArrivalTime = new TimeData(msg);
+                m_TimeWatch.AllDays[i_Day - 1].ArrivalTime = new TimeData(msg);
             else if ((eColumn) i_E.ColumnIndex == eColumn.Leaving)
-                m_TimeWatch.CurrMonth[i_Day].LeavingTime = new TimeData(msg);
+                m_TimeWatch.AllDays[i_Day - 1].LeavingTime = new TimeData(msg);
         }
 
         private List<string> getSummary()
@@ -205,13 +205,13 @@ namespace TimeWatchApp.FormUI
         private void Leaving_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
-            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].LeavingTime = new TimeData(TimeHandler.getCurrClockTime());
+            m_TimeWatch.AllDays[TimeHandler.CurDay() - 1].LeavingTime = new TimeData(TimeHandler.getCurrClockTime());
         }
 
         private void Arrival_Click(object i_Sender, EventArgs i_)
         {
             setTimeToNow();
-            m_TimeWatch.CurrMonth[TimeHandler.CurDay()].ArrivalTime = new TimeData(TimeHandler.getCurrClockTime());
+            m_TimeWatch.AllDays[TimeHandler.CurDay() - 1].ArrivalTime = new TimeData(TimeHandler.getCurrClockTime());
         }
 
         private void chooseYear_DropDown(object i_Sender, EventArgs i_)

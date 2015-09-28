@@ -48,7 +48,22 @@ namespace WorkingDaysApp.Logic
             private set { m_CurrMonth = value; }
         }
 
-        public void SetCurrMonth(int i_Year, int i_Month)
+        public int Year
+        {
+            get { return m_CurrMonth.Year; }
+        }
+
+        public int Month
+        {
+            get { return m_CurrMonth.Month; }
+        }
+
+        public List<DayData> AllDays
+        {
+            get { return m_CurrMonth.AllDays; }
+        }
+
+        public void UpdateCurrMonth(int i_Year, int i_Month)
         {
             string fileName = FilesHandler.BuildFileName(i_Year, i_Month);
             if (s_AllMonthes.ContainsKey(fileName)) CurrMonth = s_AllMonthes[fileName];
@@ -65,12 +80,12 @@ namespace WorkingDaysApp.Logic
 
         public void ChangeCurrMonth(int i_Month)
         {
-            SetCurrMonth(CurrMonth.Year, i_Month);
+            UpdateCurrMonth(CurrMonth.Year, i_Month);
         }
 
         public void ChangeCurrYear(int i_Year)
         {
-            SetCurrMonth(i_Year, CurrMonth.Month);
+            UpdateCurrMonth(i_Year, CurrMonth.Month);
         }
 
         private void change_EventHandler()

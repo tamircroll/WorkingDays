@@ -40,6 +40,7 @@ namespace WorkingDaysApp.Logic.TimeData
         {
             get { return m_AllDays; }
         }
+
         public DayData this[int i_Day]
         {
             get { return m_AllDays[i_Day - 1]; }
