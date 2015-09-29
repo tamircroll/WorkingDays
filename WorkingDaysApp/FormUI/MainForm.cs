@@ -174,7 +174,7 @@ namespace TimeWatchApp.FormUI
 
         private void ArrivalOrLeavingPressed(DataGridViewCellEventArgs i_E, int i_Day)
         {
-            string msg = (string) monthGridView.Rows[i_Day].Cells[i_E.ColumnIndex].Value;
+            string msg = (string) monthGridView.Rows[i_Day - 1].Cells[i_E.ColumnIndex].Value;
             string hours = TimeHandler.getHoursStr(msg);
             string minutes = TimeHandler.getMinutesStr(msg);
 
