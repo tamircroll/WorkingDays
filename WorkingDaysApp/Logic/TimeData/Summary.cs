@@ -63,11 +63,11 @@ namespace WorkingDaysApp.Logic.TimeData
             {
                 if (!String.IsNullOrEmpty(day.TotalHoursStr()))
                 {
-                    total += day.TotalMinutesStr();
+                    total += day.TotalSecondsStr();
                 }
             }
 
-            return total / 60;
+            return total / 3600;
         }
 
         public float AllWorkingDays()

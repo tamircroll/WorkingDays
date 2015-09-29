@@ -118,9 +118,14 @@ namespace WorkingDaysApp.Logic.TimeData
 
         public int TotalMinutesStr()
         {
+            return TotalSecondsStr()/60;
+        }
+
+        public int TotalSecondsStr()
+        {
             TimeSpan toReturn;
-            TimeSpan.TryParse(TotalHoursStr(),out toReturn);
-            return (int)toReturn.TotalMinutes;
+            TimeSpan.TryParse(TotalHoursStr(), out toReturn);
+            return (int)toReturn.TotalSeconds;
         }
 
         public override string ToString()
