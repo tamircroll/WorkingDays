@@ -125,6 +125,14 @@ namespace TimeWatchApp.FormUI
             {
                 return Color.Yellow;
             }
+            if (DayTypeFactory.Get(eDayType.PersonalVacation) == i_RowData)
+            {
+                return Color.Cyan;
+            }
+            if (DayTypeFactory.Get(eDayType.SickDay) == i_RowData)
+            {
+                return Color.Coral;
+            }
 
             return Color.White;
         }
@@ -146,7 +154,7 @@ namespace TimeWatchApp.FormUI
 
         private void daysGridView_CellContentClick(object i_Sender, DataGridViewCellEventArgs i_E)
         {
-            int day = i_E.RowIndex + 1;
+            int day = i_E.RowIndex;
             string msg;
 
             if (day < 0 || i_E.ColumnIndex < 0) return;
@@ -157,7 +165,7 @@ namespace TimeWatchApp.FormUI
                     msg = (string) monthGridView.Rows[day].Cells[(int) eColumn.Comment].Value;
                     msg = new GetCommentForm(msg).ShowDialog();
                     if (msg != null)
-                        m_TimeWatch.AllDays[day - 1].Comment = msg;
+                        m_TimeWatch.AllDays[day].Comment = msg;
                     return;
                 case eColumn.Arrival:
                 case eColumn.Leaving:
@@ -167,14 +175,14 @@ namespace TimeWatchApp.FormUI
                     string chosneDayType = (string) monthGridView.Rows[day].Cells[i_E.ColumnIndex].Value;
                     msg = new GetDayTypeWindowForm(chosneDayType).ShowDialog();
                     if (!string.IsNullOrEmpty(msg))
-                        m_TimeWatch.AllDays[day - 1].DayType = DayTypeFactory.Get(msg);
+                        m_TimeWatch.AllDays[day].DayType = DayTypeFactory.Get(msg);
                     return;
             }
         }
 
         private void ArrivalOrLeavingPressed(DataGridViewCellEventArgs i_E, int i_Day)
         {
-            string msg = (string) monthGridView.Rows[i_Day - 1].Cells[i_E.ColumnIndex].Value;
+            string msg = (string) monthGridView.Rows[i_Day].Cells[i_E.ColumnIndex].Value;
             string hours = TimeHandler.getHoursStr(msg);
             string minutes = TimeHandler.getMinutesStr(msg);
 
@@ -182,9 +190,9 @@ namespace TimeWatchApp.FormUI
             if (msg == null) return;
 
             if ((eColumn) i_E.ColumnIndex == eColumn.Arrival)
-                m_TimeWatch.AllDays[i_Day - 1].ArrivalTime = new TimeData(msg);
+                m_TimeWatch.AllDays[i_Day].ArrivalTime = new TimeData(msg);
             else if ((eColumn) i_E.ColumnIndex == eColumn.Leaving)
-                m_TimeWatch.AllDays[i_Day - 1].LeavingTime = new TimeData(msg);
+                m_TimeWatch.AllDays[i_Day].LeavingTime = new TimeData(msg);
         }
 
         private List<string> getSummary()
