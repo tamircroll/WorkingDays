@@ -121,7 +121,7 @@ namespace TimeWatchApp.FormUI
             {
                 return Color.Chartreuse;
             }
-            if (DayTypeFactory.Get(eDayType.HalfHoliday) == i_RowData)
+            if (DayTypeFactory.Get(eDayType.HalfWorkDay) == i_RowData)
             {
                 return Color.Yellow;
             }
@@ -204,7 +204,8 @@ namespace TimeWatchApp.FormUI
                 "Sick Days: " + m_TimeWatch.CurrSummary.TotalSickDays(),
                 "Holidays: " + m_TimeWatch.CurrSummary.TotalHolidays(),
                 "Working Hours: " + m_TimeWatch.CurrSummary.TotalHoursStr(),
-                "Avergae Hours A day: " + m_TimeWatch.CurrSummary.AverageHours()
+                "Avergae Hours A day: " + m_TimeWatch.CurrSummary.AverageHours(),
+                "Extra Hours: " + m_TimeWatch.CurrSummary.ExtraHours()
             };
 
             return summaryArr;

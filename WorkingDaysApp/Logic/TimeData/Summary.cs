@@ -42,7 +42,7 @@ namespace WorkingDaysApp.Logic.TimeData
             foreach (DayData day in m_MonthData.AllDays)
             {
                 if (day.DayType == eDayType.Holiday) sum++;
-                else if (day.DayType == eDayType.HalfHoliday) sum += 0.5f;
+                else if (day.DayType == eDayType.HalfWorkDay) sum += 0.5f;
             }
 
             return sum;
@@ -81,13 +81,13 @@ namespace WorkingDaysApp.Logic.TimeData
             return sum;
         }
 
-        private static float dayWorkScope(DayData i_DayArr)
+        private static float dayWorkScope(DayData day)
         {
-            int minutes = i_DayArr.TotalMinutesStr();
-
-            if (minutes >= TimeWatch.FULL_DAY_MINUTES) return 1.0f;
-            if (minutes >= TimeWatch.HALF_DAY_MINUTES) return 0.5f;
-            return 0.0f;
+            if (day.DayType.Equals(eDayType.WorkDay) && day.TotalHoursStr() != "") return  1;
+            
+            if(day.DayType.Equals(eDayType.HalfWorkDay) && day.TotalHoursStr() != "") return 0.5f;
+            
+            return 0;
         }
 
         public string AverageHours()
@@ -98,6 +98,11 @@ namespace WorkingDaysApp.Logic.TimeData
             float time = TotalHours() / AllWorkingDays();
 
             return timeFloatToString(time);
+        }
+
+        public string ExtraHours()
+        {
+            return timeFloatToString(TotalHours() - (AllWorkingDays() * 9));
         }
 
         private string timeFloatToString(float time)

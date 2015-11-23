@@ -276,7 +276,7 @@ namespace TimeWatchApp.FormUI
             // 
             this.SummaryTitle.AutoSize = true;
             this.SummaryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.SummaryTitle.Location = new System.Drawing.Point(685, 825);
+            this.SummaryTitle.Location = new System.Drawing.Point(28, 475);
             this.SummaryTitle.Name = "SummaryTitle";
             this.SummaryTitle.Size = new System.Drawing.Size(128, 29);
             this.SummaryTitle.TabIndex = 7;
@@ -286,7 +286,7 @@ namespace TimeWatchApp.FormUI
             // 
             this.SummaryLabelLeft.AutoSize = true;
             this.SummaryLabelLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.SummaryLabelLeft.Location = new System.Drawing.Point(870, 825);
+            this.SummaryLabelLeft.Location = new System.Drawing.Point(28, 553);
             this.SummaryLabelLeft.Name = "SummaryLabelLeft";
             this.SummaryLabelLeft.Size = new System.Drawing.Size(52, 29);
             this.SummaryLabelLeft.TabIndex = 8;
@@ -296,7 +296,7 @@ namespace TimeWatchApp.FormUI
             // 
             this.SummaryLabelRight.AutoSize = true;
             this.SummaryLabelRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.SummaryLabelRight.Location = new System.Drawing.Point(1285, 825);
+            this.SummaryLabelRight.Location = new System.Drawing.Point(359, 553);
             this.SummaryLabelRight.Name = "SummaryLabelRight";
             this.SummaryLabelRight.Size = new System.Drawing.Size(69, 29);
             this.SummaryLabelRight.TabIndex = 9;

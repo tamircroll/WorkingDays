@@ -8,7 +8,7 @@ namespace TimeWatchApp.Logic
         public static string Get(eDayType i_DayType)
         {
             if (i_DayType == eDayType.Holiday) return "Holiday";
-            if (i_DayType == eDayType.HalfHoliday) return "Half Holiday";
+            if (i_DayType == eDayType.HalfWorkDay) return "Half Work Day";
             if (i_DayType == eDayType.WorkDay) return "Work Day";
             if (i_DayType == eDayType.PersonalVacation) return "Personal vacation";
             if (i_DayType == eDayType.SickDay) return "Sick day";
@@ -18,11 +18,11 @@ namespace TimeWatchApp.Logic
 
         public static eDayType Get(string i_DayType)
         {
-            if (i_DayType == "Holiday") return eDayType.Holiday;
-            if (i_DayType == "Half Holiday") return eDayType.HalfHoliday;
-            if (i_DayType == "Work Day") return eDayType.WorkDay;
-            if (i_DayType == "Personal vacation") return eDayType.PersonalVacation;
-            if (i_DayType == "Sick day") return eDayType.SickDay;
+            if (i_DayType == Get(eDayType.Holiday)) return eDayType.Holiday;
+            if (i_DayType == Get(eDayType.HalfWorkDay)) return eDayType.HalfWorkDay;
+            if (i_DayType == Get(eDayType.WorkDay)) return eDayType.WorkDay;
+            if (i_DayType == Get(eDayType.PersonalVacation)) return eDayType.PersonalVacation;
+            if (i_DayType == Get(eDayType.SickDay)) return eDayType.SickDay;
 
             throw new Exception("Bad string parmeter input");
         }
