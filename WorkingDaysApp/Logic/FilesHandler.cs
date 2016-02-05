@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Text;
 using TimeWatchApp.Enums;
@@ -7,13 +8,15 @@ using WorkingDaysApp.Logic.TimeData;
 
 namespace WorkingDaysApp.Logic
 {
-    static class FilesHandler
+    internal static class FilesHandler
     {
-        private const string k_DataFolderName = "\\monthsFiles";
+        private const string k_DataFolderName = "monthsFiles";
 
         public static string GetMonthsFilesPath()
         {
-            var path = Directory.GetCurrentDirectory() + k_DataFolderName;
+            var path = string.Format(@"{0}\{1}",
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                k_DataFolderName);
             Directory.CreateDirectory(path);
             return path;
         }
